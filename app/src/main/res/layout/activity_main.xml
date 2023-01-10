@@ -6,26 +6,52 @@
     android:background="@color/white">
 
     <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/lottie_animation"
+        android:id="@+id/lottie_register"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
+        android:layout_height="200dp"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        app:lottie_repeatCount="1"
-        app:lottie_rawRes="@raw/react_native_firebase" />
+        app:lottie_rawRes="@raw/firebase" />
 
-    <TextView
-        android:id="@+id/register_tv"
-        android:layout_width="match_parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/lottie_animation"
-        android:fontFamily="sans-serif-condensed-medium"
-        android:gravity="center"
-        android:text="@string/welcome_to_social_media_app"
-        android:textColor="@color/black"
-        android:textSize="20sp" />
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/lottie_register"
+        android:padding="20dp">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottie_animation"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_alignParentTop="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/register_tv"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/social_media"
+            app:lottie_repeatCount="1" />
+
+        <TextView
+            android:id="@+id/register_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_below="@id/lottie_animation"
+            android:fontFamily="sans-serif-condensed-medium"
+            android:gravity="center"
+            android:text="@string/welcome_to_social_media_app"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
         android:id="@+id/register_btn"
