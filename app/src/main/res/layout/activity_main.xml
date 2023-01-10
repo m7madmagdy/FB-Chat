@@ -8,62 +8,35 @@
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lottie_register"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="250dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        app:lottie_rawRes="@raw/firebase" />
+        app:lottie_rawRes="@raw/firebase_icon" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/lottie_animation"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
         android:layout_below="@id/lottie_register"
-        android:padding="20dp">
-
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/lottie_animation"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_alignParentTop="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/register_tv"
-            app:layout_constraintTop_toTopOf="parent"
-            app:lottie_autoPlay="true"
-            app:lottie_loop="true"
-            app:lottie_rawRes="@raw/social_media"
-            app:lottie_repeatCount="1" />
-
-        <TextView
-            android:id="@+id/register_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_below="@id/lottie_animation"
-            android:fontFamily="sans-serif-condensed-medium"
-            android:gravity="center"
-            android:text="@string/welcome_to_social_media_app"
-            android:textColor="@color/black"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/social_media"
+        app:lottie_repeatCount="1" />
 
     <Button
         android:id="@+id/register_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_above="@id/login_btn"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:layout_marginBottom="10dp"
         android:backgroundTint="@color/blue_firebase_btn"
-        android:padding="15dp"
+        android:drawableLeft="@drawable/ic_account_register"
+        android:padding="10dp"
         android:text="@string/register"
         android:textAllCaps="false"
         android:textColor="@color/white" />
@@ -73,11 +46,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:layout_marginBottom="100dp"
         android:backgroundTint="@color/blue_firebase_btn"
-        android:padding="15dp"
+        android:drawableLeft="@drawable/ic_login"
+        android:padding="10dp"
         android:text="@string/login"
         android:textAllCaps="false"
         android:textColor="@color/white"
