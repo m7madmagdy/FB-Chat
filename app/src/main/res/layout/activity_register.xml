@@ -7,10 +7,9 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:background="@color/white"
-        android:gravity="center">
+        android:gravity="center"
+        android:layout_height="wrap_content">
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/lottie_animation"
@@ -72,7 +71,7 @@
             app:hintTextColor="@color/blue_firebase_btn"
             app:passwordToggleContentDescription="@string/password"
             app:passwordToggleEnabled="true"
-            app:passwordToggleTint="@color/blue_firebase_btn">
+            app:passwordToggleTint="@color/color_primary">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/password_edt"
@@ -82,14 +81,14 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-
         <Button
             android:id="@+id/register_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/password_layout"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="10dp"
+            android:drawableLeft="@drawable/ic_account_register"
+            android:layout_marginTop="20dp"
             android:text="@string/register"
             android:textAllCaps="false" />
     </RelativeLayout>

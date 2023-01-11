@@ -17,7 +17,6 @@ class MainActivity : AppCompatActivity() {
         initUserClick()
     }
 
-
     private fun initUserClick() {
         binding.registerBtn.setOnClickListener {
             Toast.makeText(this, "Register...", Toast.LENGTH_SHORT).show()
@@ -29,21 +28,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
-    /* TODO: Part 1 We will do the followings.
-
-        01 - Add Internet permission to manifest file
-        02 - Add Register and login Buttons in MainActivity
-        03 - Create RegisterActivity
-        04 - Create Firebase Project and connect app with that project
-        05 - Check google-services.json file to make sure app is connected with firebase
-        06 - User Registration with Email & Password
-        07 - Create ProfileActivity
-        08 - Make ProfileActivity Launcher
-        09 - Go To ProfileActivity After Register/Login
-        10 - Add Logout Feature
+    /* TODO: Part 2 We will do the followings.
+        01 - Make ProfileActivity Launcher
+        02 - On app start Check if user signed in stay in ProfileActivity otherwise go to MainActivity
+        03 - Create Login Activity
+        04 - Login User with Email/Password
+        05 - After Logging in go to Profile Activity
+        06 - Add options menu for adding logout Options
+        07 - After LoggingOut go to MainActivity
     */
-
 
     override fun onDestroy() {
         super.onDestroy()

@@ -48,7 +48,7 @@ class RegisterActivity : AppCompatActivity() {
                     emailLayout.error = "Invalid Email"
                     emailEdt.isFocusable = true
                 }
-            } else if (password.length < 6) {
+            } else if (password.length < 6 || password.isEmpty()) {
                 binding.apply {
                     passwordLayout.error = "Password length at least 6 characters"
                     passwordEdt.isFocusable = true
