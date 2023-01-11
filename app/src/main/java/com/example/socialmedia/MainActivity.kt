@@ -19,16 +19,15 @@ class MainActivity : AppCompatActivity() {
 
     private fun initUserClick() {
         binding.registerBtn.setOnClickListener {
-            Toast.makeText(this, "Register...", Toast.LENGTH_SHORT).show()
             startActivity(Intent(this, RegisterActivity::class.java))
         }
 
         binding.loginBtn.setOnClickListener {
-            Toast.makeText(this, "Login...", Toast.LENGTH_SHORT).show()
+            startActivity(Intent(this, LoginActivity::class.java))
         }
     }
-
     /* TODO: Part 2 We will do the followings.
+
         01 - Make ProfileActivity Launcher
         02 - On app start Check if user signed in stay in ProfileActivity otherwise go to MainActivity
         03 - Create Login Activity
@@ -37,6 +36,7 @@ class MainActivity : AppCompatActivity() {
         06 - Add options menu for adding logout Options
         07 - After LoggingOut go to MainActivity
     */
+
 
     override fun onDestroy() {
         super.onDestroy()
