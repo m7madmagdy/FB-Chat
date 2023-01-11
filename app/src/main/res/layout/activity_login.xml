@@ -14,21 +14,21 @@
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/lottie_animation"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
+            android:layout_height="200dp"
             android:layout_alignParentTop="true"
             app:lottie_autoPlay="true"
             app:lottie_loop="true"
-            app:lottie_rawRes="@raw/register" />
+            app:lottie_rawRes="@raw/sign_in" />
 
         <TextView
-            android:id="@+id/register_tv"
+            android:id="@+id/login_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/lottie_animation"
             android:fontFamily="sans-serif-condensed-medium"
             android:gravity="center"
             android:padding="10dp"
-            android:text="@string/register"
+            android:text="@string/login"
             android:textColor="@color/black"
             android:textSize="30sp" />
 
@@ -37,7 +37,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/register_tv"
+            android:layout_below="@id/login_tv"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:hint="@string/email"
@@ -82,26 +82,26 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <Button
-            android:id="@+id/register_btn"
+            android:id="@+id/login_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/password_layout"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="20dp"
-            android:drawableLeft="@drawable/ic_account_register"
-            android:text="@string/register"
+            android:drawableLeft="@drawable/ic_login"
+            android:text="@string/login"
             android:textAllCaps="false" />
 
         <TextView
-            android:id="@+id/hav_account_tv"
+            android:id="@+id/not_hav_account_tv"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/register_btn"
+            android:layout_below="@id/login_btn"
             android:layout_marginTop="10dp"
             android:padding="10dp"
             android:textStyle="bold"
             android:gravity="center"
-            android:text="@string/already_have_account_login"
+            android:text="@string/not_have_account_register"
             android:textAlignment="center"
             android:textColor="@color/black" />
     </RelativeLayout>

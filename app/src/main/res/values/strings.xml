@@ -8,4 +8,8 @@
     <string name="registering_user">Registering User…</string>
     <string name="profile">Profile</string>
     <string name="welcome_to_social_media_app">Welcome to</string>
+    <string name="already_have_account_login">Already have account? Login</string>
+    <string name="not_have_account_register">Not have account? Register</string>
+    <string name="logging_user">Logging in...</string>
+    <string name="sign_out">Sign Out</string>
 </resources>

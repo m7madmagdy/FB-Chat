@@ -2,20 +2,22 @@ package com.example.socialmedia.utils
 
 import android.app.Dialog
 import android.content.Context
+import android.widget.TextView
 import com.example.socialmedia.R
 
-object ProgressDialog {
+class ProgressDialog(context: Context) : Dialog(context) {
 
-    private lateinit var progressDialog: Dialog
-
-    fun showProgressDialog(context: Context) {
-        progressDialog = Dialog(context)
-        progressDialog.setContentView(R.layout.dialog_progress)
-        progressDialog.setCancelable(false)
-        progressDialog.show()
+    init {
+        setContentView(R.layout.dialog_progress)
     }
 
-    fun hideProgressDialog() {
-        progressDialog.hide()
+    fun show(message: String) {
+        val loadingMessage = findViewById<TextView>(R.id.loading_tv)
+        loadingMessage.text = message
+        super.show()
+    }
+
+    fun hideDialog() {
+        super.hide()
     }
 }
