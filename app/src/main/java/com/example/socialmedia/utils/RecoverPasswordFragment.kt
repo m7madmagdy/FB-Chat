@@ -1,11 +1,13 @@
 package com.example.socialmedia.utils
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Patterns
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.example.socialmedia.R
 import com.example.socialmedia.databinding.FragmentRecoverPasswordBinding
@@ -25,11 +27,13 @@ class RecoverPasswordFragment : BottomSheetDialogFragment() {
     ): View {
         _binding = FragmentRecoverPasswordBinding.inflate(layoutInflater)
         firebaseAuth = FirebaseAuth.getInstance()
+        dialog?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.emailEdt.requestFocus().apply { showKeyboard() }
         initProductSheet()
     }
 
@@ -37,9 +41,8 @@ class RecoverPasswordFragment : BottomSheetDialogFragment() {
         val bottomSheet =
             dialog?.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
         behavior = BottomSheetBehavior.from(bottomSheet!!).apply {
-            state = BottomSheetBehavior.STATE_EXPANDED
+            state = BottomSheetBehavior.STATE_COLLAPSED
             isHideable = true
-            skipCollapsed = true
         }
 
         val layoutParams = bottomSheet.layoutParams
@@ -91,8 +94,15 @@ class RecoverPasswordFragment : BottomSheetDialogFragment() {
             }
     }
 
+    fun showKeyboard() {
+        val imm =
+            requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.showSoftInput(binding.emailEdt, 0)
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
 }
+
