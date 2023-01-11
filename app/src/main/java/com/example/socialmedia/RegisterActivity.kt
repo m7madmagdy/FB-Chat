@@ -2,9 +2,16 @@ package com.example.socialmedia
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.TextPaint
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
 import android.util.Patterns
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import com.example.socialmedia.databinding.ActivityRegisterBinding
 import com.example.socialmedia.utils.ProgressDialog
 import com.google.firebase.auth.FirebaseAuth
@@ -38,10 +45,26 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun initUserLogin() {
-        binding.havAccountTv.setOnClickListener {
-            startActivity(Intent(this, LoginActivity::class.java))
-            finish()
+        val havAccountText = binding.havAccountTv
+        val spannableString = SpannableString(havAccountText.text)
+        val clickableSpan = object : ClickableSpan() {
+            override fun onClick(widget: View) {
+                startActivity(Intent(this@RegisterActivity, LoginActivity::class.java))
+                finish()
+            }
+
+            override fun updateDrawState(ds: TextPaint) {
+                super.updateDrawState(ds)
+                ds.color = ContextCompat.getColor(this@RegisterActivity, R.color.blue_firebase_btn)
+                ds.isUnderlineText = false
+            }
         }
+        val recoverWord = "Login"
+        val start = havAccountText.text.indexOf(recoverWord)
+        val end = start + recoverWord.length
+        spannableString.setSpan(clickableSpan, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+        havAccountText.text = spannableString
+        havAccountText.movementMethod = LinkMovementMethod.getInstance()
     }
 
     private fun initUserRegister() {

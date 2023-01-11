@@ -3,10 +3,8 @@ package com.example.socialmedia
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.example.socialmedia.databinding.ActivityProfileBinding
-import com.example.socialmedia.databinding.ActivityRegisterBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 
@@ -28,8 +26,6 @@ class ProfileActivity : AppCompatActivity() {
         val actionBar = supportActionBar
         actionBar?.apply {
             title = "Profile"
-            setDisplayHomeAsUpEnabled(true)
-            setDisplayShowHomeEnabled(true)
         }
     }
 
@@ -62,17 +58,13 @@ class ProfileActivity : AppCompatActivity() {
         builder.setNegativeButton("CANCEL") { dialog, _ ->
             dialog.cancel()
         }
-            .create().show()
+
+        builder.create().show()
     }
 
     override fun onStart() {
         checkUserStatus()
         super.onStart()
-    }
-
-    override fun onSupportNavigateUp(): Boolean {
-        onBackPressedDispatcher.onBackPressed()
-        return super.onSupportNavigateUp()
     }
 
     override fun onDestroy() {
