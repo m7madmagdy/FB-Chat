@@ -13,4 +13,6 @@
     <string name="logging_user">Logging In…</string>
     <string name="sign_out">Sign Out</string>
     <string name="forget_password">Forget Password?</string>
+    <string name="or">OR</string>
+    <string name="google_sign_in">Continue with Google</string>
 </resources>

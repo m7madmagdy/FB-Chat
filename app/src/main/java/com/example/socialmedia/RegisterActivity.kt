@@ -56,7 +56,7 @@ class RegisterActivity : AppCompatActivity() {
             override fun updateDrawState(ds: TextPaint) {
                 super.updateDrawState(ds)
                 ds.color = ContextCompat.getColor(this@RegisterActivity, R.color.blue_firebase_btn)
-                ds.isUnderlineText = false
+                ds.isUnderlineText = true
             }
         }
         val recoverWord = "Login"

@@ -31,5 +31,7 @@
         android:textAllCaps="false"
         android:textColor="@color/black"
         android:textSize="22sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        app:drawableLeftCompat="@drawable/ic_logout"
+        app:drawableTint="@color/logout_icon" />
 </RelativeLayout>

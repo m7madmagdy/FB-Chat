@@ -68,15 +68,13 @@ class MainActivity : AppCompatActivity() {
 
     /* TODO: Part 2 We will do the followings.
 
-        01 - Make ProfileActivity Launcher
-        02 - On app start Check if user signed in stay in ProfileActivity otherwise go to MainActivity
-        03 - Create Login Activity
-        04 - Login User with Email/Password
-        05 - After Logging in go to Profile Activity
-        06 - Add options menu for adding logout Options
-        07 - After LoggingOut go to MainActivity
+        01 - Add Google SignIn feature
+            Requirements:
+              . Enable Google sign-in from Firebase Authentication
+              . Add Project support email
+              . Add SHA1-Certificate TODO: To generate SHA1 type gradle-signinReport in terminal project path and hit Ctrl+Enter
+              . Add Google SignIn Library
     */
-
 
     override fun onDestroy() {
         super.onDestroy()
