@@ -4,5 +4,11 @@
         <item name="colorPrimaryDark">@color/color_primary</item>
 
         <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
+        <item name="bottomSheetDialogTheme">@style/ThemeOverlay.App.BottomSheetDialog</item>
     </style>
+
+    <style name="ThemeOverlay.App.BottomSheetDialog" parent="ThemeOverlay.Material3.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/ModalBottomSheetDialog</item>
+    </style>
+
 </resources>

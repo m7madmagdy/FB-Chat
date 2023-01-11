@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Social Media</string>
+    <string name="app_name">Firebase Social Media</string>
     <string name="login">Login</string>
     <string name="register">Register</string>
     <string name="email">Email</string>
@@ -11,8 +11,22 @@
     <string name="already_have_account_login">Already have account? Login</string>
     <string name="not_have_account_register">Not have account? Register</string>
     <string name="logging_user">Logging In…</string>
-    <string name="sign_out">Sign Out</string>
+    <string name="sign_out">SIGN OUT</string>
     <string name="forget_password">Forget Password?</string>
     <string name="or">OR</string>
     <string name="google_sign_in">Continue with Google</string>
+    <string name="close_sheet">Close sheet</string>
+    <string name="recover_password">Recover Password</string>
+    <string name="cancel">CANCEL</string>
+    <string name="recover">RECOVER</string>
+    <string name="failed">Authentication failed..</string>
+    <string name="login_failed">Login failed.</string>
+    <string name="check_your_mail">Email sent \nPlease check your mail</string>
+    <string name="password_length_must_6_characters">Password length at least 6 characters</string>
+    <string name="invalid_email">Invalid Email</string>
+    <string name="sending_email">Sending Email..</string>
+    <string name="type_your_email_first">Type your email first</string>
+    <string name="create_account">Create Account</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
