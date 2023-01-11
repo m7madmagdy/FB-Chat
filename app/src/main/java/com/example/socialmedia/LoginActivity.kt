@@ -2,33 +2,28 @@ package com.example.socialmedia
 
 import android.app.Activity
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.InputType
 import android.text.SpannableString
 import android.text.Spanned
 import android.text.TextPaint
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
-import android.util.Log
 import android.util.Patterns
 import android.view.View
-import android.widget.EditText
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.socialmedia.databinding.ActivityLoginBinding
 import com.example.socialmedia.utils.ProgressDialog
+import com.example.socialmedia.utils.RecoverPasswordFragment
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.api.ApiException
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.auth.GoogleAuthCredential
 import com.google.firebase.auth.GoogleAuthProvider
 
 class LoginActivity : AppCompatActivity() {
@@ -36,6 +31,7 @@ class LoginActivity : AppCompatActivity() {
     private val binding get() = _binding!!
     private var user: FirebaseUser? = null
     private var googleSignInClient: GoogleSignInClient? = null
+    private var bottomSheetDialog: RecoverPasswordFragment? = null
     private lateinit var firebaseAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,7 +57,7 @@ class LoginActivity : AppCompatActivity() {
     private fun initActionBar() {
         val actionBar = supportActionBar
         actionBar?.apply {
-            title = "Login"
+            title = getString(R.string.login)
             setDisplayHomeAsUpEnabled(true)
             setDisplayShowHomeEnabled(true)
         }
@@ -69,29 +65,32 @@ class LoginActivity : AppCompatActivity() {
 
     private fun initForgetPassword() {
         binding.forgetPassword.setOnClickListener {
-            val builder = AlertDialog.Builder(this)
-            builder.setTitle("Recover Password")
-            val layout = LinearLayout(this)
-            val emailEdt = EditText(this)
-            emailEdt.apply {
-                hint = getString(R.string.email)
-                inputType = InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS
-                minEms = 100
-            }
-            layout.addView(emailEdt)
-            builder.setView(layout)
-
-            builder.setPositiveButton("Recover") { _, _ ->
-                val email = emailEdt.text.toString().trim()
-                beginRecovery(email)
-            }
-
-            builder.setNegativeButton("Cancel") { dialog, _ ->
-                dialog.dismiss()
-            }
-
-            builder.create().show()
+            val bottomSheetFragment = RecoverPasswordFragment()
+            bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)
         }
+
+//        val binding = BottomSheetDialogBinding.inflate(layoutInflater)
+//        bottomSheetDialog = BottomSheetDialog(this).apply {
+//            setContentView(binding.root)
+//            setCancelable(true)
+//            show()
+//        }
+//        binding.recoverBtn.setOnClickListener {
+//            val email = binding.emailEdt.text.toString().trim()
+//            if (email.isEmpty()) {
+//                binding.emailLayout.error = getString(R.string.type_your_email_first)
+//            } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+//                binding.emailLayout.error = getString(R.string.invalid_email)
+//            } else {
+//                beginRecovery(email)
+//            }
+//        }
+//        binding.cancelBtn.setOnClickListener {
+//            bottomSheetDialog!!.dismiss()
+//        }
+//        binding.closeSheetBtn.setOnClickListener {
+//            bottomSheetDialog!!.dismiss()
+//        }
     }
 
     private fun initUserRegister() {
@@ -124,12 +123,12 @@ class LoginActivity : AppCompatActivity() {
 
             if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                 binding.apply {
-                    emailLayout.error = "Invalid Email"
+                    emailLayout.error = getString(R.string.invalid_email)
                     emailEdt.isFocusable = true
                 }
             } else if (password.length < 6) {
                 binding.apply {
-                    passwordLayout.error = "Password length at least 6 characters"
+                    passwordLayout.error = getString(R.string.password_length_must_6_characters)
                     passwordEdt.isFocusable = true
                 }
             } else {
@@ -156,33 +155,34 @@ class LoginActivity : AppCompatActivity() {
                     finish()
                 } else {
                     progressDialog.hideDialog()
-                    Toast.makeText(this, "Authentication failed..", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.failed), Toast.LENGTH_SHORT).show()
                 }
             }
 
             .addOnFailureListener {
                 progressDialog.hideDialog()
-                Toast.makeText(this, "Connection failed..", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.failed), Toast.LENGTH_SHORT).show()
             }
     }
 
     private fun beginRecovery(email: String) {
         val progressDialog = ProgressDialog(this)
-        progressDialog.show("Sending Email..")
+        progressDialog.show(getString(R.string.sending_email))
 
         firebaseAuth.sendPasswordResetEmail(email)
 
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     progressDialog.hideDialog()
-                    Toast.makeText(this, "Email sent \nPlease check your mail", Toast.LENGTH_SHORT)
+                    bottomSheetDialog!!.dismiss()
+                    Toast.makeText(this, getString(R.string.check_your_mail), Toast.LENGTH_SHORT)
                         .show()
                 }
             }
 
             .addOnFailureListener {
                 progressDialog.hideDialog()
-                Toast.makeText(this, "Connection failed..", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.failed), Toast.LENGTH_SHORT).show()
             }
     }
 
@@ -194,7 +194,7 @@ class LoginActivity : AppCompatActivity() {
                     val account = task.result
                     firebaseAuthWithGoogle(account)
                 } catch (e: Exception) {
-                    Toast.makeText(this, "Failed.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.failed), Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -209,11 +209,12 @@ class LoginActivity : AppCompatActivity() {
                     startActivity(Intent(this, ProfileActivity::class.java))
                     finish()
                 } else {
-                    Toast.makeText(this, "Login failed.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.login_failed), Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
             .addOnFailureListener {
-                Toast.makeText(this, "Connection failed.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.failed), Toast.LENGTH_SHORT).show()
             }
     }
 

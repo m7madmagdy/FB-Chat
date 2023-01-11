@@ -25,7 +25,7 @@ class ProfileActivity : AppCompatActivity() {
     private fun initActionBar() {
         val actionBar = supportActionBar
         actionBar?.apply {
-            title = "Profile"
+            title = getString(R.string.profile)
         }
     }
 
@@ -50,12 +50,12 @@ class ProfileActivity : AppCompatActivity() {
         val builder = AlertDialog.Builder(this)
         builder.setTitle(getString(R.string.sign_out))
 
-        builder.setPositiveButton("SIGN OUT") { _, _ ->
+        builder.setPositiveButton(getString(R.string.sign_out)) { _, _ ->
             firebaseAuth.signOut()
             checkUserStatus()
         }
 
-        builder.setNegativeButton("CANCEL") { dialog, _ ->
+        builder.setNegativeButton(getString(R.string.cancel)) { dialog, _ ->
             dialog.cancel()
         }
 

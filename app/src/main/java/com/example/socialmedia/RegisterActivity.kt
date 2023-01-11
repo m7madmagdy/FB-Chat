@@ -38,7 +38,7 @@ class RegisterActivity : AppCompatActivity() {
     private fun initActionBar() {
         val actionBar = supportActionBar
         actionBar?.apply {
-            title = "Create Account"
+            title = getString(R.string.create_account)
             setDisplayHomeAsUpEnabled(true)
             setDisplayShowHomeEnabled(true)
         }
@@ -59,7 +59,7 @@ class RegisterActivity : AppCompatActivity() {
                 ds.isUnderlineText = true
             }
         }
-        val recoverWord = "Login"
+        val recoverWord = getString(R.string.login)
         val start = havAccountText.text.indexOf(recoverWord)
         val end = start + recoverWord.length
         spannableString.setSpan(clickableSpan, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
@@ -74,12 +74,12 @@ class RegisterActivity : AppCompatActivity() {
 
             if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
                 binding.apply {
-                    emailLayout.error = "Invalid Email"
+                    emailLayout.error = getString(R.string.invalid_email)
                     emailEdt.isFocusable = true
                 }
             } else if (password.length < 6 || password.isEmpty()) {
                 binding.apply {
-                    passwordLayout.error = "Password length at least 6 characters"
+                    passwordLayout.error = getString(R.string.password_length_must_6_characters)
                     passwordEdt.isFocusable = true
                 }
             } else {
@@ -99,14 +99,11 @@ class RegisterActivity : AppCompatActivity() {
                     user = firebaseAuth.currentUser!!
                     startActivity(Intent(this, ProfileActivity::class.java))
                     finish()
-                } else {
-                    progressDialog.hideDialog()
-                    Toast.makeText(this, "User is already exist", Toast.LENGTH_SHORT).show()
                 }
             }
             .addOnFailureListener {
                 progressDialog.hideDialog()
-                Toast.makeText(this, "Connection Failed.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, getString(R.string.failed), Toast.LENGTH_SHORT).show()
             }
     }
 

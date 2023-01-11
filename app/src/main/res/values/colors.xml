@@ -11,4 +11,7 @@
     <color name="underline_view">#777777</color>
     <color name="google_btn_select">#FCFDFF</color>
     <color name="logout_icon">#D60E00</color>
+    <color name="not_pressed_color">#FFFFFF</color>
+    <color name="pressed_color">#EDF7FF</color>
+
 </resources>
