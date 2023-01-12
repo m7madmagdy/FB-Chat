@@ -1,15 +1,17 @@
 package com.example.socialmedia
 
+import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.example.socialmedia.databinding.FragmentHomeBinding
 import com.example.socialmedia.databinding.FragmentProfileBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -18,10 +20,11 @@ import com.google.firebase.database.*
 class ProfileFragment : BaseFragment() {
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
-    lateinit var firebaseAuth: FirebaseAuth
-    lateinit var firebaseUser: FirebaseUser
-    lateinit var firebaseDatabase: FirebaseDatabase
-    lateinit var databaseReference: DatabaseReference
+    private lateinit var firebaseAuth: FirebaseAuth
+    private lateinit var firebaseUser: FirebaseUser
+    private lateinit var firebaseDatabase: FirebaseDatabase
+    private lateinit var databaseReference: DatabaseReference
+    private lateinit var userImage: Any
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,17 +32,50 @@ class ProfileFragment : BaseFragment() {
     ): View {
         _binding = FragmentProfileBinding.inflate(layoutInflater)
         initFirebase()
+        initUserClicks()
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    private fun initUserClicks() {
+        binding.apply {
+            signOut.setOnClickListener {
+                alertUserSignOut()
+            }
 
-        binding.avatarImage.setOnClickListener {
-            Toast.makeText(requireContext(), "Clicked", Toast.LENGTH_SHORT).show()
+            avatarImage.setOnClickListener {
+                val action =
+                    ProfileFragmentDirections.actionProfileFragmentToFullScreenPhotoFragment(
+                        userImage.toString()
+                    )
+                findNavController().navigate(action)
+            }
+
+            coverPhoto.setOnClickListener {
+                val imageUrl = getString(R.string.cover_image)
+                val action =
+                    ProfileFragmentDirections.actionProfileFragmentToFullScreenPhotoFragment(
+                        imageUrl
+                    )
+                findNavController().navigate(action)
+            }
         }
     }
 
+    private fun alertUserSignOut() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle(getString(R.string.sign_out))
+
+        builder.setPositiveButton(getString(R.string.sign_out)) { _, _ ->
+            firebaseAuth.signOut()
+            startActivity(Intent(requireContext(), MainActivity::class.java))
+        }
+
+        builder.setNegativeButton(getString(R.string.cancel)) { dialog, _ ->
+            dialog.cancel()
+        }
+
+        builder.create().show()
+    }
 
     private fun initFirebase() {
         firebaseAuth = FirebaseAuth.getInstance()
@@ -54,12 +90,12 @@ class ProfileFragment : BaseFragment() {
                     val name = "" + ds.child("name").value
                     val email = "" + ds.child("email").value
                     val phone = "" + ds.child("phone").value
-                    val image = "" + ds.child("image").value
+                    userImage = "" + ds.child("image").value
                     binding.apply {
                         userName.text = name
                         userEmail.text = email
                         userPhone.text = phone
-                        Glide.with(requireContext()).load(image)
+                        Glide.with(requireContext()).load(userImage)
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .into(avatarImage)
                     }
@@ -76,13 +112,6 @@ class ProfileFragment : BaseFragment() {
         Glide.with(requireContext()).load(getString(R.string.cover_image))
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .into(binding.coverPhoto)
-    }
-
-    override fun backIndicator() {
-        val activity = activity as AppCompatActivity
-        activity.supportActionBar?.apply {
-            setHomeAsUpIndicator(R.drawable.navigate_up_back_left)
-        }
     }
 
     override fun onDestroyView() {

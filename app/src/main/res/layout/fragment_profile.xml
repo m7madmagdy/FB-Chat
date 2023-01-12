@@ -5,15 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:fillViewport="true"
     tools:ignore="SpeakableTextPresentCheck">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
+        <com.github.chrisbanes.photoview.PhotoView
             android:id="@+id/cover_photo"
             android:layout_width="match_parent"
+            android:layout_alignParentTop="true"
             android:layout_height="wrap_content"
             android:layout_marginBottom="100dp"
             android:background="@android:color/darker_gray"
@@ -24,9 +26,8 @@
             android:id="@+id/user_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
             android:visibility="invisible"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="150dp"
             android:elevation="2dp"
             android:orientation="vertical">
 
@@ -75,15 +76,32 @@
             android:id="@+id/shimmer_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:elevation="5dp"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="150dp"
-            android:layout_alignParentBottom="true">
+            android:elevation="2dp">
 
             <include layout="@layout/profile_shimmer" />
 
         </com.facebook.shimmer.ShimmerFrameLayout>
 
+        <TextView
+            android:id="@+id/sign_out"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="50dp"
+            android:background="@drawable/sign_out_ripple"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="@string/sign_out"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            app:drawableLeftCompat="@drawable/ic_logout"
+            app:drawableTint="@color/logout_icon" />
     </RelativeLayout>
 
 </ScrollView>

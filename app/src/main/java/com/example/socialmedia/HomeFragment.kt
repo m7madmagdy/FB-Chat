@@ -20,13 +20,6 @@ class HomeFragment : BaseFragment() {
         return binding.root
     }
 
-    override fun backIndicator() {
-        val activity = activity as AppCompatActivity
-        activity.supportActionBar?.apply {
-            setHomeAsUpIndicator(R.drawable.navigate_up_back_left)
-        }
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

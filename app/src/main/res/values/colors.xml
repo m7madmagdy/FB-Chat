@@ -12,7 +12,7 @@
     <color name="google_btn_select">#FCFDFF</color>
     <color name="logout_icon">#D60E00</color>
     <color name="not_pressed_color">#FFFFFF</color>
-    <color name="pressed_color">#EDF7FF</color>
+    <color name="pressed_color">#E1E1E1</color>
     <color name="avatar_image_select">#F8F8F8</color>
     <color name="avatar_image_border">#F4F4F4</color>
 

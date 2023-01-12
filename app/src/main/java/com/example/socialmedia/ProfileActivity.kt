@@ -25,7 +25,6 @@ class ProfileActivity : AppCompatActivity() {
         setContentView(binding.root)
         firebaseAuth = FirebaseAuth.getInstance()
         initActionBar()
-        initUserSignOut()
         initNavController()
     }
 
@@ -55,28 +54,6 @@ class ProfileActivity : AppCompatActivity() {
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
-    }
-
-    private fun initUserSignOut() {
-        binding.signOut.setOnClickListener {
-            alertUserSignOut()
-        }
-    }
-
-    private fun alertUserSignOut() {
-        val builder = AlertDialog.Builder(this)
-        builder.setTitle(getString(R.string.sign_out))
-
-        builder.setPositiveButton(getString(R.string.sign_out)) { _, _ ->
-            firebaseAuth.signOut()
-            checkUserStatus()
-        }
-
-        builder.setNegativeButton(getString(R.string.cancel)) { dialog, _ ->
-            dialog.cancel()
-        }
-
-        builder.create().show()
     }
 
     override fun onStart() {

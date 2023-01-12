@@ -32,4 +32,7 @@
     <string name="cover_photo">Cover photo</string>
     <string name="avatar_photo">Avatar photo</string>
     <string name="cover_image">https://m7madmagdy.github.io/profile/images/firebase.png</string>
+    <string name="welcome_to_firebase">Welcome to Firebase</string>
+    <string name="save">Save</string>
+    <string name="photo_saved_successfully">Photo saved on this device</string>
 </resources>
