@@ -7,8 +7,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 
 abstract class BaseFragment : Fragment() {
     //    lateinit var firebaseAuth: FirebaseAuth
@@ -22,10 +20,14 @@ abstract class BaseFragment : Fragment() {
         bottomNavView = activity?.findViewById(R.id.bottom_navigation) as BottomNavigationView
 //        firebaseAuth = FirebaseAuth.getInstance()
 //        firebaseUser = firebaseAuth.currentUser!!
-        backIndicator()
+        backBtnIndicator()
     }
 
-    abstract fun backIndicator()
+    private fun backBtnIndicator(){
+        appCompactActivity.supportActionBar?.apply {
+            setHomeAsUpIndicator(R.drawable.navigate_up_back_left)
+        }
+    }
 
     fun showBottomNavigation() {
         bottomNavView.isVisible = true
@@ -43,6 +45,7 @@ abstract class BaseFragment : Fragment() {
         appCompactActivity.supportActionBar?.apply { hide() }
     }
 
+    @Suppress("DEPRECATION")
     fun hideStatusBar() {
         appCompactActivity.window?.setFlags(
             WindowManager.LayoutParams.FLAG_FULLSCREEN,
@@ -50,6 +53,7 @@ abstract class BaseFragment : Fragment() {
         )
     }
 
+    @Suppress("DEPRECATION")
     fun showStatusBar() {
         appCompactActivity.window?.clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
     }

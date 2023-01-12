@@ -38,6 +38,7 @@ class FullScreenPhotoFragment : BaseFragment() {
         hideBottomNavigation()
         initScreenView()
         hideStatusBar()
+        hideToolbar()
     }
 
     private fun initScreenView() {
@@ -68,7 +69,7 @@ class FullScreenPhotoFragment : BaseFragment() {
     private fun saveImage() {
         val bitmapDrawable = binding.fullScreenPhoto.drawable as BitmapDrawable
         val bitmap = bitmapDrawable.bitmap
-        val bitmapPath =
+        @Suppress("DEPRECATION") val bitmapPath =
             MediaStore.Images.Media.insertImage(activity?.contentResolver, bitmap, "", null)
         val bitmapUri = Uri.parse(bitmapPath)
         val shareIntent = Intent(Intent.ACTION_SEND)
@@ -93,10 +94,6 @@ class FullScreenPhotoFragment : BaseFragment() {
             )
             false
         }
-    }
-
-    override fun backIndicator() {
-        hideToolbar()
     }
 
     companion object {
