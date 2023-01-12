@@ -16,7 +16,7 @@ class MainActivity : AppCompatActivity() {
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
     private val requestPermissionLauncher =
-        registerForActivityResult(ActivityResultContracts.RequestPermission()){}
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) {}
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,7 +41,8 @@ class MainActivity : AppCompatActivity() {
             when {
                 ContextCompat.checkSelfPermission(
                     this, android.Manifest.permission.POST_NOTIFICATIONS
-                ) == PackageManager.PERMISSION_GRANTED -> {}
+                ) == PackageManager.PERMISSION_GRANTED -> {
+                }
                 shouldShowRequestPermissionRationale(android.Manifest.permission.POST_NOTIFICATIONS) -> {
                     Snackbar.make(
                         binding.root,
@@ -66,19 +67,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    /* TODO: Part 5 We will do the followings.
+    /* TODO: Part 06 We will do the followings.
 
-        01 - Save registered users info (name, email, uid, phone, image)
-            in firebase realtime database.
-            TODO: Requirements:
-            1 - Add Firebase Realtime database
-            2 - Change firebase realtime database rules
-
-        02 - Add Bottom Navigation in Profile Activity having three menus
-            1 - Home
-            2 - Profile (User info)
-            3 - All Users
-     */
+        1 - Design User Profile
+        2 - Get user info from firebase
+        3 - Show user info
+        4 - For setting image we will user Glide library
+    */
     override fun onDestroy() {
         super.onDestroy()
         _binding = null

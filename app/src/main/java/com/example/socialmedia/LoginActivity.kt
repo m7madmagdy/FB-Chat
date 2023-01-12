@@ -153,19 +153,22 @@ class LoginActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     progressDialog.hideDialog()
                     user = firebaseAuth.currentUser
-                    val userEmail = user!!.email.toString()
-                    val uid = user!!.uid
-                    val userInfo = hashMapOf<Any, String>()
-                    userInfo.apply {
-                        put("email", userEmail)
-                        put("uid", uid)
-                        put("name", "")
-                        put("phone", "")
-                        put("image", "")
+
+                    if (task.result.additionalUserInfo?.isNewUser!!) {
+                        val userEmail = user!!.email.toString()
+                        val uid = user!!.uid
+                        val userInfo = hashMapOf<Any, String>()
+                        userInfo.apply {
+                            put("email", userEmail)
+                            put("uid", uid)
+                            put("name", "")
+                            put("phone", "")
+                            put("image", "")
+                        }
+                        val database = FirebaseDatabase.getInstance()
+                        val reference = database.getReference("Users")
+                        reference.child(uid).setValue(userInfo)
                     }
-                    val database = FirebaseDatabase.getInstance()
-                    val reference = database.getReference("Users")
-                    reference.child(uid).setValue(userInfo)
                     startActivity(Intent(this, ProfileActivity::class.java))
                     finish()
                 } else {

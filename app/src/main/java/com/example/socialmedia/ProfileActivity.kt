@@ -38,12 +38,10 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun initNavController() {
         val bottomNavView = binding.bottomNavigation
-        bottomNavView.background = null
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
         val navController = navHostFragment.navController
         bottomNavView.setupWithNavController(navController)
-        /** Show the Up button in the action bar. **/
         NavigationUI.setupActionBarWithNavController(this, navController)
     }
 

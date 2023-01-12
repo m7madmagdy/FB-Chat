@@ -13,5 +13,6 @@
     <color name="logout_icon">#D60E00</color>
     <color name="not_pressed_color">#FFFFFF</color>
     <color name="pressed_color">#EDF7FF</color>
+    <color name="avatar_image_select">#F8F8F8</color>
 
 </resources>
