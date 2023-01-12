@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">Firebase Social Media</string>
     <string name="login">Login</string>
     <string name="register">Register</string>
@@ -16,7 +16,7 @@
     <string name="google_sign_in">Continue with Google</string>
     <string name="close_sheet">Close sheet</string>
     <string name="recover_password">Recover Password</string>
-    <string name="cancel">CANCEL</string>
+    <string name="cancel" tools:ignore="ButtonCase">CANCEL</string>
     <string name="recover">RECOVER</string>
     <string name="failed">Authentication failed..</string>
     <string name="login_failed">Login failed.</string>
@@ -29,5 +29,4 @@
     <string name="home">Home</string>
     <string name="profile">Profile</string>
     <string name="users">Users</string>
-    <string name="all_users">All Users</string>
 </resources>
