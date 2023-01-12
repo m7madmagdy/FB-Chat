@@ -15,28 +15,31 @@
             android:id="@+id/cover_photo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:elevation="1dp"
             android:layout_marginBottom="100dp"
             android:background="@android:color/darker_gray"
-            android:contentDescription="@string/avatar_photo" />
+            android:contentDescription="@string/avatar_photo"
+            android:elevation="1dp" />
 
         <LinearLayout
             android:id="@+id/user_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
-            android:elevation="10dp"
             android:layout_alignParentBottom="true"
+            android:visibility="invisible"
+            android:layout_marginTop="100dp"
+            android:elevation="2dp"
             android:orientation="vertical">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/avatar_image"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
+                android:layout_width="160dp"
+                android:layout_height="160dp"
                 android:layout_marginLeft="20dp"
                 android:contentDescription="@string/avatar_photo"
-                android:src="@drawable/ic_add_a_photo"
-                app:civ_border_width="1dp" />
+                android:elevation="5dp"
+                app:civ_border_color="@color/avatar_image_border"
+                app:civ_border_width="4dp"
+                tools:src="@mipmap/ic_launcher" />
 
             <TextView
                 android:id="@+id/user_name"
@@ -46,7 +49,7 @@
                 android:layout_marginTop="5dp"
                 android:fontFamily="sans-serif-black"
                 android:textColor="@color/black"
-                android:textSize="20sp"
+                android:textSize="22sp"
                 tools:text="Mohamed Magdy" />
 
             <TextView
@@ -67,6 +70,19 @@
                 android:textColor="@color/black"
                 tools:text="01287303441" />
         </LinearLayout>
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/shimmer_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="5dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="150dp"
+            android:layout_alignParentBottom="true">
+
+            <include layout="@layout/profile_shimmer" />
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
 
     </RelativeLayout>
 
