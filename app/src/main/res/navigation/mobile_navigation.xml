@@ -14,10 +14,29 @@
         android:id="@+id/profileFragment"
         android:name="com.example.socialmedia.ProfileFragment"
         android:label="@string/profile"
-        tools:layout="@layout/fragment_profile" />
+        tools:layout="@layout/fragment_profile">
+        <action
+            android:id="@+id/action_profileFragment_to_fullScreenPhotoFragment"
+            app:destination="@id/fullScreenPhotoFragment"
+            app:enterAnim="@anim/fragment_enter"
+            app:exitAnim="@anim/fragment_exit"
+            app:popEnterAnim="@anim/fragment_enter_pop"
+            app:popExitAnim="@anim/fragment_exit_pop" />
+    </fragment>
     <fragment
         android:id="@+id/usersFragment"
         android:name="com.example.socialmedia.UsersFragment"
         android:label="@string/users"
         tools:layout="@layout/fragment_users" />
+
+    <fragment
+        android:id="@+id/fullScreenPhotoFragment"
+        android:name="com.example.socialmedia.FullScreenPhotoFragment"
+        android:label=""
+        tools:layout="@layout/fragment_full_screen_photo">
+        <argument
+            android:name="image_url"
+            app:argType="string" />
+    </fragment>
+
 </navigation>
