@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.socialmedia.databinding.FragmentHomeBinding
 import com.example.socialmedia.databinding.FragmentProfileBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -54,19 +55,27 @@ class ProfileFragment : BaseFragment() {
                     val email = "" + ds.child("email").value
                     val phone = "" + ds.child("phone").value
                     val image = "" + ds.child("image").value
-
                     binding.apply {
                         userName.text = name
                         userEmail.text = email
                         userPhone.text = phone
-                        Glide.with(requireContext()).load(image).into(avatarImage)
+                        Glide.with(requireContext()).load(image)
+                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .into(avatarImage)
+                    }
+                    binding.apply {
+                        shimmerLayout.visibility = View.INVISIBLE
+                        userLayout.visibility = View.VISIBLE
                     }
                 }
             }
+
             override fun onCancelled(error: DatabaseError) {}
         })
         // TODO: Loading Cover photo using Glide
-        Glide.with(requireContext()).load(getString(R.string.cover_image)).into(binding.coverPhoto)
+        Glide.with(requireContext()).load(getString(R.string.cover_image))
+            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .into(binding.coverPhoto)
     }
 
     override fun backIndicator() {
