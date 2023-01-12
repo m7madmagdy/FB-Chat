@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="@color/avatar_image_select">
+
+    <item android:drawable="@drawable/ic_add_a_photo">
+        <shape android:shape="oval">
+            <solid android:color="@android:color/darker_gray"/>
+            <corners android:radius="80dp" />
+        </shape>
+    </item>
+
+</ripple>
