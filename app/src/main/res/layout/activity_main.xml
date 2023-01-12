@@ -32,7 +32,7 @@
         android:layout_above="@id/login_btn"
         android:layout_margin="20dp"
         android:backgroundTint="@color/blue_firebase_btn"
-        android:drawableLeft="@drawable/ic_account_register"
+        android:drawableLeft="@drawable/ic_profile_outline"
         android:padding="10dp"
         android:text="@string/register"
         android:textAllCaps="false"

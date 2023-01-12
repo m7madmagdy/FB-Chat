@@ -25,6 +25,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.database.FirebaseDatabase
 
 class LoginActivity : AppCompatActivity() {
     private var _binding: ActivityLoginBinding? = null
@@ -60,6 +61,7 @@ class LoginActivity : AppCompatActivity() {
             title = getString(R.string.login)
             setDisplayHomeAsUpEnabled(true)
             setDisplayShowHomeEnabled(true)
+            setHomeAsUpIndicator(R.drawable.navigate_up_back_left)
         }
     }
 
@@ -151,6 +153,19 @@ class LoginActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     progressDialog.hideDialog()
                     user = firebaseAuth.currentUser
+                    val userEmail = user!!.email.toString()
+                    val uid = user!!.uid
+                    val userInfo = hashMapOf<Any, String>()
+                    userInfo.apply {
+                        put("email", userEmail)
+                        put("uid", uid)
+                        put("name", "")
+                        put("phone", "")
+                        put("image", "")
+                    }
+                    val database = FirebaseDatabase.getInstance()
+                    val reference = database.getReference("Users")
+                    reference.child(uid).setValue(userInfo)
                     startActivity(Intent(this, ProfileActivity::class.java))
                     finish()
                 } else {

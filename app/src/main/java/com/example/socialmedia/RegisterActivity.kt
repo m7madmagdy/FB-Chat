@@ -17,6 +17,7 @@ import com.example.socialmedia.utils.ProgressDialog
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
 
 class RegisterActivity : AppCompatActivity() {
@@ -41,6 +42,7 @@ class RegisterActivity : AppCompatActivity() {
             title = getString(R.string.create_account)
             setDisplayHomeAsUpEnabled(true)
             setDisplayShowHomeEnabled(true)
+            setHomeAsUpIndicator(R.drawable.navigate_up_back_left)
         }
     }
 
@@ -97,6 +99,19 @@ class RegisterActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     ProgressDialog(this).hideDialog()
                     user = firebaseAuth.currentUser!!
+                    val userEmail = user!!.email.toString()
+                    val uid = user!!.uid
+                    val userInfo = hashMapOf<Any, String>()
+                    userInfo.apply {
+                        put("email", userEmail)
+                        put("uid", uid)
+                        put("name", "")
+                        put("phone", "")
+                        put("image", "")
+                    }
+                    val database = FirebaseDatabase.getInstance()
+                    val reference = database.getReference("Users")
+                    reference.child(uid).setValue(userInfo)
                     startActivity(Intent(this, ProfileActivity::class.java))
                     finish()
                 }
