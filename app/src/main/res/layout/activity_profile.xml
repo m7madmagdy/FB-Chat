@@ -6,24 +6,25 @@
     android:layout_height="match_parent"
     tools:context=".ProfileActivity">
 
-    <TextView
-        android:id="@+id/user"
-        android:layout_width="wrap_content"
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/fragmentContainerView"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:fontFamily="sans-serif-black"
-        android:textColor="@color/color_primary"
-        android:textSize="30sp"
-        tools:text="@string/profile" />
+        android:layout_above="@id/sign_out"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        app:defaultNavHost="true"
+        app:navGraph="@navigation/mobile_navigation" />
 
     <TextView
         android:id="@+id/sign_out"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="50dp"
+        android:layout_above="@id/bottom_navigation"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
+        android:layout_marginBottom="50dp"
         android:background="@drawable/sign_out_ripple"
         android:gravity="center"
         android:padding="8dp"
@@ -34,4 +35,14 @@
         android:textStyle="bold"
         app:drawableLeftCompat="@drawable/ic_logout"
         app:drawableTint="@color/logout_icon" />
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="?android:attr/windowBackground"
+        app:menu="@menu/bottom_nav_menu" />
+
 </RelativeLayout>

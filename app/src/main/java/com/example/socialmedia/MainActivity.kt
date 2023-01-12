@@ -66,16 +66,19 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    /* TODO: Part 2 We will do the followings.
+    /* TODO: Part 5 We will do the followings.
 
-        01 - Add Google SignIn feature
-            Requirements:
-              . Enable Google sign-in from Firebase Authentication
-              . Add Project support email
-              . Add SHA1-Certificate TODO: To generate SHA1 type gradle-signinReport in terminal project path and hit Ctrl+Enter
-              . Add Google SignIn Library
-    */
+        01 - Save registered users info (name, email, uid, phone, image)
+            in firebase realtime database.
+            TODO: Requirements:
+            1 - Add Firebase Realtime database
+            2 - Change firebase realtime database rules
 
+        02 - Add Bottom Navigation in Profile Activity having three menus
+            1 - Home
+            2 - Profile (User info)
+            3 - All Users
+     */
     override fun onDestroy() {
         super.onDestroy()
         _binding = null

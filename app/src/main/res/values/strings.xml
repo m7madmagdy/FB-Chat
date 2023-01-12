@@ -6,7 +6,6 @@
     <string name="password">Password</string>
     <string name="loading">Loading…</string>
     <string name="registering_user">Registering User…</string>
-    <string name="profile">Profile</string>
     <string name="welcome_to_social_media_app">Welcome to</string>
     <string name="already_have_account_login">Already have account? Login</string>
     <string name="not_have_account_register">Not have account? Register</string>
@@ -27,6 +26,8 @@
     <string name="sending_email">Sending Email..</string>
     <string name="type_your_email_first">Type your email first</string>
     <string name="create_account">Create Account</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="home">Home</string>
+    <string name="profile">Profile</string>
+    <string name="users">Users</string>
+    <string name="all_users">All Users</string>
 </resources>
