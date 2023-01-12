@@ -63,10 +63,10 @@ class ProfileFragment : BaseFragment() {
                             .diskCacheStrategy(DiskCacheStrategy.ALL)
                             .into(avatarImage)
                     }
-                    binding.apply {
-                        shimmerLayout.visibility = View.INVISIBLE
-                        userLayout.visibility = View.VISIBLE
-                    }
+                }
+                binding.apply {
+                    shimmerLayout.visibility = View.INVISIBLE
+                    userLayout.visibility = View.VISIBLE
                 }
             }
 
