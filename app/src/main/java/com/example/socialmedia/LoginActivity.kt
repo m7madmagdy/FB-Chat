@@ -141,6 +141,7 @@ class LoginActivity : AppCompatActivity() {
                             put("name", "")
                             put("phone", "")
                             put("image", "")
+                            put("cover","")
                         }
                         val database = FirebaseDatabase.getInstance()
                         val reference = database.getReference("Users")

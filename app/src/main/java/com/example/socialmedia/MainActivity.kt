@@ -67,12 +67,19 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    /* TODO: Part 06 We will do the followings.
+    /* TODO: Part 07 We will do the followings.
 
-        1 - Design User Profile
-        2 - Get user info from firebase
-        3 - Show user info
-        4 - For setting image we will user Glide library
+        * Edit Profile
+            1- Name, Phone, Picture, Cover Photo
+
+        * Requirements
+            1- Camera & Storage Permission (to pick image from camera or gallery)
+            2- Firebase storage libraries (to upload & receive profile / cover photo)
+
+        * UI Update
+            1- Add ImageView (for cover photo)
+            2- Add Floating action button to show dialog option for edit profile
+            3- Add Default Image for Profile Avatar
     */
     override fun onDestroy() {
         super.onDestroy()
