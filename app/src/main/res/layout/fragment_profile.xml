@@ -23,9 +23,9 @@
             android:elevation="1dp" />
 
         <androidx.cardview.widget.CardView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            app:cardBackgroundColor="#CFCFCF"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            app:cardBackgroundColor="@color/add_image_bg"
             android:layout_alignBottom="@id/cover_photo"
             android:layout_alignParentRight="true"
             android:layout_margin="10dp"
@@ -36,7 +36,7 @@
                 android:id="@+id/add_cover_photo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@android:color/transparent"
+                android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="@string/add_photo"
                 android:src="@drawable/ic_add_a_photo"
                 app:tint="@color/black" />
@@ -68,20 +68,20 @@
                     tools:src="@mipmap/ic_launcher" />
 
                 <androidx.cardview.widget.CardView
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
                     android:layout_marginBottom="3dp"
                     android:layout_marginRight="3dp"
                     android:layout_alignRight="@id/avatar_image"
                     android:layout_alignBottom="@id/avatar_image"
-                    app:cardBackgroundColor="#CFCFCF"
+                    app:cardBackgroundColor="@color/add_image_bg"
                     app:cardCornerRadius="50dp">
 
                     <ImageButton
                         android:id="@+id/add_user_image"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@android:color/transparent"
+                        android:background="?attr/selectableItemBackgroundBorderless"
                         android:contentDescription="@string/add_photo"
                         android:src="@drawable/ic_add_a_photo"
                         app:tint="@color/black" />
@@ -122,7 +122,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="150dp"
+            android:layout_marginTop="130dp"
             android:elevation="2dp">
 
             <include layout="@layout/profile_shimmer" />
