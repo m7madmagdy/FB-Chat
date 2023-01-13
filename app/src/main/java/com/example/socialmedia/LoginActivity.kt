@@ -70,29 +70,6 @@ class LoginActivity : AppCompatActivity() {
             val bottomSheetFragment = RecoverPasswordFragment()
             bottomSheetFragment.show(supportFragmentManager, bottomSheetFragment.tag)
         }
-
-//        val binding = BottomSheetDialogBinding.inflate(layoutInflater)
-//        bottomSheetDialog = BottomSheetDialog(this).apply {
-//            setContentView(binding.root)
-//            setCancelable(true)
-//            show()
-//        }
-//        binding.recoverBtn.setOnClickListener {
-//            val email = binding.emailEdt.text.toString().trim()
-//            if (email.isEmpty()) {
-//                binding.emailLayout.error = getString(R.string.type_your_email_first)
-//            } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-//                binding.emailLayout.error = getString(R.string.invalid_email)
-//            } else {
-//                beginRecovery(email)
-//            }
-//        }
-//        binding.cancelBtn.setOnClickListener {
-//            bottomSheetDialog!!.dismiss()
-//        }
-//        binding.closeSheetBtn.setOnClickListener {
-//            bottomSheetDialog!!.dismiss()
-//        }
     }
 
     private fun initUserRegister() {
@@ -174,27 +151,6 @@ class LoginActivity : AppCompatActivity() {
                 } else {
                     progressDialog.hideDialog()
                     Toast.makeText(this, getString(R.string.failed), Toast.LENGTH_SHORT).show()
-                }
-            }
-
-            .addOnFailureListener {
-                progressDialog.hideDialog()
-                Toast.makeText(this, getString(R.string.failed), Toast.LENGTH_SHORT).show()
-            }
-    }
-
-    private fun beginRecovery(email: String) {
-        val progressDialog = ProgressDialog(this)
-        progressDialog.show(getString(R.string.sending_email))
-
-        firebaseAuth.sendPasswordResetEmail(email)
-
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    progressDialog.hideDialog()
-                    bottomSheetDialog!!.dismiss()
-                    Toast.makeText(this, getString(R.string.check_your_mail), Toast.LENGTH_SHORT)
-                        .show()
                 }
             }
 

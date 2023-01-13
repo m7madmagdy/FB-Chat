@@ -12,7 +12,7 @@ open class BaseFragment : Fragment() {
     //    lateinit var firebaseAuth: FirebaseAuth
 //    lateinit var firebaseUser: FirebaseUser
     private lateinit var bottomNavView: BottomNavigationView
-    private lateinit var appCompactActivity: AppCompatActivity
+    lateinit var appCompactActivity: AppCompatActivity
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
