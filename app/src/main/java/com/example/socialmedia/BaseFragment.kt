@@ -8,7 +8,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-abstract class BaseFragment : Fragment() {
+open class BaseFragment : Fragment() {
     //    lateinit var firebaseAuth: FirebaseAuth
 //    lateinit var firebaseUser: FirebaseUser
     private lateinit var bottomNavView: BottomNavigationView

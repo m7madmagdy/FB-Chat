@@ -5,10 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -58,6 +56,10 @@ class ProfileFragment : BaseFragment() {
                     )
                 findNavController().navigate(action)
             }
+
+            addUserImage.setOnClickListener {
+                Toast.makeText(requireContext(), getString(R.string.adding_photo), Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -102,7 +104,6 @@ class ProfileFragment : BaseFragment() {
                 }
                 binding.apply {
                     shimmerLayout.visibility = View.INVISIBLE
-                    userLayout.visibility = View.VISIBLE
                 }
             }
 

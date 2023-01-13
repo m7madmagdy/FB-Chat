@@ -3,9 +3,6 @@ package com.example.socialmedia
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
-import androidx.activity.addCallback
-import androidx.appcompat.app.AlertDialog
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
@@ -46,11 +43,7 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun checkUserStatus() {
         val user: FirebaseUser? = firebaseAuth.currentUser
-
-        if (user != null) {
-            Toast.makeText(this, user.email, Toast.LENGTH_SHORT).show()
-//            binding.user.text = user.email
-        } else {
+        if (user == null) {
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
