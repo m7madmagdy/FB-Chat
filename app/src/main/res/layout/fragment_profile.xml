@@ -22,6 +22,27 @@
             android:contentDescription="@string/avatar_photo"
             android:elevation="1dp" />
 
+        <androidx.cardview.widget.CardView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            app:cardBackgroundColor="#CFCFCF"
+            android:layout_alignBottom="@id/cover_photo"
+            android:layout_alignParentRight="true"
+            android:layout_margin="10dp"
+            app:cardCornerRadius="50dp"
+            app:cardElevation="10dp">
+
+            <ImageButton
+                android:id="@+id/add_cover_photo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:contentDescription="@string/add_photo"
+                android:src="@drawable/ic_add_a_photo"
+                app:tint="@color/black" />
+
+        </androidx.cardview.widget.CardView>
+
         <LinearLayout
             android:id="@+id/user_layout"
             android:layout_width="match_parent"
@@ -37,29 +58,36 @@
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/avatar_image"
-                    android:layout_width="160dp"
-                    android:layout_height="160dp"
+                    android:layout_width="180dp"
+                    android:layout_height="180dp"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:contentDescription="@string/avatar_photo"
-                    android:elevation="5dp"
                     app:civ_border_color="@color/avatar_image_border"
-                    app:civ_border_width="4dp"
+                    app:civ_border_width="5dp"
                     tools:src="@mipmap/ic_launcher" />
 
-                <ImageView
-                    android:id="@+id/add_user_image"
-                    android:layout_width="55dp"
-                    android:layout_height="55dp"
-                    android:padding="14dp"
+                <androidx.cardview.widget.CardView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginBottom="3dp"
+                    android:layout_marginRight="3dp"
                     android:layout_alignRight="@id/avatar_image"
                     android:layout_alignBottom="@id/avatar_image"
-                    android:layout_gravity="center"
-                    android:background="@android:color/transparent"
-                    android:contentDescription="@string/add_photo"
-                    android:elevation="10dp"
-                    android:src="@drawable/ic_add_a_photo"
-                    app:tint="#595959" />
+                    app:cardBackgroundColor="#CFCFCF"
+                    app:cardCornerRadius="50dp">
+
+                    <ImageButton
+                        android:id="@+id/add_user_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
+                        android:contentDescription="@string/add_photo"
+                        android:src="@drawable/ic_add_a_photo"
+                        app:tint="@color/black" />
+
+                </androidx.cardview.widget.CardView>
+
             </RelativeLayout>
 
             <TextView

@@ -60,6 +60,10 @@ class ProfileFragment : BaseFragment() {
             addUserImage.setOnClickListener {
                 Toast.makeText(requireContext(), getString(R.string.adding_photo), Toast.LENGTH_SHORT).show()
             }
+
+            addCoverPhoto.setOnClickListener {
+                Toast.makeText(requireContext(), getString(R.string.adding_photo), Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
@@ -98,7 +102,7 @@ class ProfileFragment : BaseFragment() {
                         userEmail.text = email
                         userPhone.text = phone
                         Glide.with(requireContext()).load(userImage)
-                            .diskCacheStrategy(DiskCacheStrategy.ALL)
+                            .diskCacheStrategy(DiskCacheStrategy.DATA)
                             .into(avatarImage)
                     }
                 }
@@ -111,7 +115,7 @@ class ProfileFragment : BaseFragment() {
         })
         // TODO: Loading Cover photo using Glide
         Glide.with(requireContext()).load(getString(R.string.cover_image))
-            .diskCacheStrategy(DiskCacheStrategy.ALL)
+            .diskCacheStrategy(DiskCacheStrategy.DATA)
             .into(binding.coverPhoto)
     }
 

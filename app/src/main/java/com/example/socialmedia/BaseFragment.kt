@@ -1,11 +1,14 @@
 package com.example.socialmedia
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 open class BaseFragment : Fragment() {
@@ -21,6 +24,11 @@ open class BaseFragment : Fragment() {
 //        firebaseAuth = FirebaseAuth.getInstance()
 //        firebaseUser = firebaseAuth.currentUser!!
         backBtnIndicator()
+        clearGlideMemory()
+    }
+
+    private fun clearGlideMemory(){
+        Glide.get(requireContext()).clearMemory()
     }
 
     private fun backBtnIndicator(){
