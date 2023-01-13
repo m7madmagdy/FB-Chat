@@ -94,7 +94,7 @@ class RecoverPasswordFragment : BottomSheetDialogFragment() {
             }
     }
 
-    fun showKeyboard() {
+    private fun showKeyboard() {
         val imm =
             requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.showSoftInput(binding.emailEdt, 0)
