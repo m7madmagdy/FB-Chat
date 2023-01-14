@@ -1,7 +1,6 @@
 package com.example.socialmedia
 
 import android.Manifest
-import android.app.Activity.RESULT_OK
 import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -12,7 +11,6 @@ import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -21,10 +19,10 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.socialmedia.databinding.BottomSheetChooserBinding
 import com.example.socialmedia.databinding.FragmentProfileBinding
+import com.example.socialmedia.utils.Constants
 import com.example.socialmedia.utils.Constants.CAMERA_REQUEST_CODE
 import com.example.socialmedia.utils.Constants.IMAGE_PICK_CAMERA_CODE
 import com.example.socialmedia.utils.Constants.IMAGE_PICK_GALLERY_CODE
-import com.example.socialmedia.utils.Constants.STORAGE_REQUEST_CODE
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -107,9 +105,9 @@ class ProfileFragment : BaseFragment() {
         }
 
         binding.gallery.setOnClickListener {
-            if (!checkStoragePermission()) {
-                    requestStoragePermission()
-            } else {
+            if (!checkStoragePermission()){
+                requestStoragePermission()
+            }else{
                 pickFromGallery()
             }
             bottomSheetDialog.dismiss()
@@ -178,17 +176,7 @@ class ProfileFragment : BaseFragment() {
     }
 
     private fun arrayPermissions() {
-        cameraPermissions = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            arrayOf(
-                Manifest.permission.CAMERA,
-                Manifest.permission.ACCESS_MEDIA_LOCATION
-            )
-        } else {
-            arrayOf(
-                Manifest.permission.CAMERA,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-            )
-        }
+        cameraPermissions = arrayOf(Manifest.permission.CAMERA)
 
         storagePermissions = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             arrayOf(Manifest.permission.ACCESS_MEDIA_LOCATION)
@@ -197,38 +185,18 @@ class ProfileFragment : BaseFragment() {
         }
     }
 
+    private fun checkCameraPermission(): Boolean {
+        return ContextCompat.checkSelfPermission(
+            requireActivity(),
+            Manifest.permission.CAMERA
+        ) == (PackageManager.PERMISSION_GRANTED)
+    }
+
     private fun checkStoragePermission(): Boolean {
         return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             ContextCompat.checkSelfPermission(
                 requireActivity(),
                 Manifest.permission.ACCESS_MEDIA_LOCATION
-            ) == (PackageManager.PERMISSION_DENIED)
-        } else {
-            ContextCompat.checkSelfPermission(
-                requireActivity(),
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-            ) == (PackageManager.PERMISSION_GRANTED)
-        }
-    }
-
-    private fun requestStoragePermission() {
-        ActivityCompat.requestPermissions(
-            requireActivity(),
-            storagePermissions,
-            STORAGE_REQUEST_CODE
-        )
-    }
-
-    private fun checkCameraPermission(): Boolean {
-        val cameraResult: Boolean = ContextCompat.checkSelfPermission(
-            requireActivity(),
-            Manifest.permission.CAMERA
-        ) == (PackageManager.PERMISSION_GRANTED)
-
-        val storageResult: Boolean = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            ContextCompat.checkSelfPermission(
-                requireActivity(),
-                Manifest.permission.ACCESS_MEDIA_LOCATION
             ) == (PackageManager.PERMISSION_GRANTED)
         } else {
             ContextCompat.checkSelfPermission(
@@ -236,8 +204,6 @@ class ProfileFragment : BaseFragment() {
                 Manifest.permission.WRITE_EXTERNAL_STORAGE
             ) == (PackageManager.PERMISSION_GRANTED)
         }
-
-        return cameraResult && storageResult
     }
 
     private fun requestCameraPermission() {
@@ -248,12 +214,21 @@ class ProfileFragment : BaseFragment() {
         )
     }
 
+    private fun requestStoragePermission() {
+        ActivityCompat.requestPermissions(
+            requireActivity(),
+            storagePermissions,
+            Constants.STORAGE_REQUEST_CODE
+        )
+    }
+
     private fun pickFromGallery() {
-        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
-            addCategory(Intent.CATEGORY_OPENABLE)
-            type = "image/*"
+        val galleryIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            Intent(MediaStore.ACTION_PICK_IMAGES)
+        } else {
+            Intent(Intent.ACTION_PICK)
         }
-        startActivityForResult(intent, IMAGE_PICK_GALLERY_CODE)
+        startActivityForResult(galleryIntent, IMAGE_PICK_GALLERY_CODE)
     }
 
     private fun pickFromCamera() {
@@ -278,46 +253,41 @@ class ProfileFragment : BaseFragment() {
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
-        when (requestCode) {
-            CAMERA_REQUEST_CODE -> {
-                if ((grantResults.isNotEmpty())) {
-                    val cameraAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED
-                    val writeStorageAccepted = grantResults[1] == PackageManager.PERMISSION_GRANTED
-
-                    if (cameraAccepted && writeStorageAccepted) {
-                        pickFromCamera()
-                    } else {
-                        Toast.makeText(
-                            requireContext(),
-                            getString(R.string.please_enable_permissions),
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                }
-            }
-            STORAGE_REQUEST_CODE -> {
-                if ((grantResults.isNotEmpty())) {
-                    val writeStorageAccepted = grantResults[1] == PackageManager.PERMISSION_GRANTED
-                    if (writeStorageAccepted) {
-                        pickFromGallery()
-                    } else {
-                        Toast.makeText(
-                            requireContext(),
-                            getString(R.string.please_enable_permissions),
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                }
-            }
-        }
+//        when (requestCode) {
+//            CAMERA_REQUEST_CODE -> {
+//                if ((grantResults.isNotEmpty())) {
+//                    val cameraAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED
+//
+//                    if (cameraAccepted) {
+//                        pickFromCamera()
+//                    } else {
+//                        Toast.makeText(
+//                            requireContext(),
+//                            getString(R.string.please_enable_permissions),
+//                            Toast.LENGTH_SHORT
+//                        ).show()
+//                    }
+//                }
+//            }
+//            STORAGE_REQUEST_CODE -> {
+//                if ((grantResults.isNotEmpty())) {
+//                    val writeStorageAccepted = grantResults[1] == PackageManager.PERMISSION_GRANTED
+//                    if (writeStorageAccepted) {
+//                        pickFromGallery()
+//                    } else {
+//                        Toast.makeText(
+//                            requireContext(),
+//                            getString(R.string.please_enable_permissions),
+//                            Toast.LENGTH_SHORT
+//                        ).show()
+//                    }
+//                }
+//            }
+//        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == IMAGE_PICK_GALLERY_CODE && resultCode == RESULT_OK) {
-            val selectedPhotoUri = data?.data
-        }
     }
 
 
