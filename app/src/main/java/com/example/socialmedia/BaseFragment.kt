@@ -1,19 +1,20 @@
 package com.example.socialmedia
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 open class BaseFragment : Fragment() {
-    //    lateinit var firebaseAuth: FirebaseAuth
-//    lateinit var firebaseUser: FirebaseUser
     private lateinit var bottomNavView: BottomNavigationView
     lateinit var appCompactActivity: AppCompatActivity
 
@@ -21,17 +22,15 @@ open class BaseFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         appCompactActivity = activity as AppCompatActivity
         bottomNavView = activity?.findViewById(R.id.bottom_navigation) as BottomNavigationView
-//        firebaseAuth = FirebaseAuth.getInstance()
-//        firebaseUser = firebaseAuth.currentUser!!
         backBtnIndicator()
         clearGlideMemory()
     }
 
-    private fun clearGlideMemory(){
+    private fun clearGlideMemory() {
         Glide.get(requireContext()).clearMemory()
     }
 
-    private fun backBtnIndicator(){
+    private fun backBtnIndicator() {
         appCompactActivity.supportActionBar?.apply {
             setHomeAsUpIndicator(R.drawable.navigate_up_back_left)
         }
