@@ -1,6 +1,7 @@
 package com.example.socialmedia
 
 import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK
 import android.content.ContentValues
 import android.content.Intent
@@ -9,13 +10,12 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
-import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
-import android.widget.LinearLayout
+import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
@@ -32,6 +32,8 @@ import com.example.socialmedia.utils.Constants.STORAGE_PATH
 import com.example.socialmedia.utils.ProgressDialog
 import com.google.android.gms.tasks.Task
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.android.material.textfield.TextInputEditText
+import com.google.android.material.textfield.TextInputLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
@@ -158,18 +160,26 @@ class ProfileFragment : BaseFragment() {
 
         binding.apply {
             profilePicture.setOnClickListener {
+                bottomSheet.dismiss()
                 bottomSheetCameraOrGallery()
                 profileOrCoverPhoto = "avatar"
             }
             coverPhoto.setOnClickListener {
+                bottomSheet.dismiss()
                 bottomSheetCameraOrGallery()
                 profileOrCoverPhoto = "cover"
             }
         }
 
         binding.apply {
-            userName.setOnClickListener { showNamePhoneUpdateDialog("name") }
-            userPhone.setOnClickListener { showNamePhoneUpdateDialog("phone") }
+            userName.setOnClickListener {
+                bottomSheet.dismiss()
+                showNamePhoneUpdateDialog("name")
+            }
+            userPhone.setOnClickListener {
+                bottomSheet.dismiss()
+                showNamePhoneUpdateDialog("phone")
+            }
         }
 
         binding.closeSheetBtn.setOnClickListener { bottomSheet.dismiss() }
@@ -232,41 +242,46 @@ class ProfileFragment : BaseFragment() {
         startActivityForResult(cameraIntent, IMAGE_PICK_CAMERA_CODE)
     }
 
+    @SuppressLint("SetTextI18n")
     private fun showNamePhoneUpdateDialog(key: String) {
+        val inflater = layoutInflater
+        val dialogView = inflater.inflate(R.layout.dialog_edit_user_details, null);
         val builder = AlertDialog.Builder(requireContext())
-        builder.setTitle("Update $key")
-        val linearLayout = LinearLayout(requireContext())
-        linearLayout.orientation = LinearLayout.VERTICAL
-        linearLayout.setPadding(20, 20, 20, 20)
+        builder.setView(dialogView)
+        val editLayout = dialogView.findViewById(R.id.user_layout) as TextInputLayout
+        val nameOrPhone = dialogView.findViewById(R.id.name_or_phone) as TextInputEditText
+        val headerName = dialogView.findViewById(R.id.edit_name) as TextView
+        val updateBtn = dialogView.findViewById(R.id.update_btn) as Button
+        val cancelBtn = dialogView.findViewById(R.id.cancel_btn) as Button
 
-        val editText = EditText(requireContext())
-        editText.hint = "Edit $key"
-        linearLayout.addView(editText)
-        builder.setView(linearLayout)
+        headerName.text = "Update $key"
+        nameOrPhone.hint = "Edit $key"
+        val dialog = builder.create()
+        dialog.show()
 
-        builder.setPositiveButton("UPDATE") { _, _ ->
-            val value = editText.text.toString().trim()
+        cancelBtn.setOnClickListener { dialog.dismiss() }
+        updateBtn.setOnClickListener {
+            val value = nameOrPhone.text.toString().trim()
 
-            if (!TextUtils.isEmpty(value)) {
+            if (value.isNotEmpty()) {
                 val result = hashMapOf<String, Any>()
-                result.put(key, value)
+                result[key] = value
 
                 databaseReference.child(firebaseUser.uid).updateChildren(result)
 
                     .addOnSuccessListener {
+                        dialog.dismiss()
                         Toast.makeText(requireContext(), "Updated", Toast.LENGTH_SHORT).show()
                     }
 
                     .addOnFailureListener {
+                        dialog.dismiss()
                         Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                     }
             } else {
-                Toast.makeText(requireContext(), "Please Enter $key", Toast.LENGTH_SHORT).show()
-
+                editLayout.error = "Please enter value"
             }
         }
-        builder.setNegativeButton("CANCEL") { dialog, _ -> dialog.dismiss() }
-        builder.create().show()
     }
 
     private fun alertUserSignOut() {
