@@ -17,5 +17,6 @@
     <color name="avatar_image_border">#F4F4F4</color>
     <color name="add_image_bg">#CFCFCF</color>
     <color name="chooser_sheet_color">#4E4E4E</color>
+    <color name="full_screen_bg">#2B2B2B</color>
 
 </resources>

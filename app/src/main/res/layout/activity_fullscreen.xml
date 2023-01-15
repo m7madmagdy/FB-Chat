@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/full_screen_bg">
+
+    <com.github.chrisbanes.photoview.PhotoView
+        android:id="@+id/fullscreen_image"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:keepScreenOn="true"
+        tools:src="@mipmap/ic_launcher" />
+
+    <LinearLayout
+        android:id="@+id/fullscreenContentControls"
+        android:layout_width="match_parent"
+        android:layout_gravity="bottom"
+        android:gravity="bottom"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/save_image_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="20dp"
+            android:background="@drawable/btn_selector"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="@string/save"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:drawableLeftCompat="@drawable/ic_download"
+            app:drawableTint="@color/black" />
+
+        <TextView
+            android:id="@+id/back_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="40dp"
+            android:background="@drawable/btn_selector"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="center"
+            android:padding="8dp"
+            android:text="@string/back"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:drawableLeftCompat="@drawable/ic_return"
+            app:drawableTint="@color/black" />
+
+    </LinearLayout>
+</FrameLayout>
