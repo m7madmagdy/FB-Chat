@@ -1,33 +1,26 @@
 package com.example.socialmedia
 
-import android.Manifest
-import android.content.ContentValues
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.net.Uri
-import android.os.Build
 import android.os.Bundle
-import android.provider.MediaStore
+import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.example.socialmedia.databinding.BottomSheetChooserBinding
+import com.example.socialmedia.databinding.BottomSheetEditProfileBinding
 import com.example.socialmedia.databinding.FragmentProfileBinding
-import com.example.socialmedia.utils.Constants
-import com.example.socialmedia.utils.Constants.CAMERA_REQUEST_CODE
-import com.example.socialmedia.utils.Constants.IMAGE_PICK_CAMERA_CODE
-import com.example.socialmedia.utils.Constants.IMAGE_PICK_GALLERY_CODE
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
-
+import com.google.firebase.storage.FirebaseStorage.getInstance
+import com.google.firebase.storage.StorageReference
 
 class ProfileFragment : BaseFragment() {
     private var _binding: FragmentProfileBinding? = null
@@ -36,11 +29,9 @@ class ProfileFragment : BaseFragment() {
     private lateinit var firebaseUser: FirebaseUser
     private lateinit var firebaseDatabase: FirebaseDatabase
     private lateinit var databaseReference: DatabaseReference
-    private lateinit var cameraPermissions: Array<String>
-    private lateinit var storagePermissions: Array<String>
     private lateinit var userImage: Any
     private lateinit var coverImage: Any
-    private lateinit var imageUri: Uri
+    private lateinit var storageReference: StorageReference
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,7 +40,6 @@ class ProfileFragment : BaseFragment() {
         _binding = FragmentProfileBinding.inflate(layoutInflater)
         initFirebase()
         initUserClicks()
-        arrayPermissions()
         return binding.root
     }
 
@@ -59,63 +49,113 @@ class ProfileFragment : BaseFragment() {
                 alertUserSignOut()
             }
 
-            avatarImage.setOnClickListener {
-                val action =
-                    ProfileFragmentDirections.actionProfileFragmentToFullScreenPhotoFragment(
-                        userImage.toString()
-                    )
-                findNavController().navigate(action)
+            editProfile.setOnClickListener {
+                bottomSheetEditProfile()
             }
-
-            coverPhoto.setOnClickListener {
-                val imageUrl = getString(R.string.cover_image_url)
-                val action =
-                    ProfileFragmentDirections.actionProfileFragmentToFullScreenPhotoFragment(
-                        imageUrl
-                    )
-                findNavController().navigate(action)
-            }
-
-            addUserImage.setOnClickListener {
-                dialogChooser()
-            }
-
-            addCoverPhoto.setOnClickListener {
-                dialogChooser()
-            }
+            addUserImage.setOnClickListener { bottomSheetEditProfile() }
+            addCoverPhoto.setOnClickListener { bottomSheetEditProfile() }
         }
     }
 
-    private fun dialogChooser() {
-        val binding = BottomSheetChooserBinding.inflate(layoutInflater)
+    private fun initFirebase() {
+        firebaseAuth = FirebaseAuth.getInstance()
+        firebaseUser = firebaseAuth.currentUser!!
+        firebaseDatabase = FirebaseDatabase.getInstance()
+        databaseReference = firebaseDatabase.getReference("Users")
+        storageReference = getInstance().reference
 
-        val bottomSheetDialog = BottomSheetDialog(requireContext()).apply {
+        val query = databaseReference.orderByChild("email").equalTo(firebaseUser.email)
+        query.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (ds in snapshot.children) {
+                    val name = "" + ds.child("name").value
+                    val email = "" + ds.child("email").value
+                    val phone = "" + ds.child("phone").value
+                    userImage = "" + ds.child("image").value
+                    coverImage = "" + ds.child("cover").value
+
+                    binding.apply {
+                        userName.text = name
+                        userEmail.text = email
+                        userPhone.text = phone
+
+                        Glide.with(requireContext())
+                            .load(userImage)
+                            .diskCacheStrategy(DiskCacheStrategy.DATA)
+                            .into(avatarImage)
+
+                        Glide.with(requireActivity())
+                            .load(getString(R.string.cover_image_url))
+                            .diskCacheStrategy(DiskCacheStrategy.DATA)
+                            .into(coverPhoto)
+
+                        shimmerLayout.visibility = View.INVISIBLE
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {}
+        })
+    }
+
+    private fun bottomSheetEditProfile() {
+        val binding = BottomSheetEditProfileBinding.inflate(layoutInflater)
+
+        val bottomSheet = BottomSheetDialog(requireContext()).apply {
             setContentView(binding.root)
             setCancelable(true)
             show()
         }
 
-        binding.camera.setOnClickListener {
-            if (!checkCameraPermission()) {
-                requestCameraPermission()
-            } else {
-                pickFromCamera()
+        binding.apply {
+            userName.setOnClickListener {
+                showNamePhoneUpdateDialog("name")
             }
-            bottomSheetDialog.dismiss()
-        }
-
-        binding.gallery.setOnClickListener {
-            if (!checkStoragePermission()){
-                requestStoragePermission()
-            }else{
-                pickFromGallery()
+            userPhone.setOnClickListener {
+                showNamePhoneUpdateDialog("phone")
             }
-            bottomSheetDialog.dismiss()
         }
 
         binding.closeSheetBtn.setOnClickListener {
-            bottomSheetDialog.dismiss()
+            bottomSheet.dismiss()
         }
+    }
+
+    private fun showNamePhoneUpdateDialog(key: String) {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Update $key")
+        val linearLayout = LinearLayout(requireContext())
+        linearLayout.orientation = LinearLayout.VERTICAL
+        linearLayout.setPadding(20, 20, 20, 20)
+
+        val editText = EditText(requireContext())
+        editText.hint = "Edit $key"
+        linearLayout.addView(editText)
+        builder.setView(linearLayout)
+
+        builder.setPositiveButton("UPDATE") { _, _ ->
+            val value = editText.text.toString().trim()
+
+            if (!TextUtils.isEmpty(value)) {
+                val result = hashMapOf<String, Any>()
+                result.put(key, value)
+
+                databaseReference.child(firebaseUser.uid).updateChildren(result)
+
+                    .addOnSuccessListener {
+                        Toast.makeText(requireContext(), "Updated", Toast.LENGTH_SHORT).show()
+                    }
+
+                    .addOnFailureListener {
+                        Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                    }
+            } else {
+                Toast.makeText(requireContext(), "Please Enter $key", Toast.LENGTH_SHORT).show()
+
+            }
+        }
+        builder.setNegativeButton("CANCEL") { dialog, _ -> dialog.dismiss() }
+        builder.create().show()
     }
 
     private fun alertUserSignOut() {
@@ -133,163 +173,6 @@ class ProfileFragment : BaseFragment() {
 
         builder.create().show()
     }
-
-    private fun initFirebase() {
-        firebaseAuth = FirebaseAuth.getInstance()
-        firebaseUser = firebaseAuth.currentUser!!
-        firebaseDatabase = FirebaseDatabase.getInstance()
-        databaseReference = firebaseDatabase.getReference("Users")
-
-        val query = databaseReference.orderByChild("email").equalTo(firebaseUser.email)
-        query.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                for (ds in snapshot.children) {
-                    val name = "" + ds.child("name").value
-                    val email = "" + ds.child("email").value
-                    val phone = "" + ds.child("phone").value
-                    userImage = "" + ds.child("image").value
-                    coverImage = "" + ds.child("cover").value
-
-                    binding.apply {
-                        userName.text = name
-                        userEmail.text = email
-                        userPhone.text = phone
-
-                        Glide.with(requireActivity())
-                            .load(coverImage)
-                            .diskCacheStrategy(DiskCacheStrategy.DATA)
-                            .into(coverPhoto)
-
-                        Glide.with(requireContext())
-                            .load(userImage)
-                            .diskCacheStrategy(DiskCacheStrategy.DATA)
-                            .into(avatarImage)
-                    }
-                }
-                binding.apply {
-                    shimmerLayout.visibility = View.INVISIBLE
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {}
-        })
-    }
-
-    private fun arrayPermissions() {
-        cameraPermissions = arrayOf(Manifest.permission.CAMERA)
-
-        storagePermissions = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            arrayOf(Manifest.permission.ACCESS_MEDIA_LOCATION)
-        } else {
-            arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-        }
-    }
-
-    private fun checkCameraPermission(): Boolean {
-        return ContextCompat.checkSelfPermission(
-            requireActivity(),
-            Manifest.permission.CAMERA
-        ) == (PackageManager.PERMISSION_GRANTED)
-    }
-
-    private fun checkStoragePermission(): Boolean {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            ContextCompat.checkSelfPermission(
-                requireActivity(),
-                Manifest.permission.ACCESS_MEDIA_LOCATION
-            ) == (PackageManager.PERMISSION_GRANTED)
-        } else {
-            ContextCompat.checkSelfPermission(
-                requireActivity(),
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-            ) == (PackageManager.PERMISSION_GRANTED)
-        }
-    }
-
-    private fun requestCameraPermission() {
-        ActivityCompat.requestPermissions(
-            requireActivity(),
-            cameraPermissions,
-            CAMERA_REQUEST_CODE
-        )
-    }
-
-    private fun requestStoragePermission() {
-        ActivityCompat.requestPermissions(
-            requireActivity(),
-            storagePermissions,
-            Constants.STORAGE_REQUEST_CODE
-        )
-    }
-
-    private fun pickFromGallery() {
-        val galleryIntent = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            Intent(MediaStore.ACTION_PICK_IMAGES)
-        } else {
-            Intent(Intent.ACTION_PICK)
-        }
-        startActivityForResult(galleryIntent, IMAGE_PICK_GALLERY_CODE)
-    }
-
-    private fun pickFromCamera() {
-        val values = ContentValues()
-        values.apply {
-            put(MediaStore.Images.Media.TITLE, "Temp Pic")
-            put(MediaStore.Images.Media.DESCRIPTION, "Temp Description")
-        }
-        imageUri = activity?.contentResolver?.insert(
-            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-            values
-        )!!
-        val cameraIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
-        startActivityForResult(cameraIntent, IMAGE_PICK_CAMERA_CODE)
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
-//        when (requestCode) {
-//            CAMERA_REQUEST_CODE -> {
-//                if ((grantResults.isNotEmpty())) {
-//                    val cameraAccepted = grantResults[0] == PackageManager.PERMISSION_GRANTED
-//
-//                    if (cameraAccepted) {
-//                        pickFromCamera()
-//                    } else {
-//                        Toast.makeText(
-//                            requireContext(),
-//                            getString(R.string.please_enable_permissions),
-//                            Toast.LENGTH_SHORT
-//                        ).show()
-//                    }
-//                }
-//            }
-//            STORAGE_REQUEST_CODE -> {
-//                if ((grantResults.isNotEmpty())) {
-//                    val writeStorageAccepted = grantResults[1] == PackageManager.PERMISSION_GRANTED
-//                    if (writeStorageAccepted) {
-//                        pickFromGallery()
-//                    } else {
-//                        Toast.makeText(
-//                            requireContext(),
-//                            getString(R.string.please_enable_permissions),
-//                            Toast.LENGTH_SHORT
-//                        ).show()
-//                    }
-//                }
-//            }
-//        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-    }
-
 
     override fun onDestroyView() {
         super.onDestroyView()
