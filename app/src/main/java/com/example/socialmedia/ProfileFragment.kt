@@ -29,6 +29,7 @@ import com.example.socialmedia.databinding.FragmentProfileBinding
 import com.example.socialmedia.utils.Constants.CAMERA_REQUEST_CODE
 import com.example.socialmedia.utils.Constants.IMAGE_PICK_CAMERA_CODE
 import com.example.socialmedia.utils.Constants.IMAGE_PICK_GALLERY_CODE
+import com.example.socialmedia.utils.Constants.STORAGE_PATH
 import com.example.socialmedia.utils.ProgressDialog
 import com.google.android.gms.tasks.Task
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -51,7 +52,6 @@ class ProfileFragment : BaseFragment() {
     private lateinit var imageUri: Uri
     private lateinit var profileOrCoverPhoto: String
     private lateinit var cameraPermissions: Array<String>
-    private var storagePath = "Users_Images/"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -105,30 +105,34 @@ class ProfileFragment : BaseFragment() {
         val query = databaseReference.orderByChild("email").equalTo(firebaseUser.email)
         query.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                for (ds in snapshot.children) {
-                    val name = "" + ds.child("name").value
-                    val email = "" + ds.child("email").value
-                    val phone = "" + ds.child("phone").value
-                    userImage = "" + ds.child("avatar").value
-                    coverImage = "" + ds.child("cover").value
+                try {
+                    for (ds in snapshot.children) {
+                        val name = "" + ds.child("name").value
+                        val email = "" + ds.child("email").value
+                        val phone = "" + ds.child("phone").value
+                        userImage = "" + ds.child("avatar").value
+                        coverImage = "" + ds.child("cover").value
 
-                    binding.apply {
-                        userName.text = name
-                        userEmail.text = email
-                        userPhone.text = phone
+                        binding.apply {
+                            userName.text = name
+                            userEmail.text = email
+                            userPhone.text = phone
 
-                        Glide.with(requireContext())
-                            .load(userImage)
-                            .diskCacheStrategy(DiskCacheStrategy.DATA)
-                            .into(avatarImage)
+                            Glide.with(requireContext())
+                                .load(userImage)
+                                .diskCacheStrategy(DiskCacheStrategy.DATA)
+                                .into(avatarImage)
 
-                        Glide.with(requireContext())
-                            .load(coverImage)
-                            .diskCacheStrategy(DiskCacheStrategy.DATA)
-                            .into(coverPhoto)
+                            Glide.with(requireContext())
+                                .load(coverImage)
+                                .diskCacheStrategy(DiskCacheStrategy.DATA)
+                                .into(coverPhoto)
 
-                        shimmerLayout.visibility = View.INVISIBLE
+                            shimmerLayout.visibility = View.INVISIBLE
+                        }
                     }
+                } catch (e: NullPointerException){
+                    Log.d("Firebase", "onCatchError: ${e.message}")
                 }
             }
 
@@ -281,7 +285,6 @@ class ProfileFragment : BaseFragment() {
             when (requestCode) {
                 IMAGE_PICK_GALLERY_CODE -> {
                     imageUri = data?.data!!
-                    Log.d("Firebase", "onActivityResult: ${imageUri.path}")
                     uploadPhoto(imageUri)
                 }
                 IMAGE_PICK_CAMERA_CODE -> {
@@ -294,7 +297,7 @@ class ProfileFragment : BaseFragment() {
     private fun uploadPhoto(uri: Uri) {
         val progressDialog = ProgressDialog(requireContext())
         progressDialog.show("Updating $profileOrCoverPhoto")
-        val filePathAndName = storagePath + "" + profileOrCoverPhoto + "_" + firebaseUser.uid
+        val filePathAndName = STORAGE_PATH + "" + profileOrCoverPhoto + "_" + firebaseUser.uid
         val storageReference2 = storageReference.child(filePathAndName)
         storageReference2.putFile(uri)
 
@@ -315,7 +318,8 @@ class ProfileFragment : BaseFragment() {
                         }
                 } else {
                     progressDialog.hideDialog()
-                    Toast.makeText(requireContext(), "Failed to update photo", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(requireContext(), "Failed to update photo", Toast.LENGTH_SHORT)
+                        .show()
                 }
 
             }
