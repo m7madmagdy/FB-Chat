@@ -18,6 +18,6 @@ class ProgressDialog(context: Context) : Dialog(context) {
     }
 
     fun hideDialog() {
-        super.hide()
+        super.dismiss()
     }
 }

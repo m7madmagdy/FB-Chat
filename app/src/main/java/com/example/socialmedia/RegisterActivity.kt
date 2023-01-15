@@ -107,7 +107,7 @@ class RegisterActivity : AppCompatActivity() {
                         put("uid", uid)
                         put("name", "")
                         put("phone", "")
-                        put("image", "")
+                        put("avatar", "")
                         put("cover","")
                     }
                     val database = FirebaseDatabase.getInstance()

@@ -38,7 +38,7 @@
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
                     android:padding="8dp"
-                    android:text="@string/edit_profile"
+                    android:text="@string/pick_image_from"
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     android:textStyle="bold"
@@ -61,7 +61,7 @@
             </RelativeLayout>
 
             <LinearLayout
-                android:id="@+id/profile_picture"
+                android:id="@+id/camera"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/head_view"
@@ -78,19 +78,19 @@
                     android:drawablePadding="20dp"
                     android:fontFamily="sans-serif-medium"
                     android:gravity="left|center"
-                    android:text="@string/profile_picture"
+                    android:text="@string/camera"
                     android:textColor="@color/chooser_sheet_color"
                     android:textSize="16sp"
-                    app:drawableLeftCompat="@drawable/ic_profile_outline"
+                    app:drawableLeftCompat="@drawable/ic_camera"
                     app:drawableTint="@color/chooser_sheet_color" />
 
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/cover_photo"
+                android:id="@+id/gallery"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/profile_picture"
+                android:layout_below="@id/camera"
                 android:layout_marginTop="5dp"
                 android:background="@drawable/btn_selector"
                 android:gravity="left"
@@ -104,62 +104,10 @@
                     android:drawablePadding="20dp"
                     android:fontFamily="sans-serif-medium"
                     android:gravity="left|center"
-                    android:text="@string/cover_photo"
+                    android:text="@string/gallery"
                     android:textColor="@color/chooser_sheet_color"
                     android:textSize="16sp"
-                    app:drawableLeftCompat="@drawable/ic_image"
-                    app:drawableTint="@color/chooser_sheet_color" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/user_name"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/cover_photo"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/btn_selector"
-                android:gravity="left"
-                android:orientation="horizontal"
-                android:padding="10dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:drawablePadding="20dp"
-                    android:fontFamily="sans-serif-medium"
-                    android:gravity="left|center"
-                    android:text="@string/name"
-                    android:textColor="@color/chooser_sheet_color"
-                    android:textSize="16sp"
-                    app:drawableLeftCompat="@drawable/ic_edit_name"
-                    app:drawableTint="@color/chooser_sheet_color" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/user_phone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/user_name"
-                android:layout_marginTop="5dp"
-                android:background="@drawable/btn_selector"
-                android:gravity="left"
-                android:orientation="horizontal"
-                android:padding="10dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="left"
-                    android:drawablePadding="20dp"
-                    android:fontFamily="sans-serif-medium"
-                    android:gravity="left|center"
-                    android:text="@string/phone"
-                    android:textColor="@color/chooser_sheet_color"
-                    android:textSize="16sp"
-                    app:drawableLeftCompat="@drawable/ic_phone"
+                    app:drawableLeftCompat="@drawable/ic_gallery"
                     app:drawableTint="@color/chooser_sheet_color" />
 
             </LinearLayout>
