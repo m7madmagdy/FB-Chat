@@ -15,7 +15,7 @@ import com.bumptech.glide.Glide
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 open class BaseFragment : Fragment() {
-    private lateinit var bottomNavView: BottomNavigationView
+    lateinit var bottomNavView: BottomNavigationView
     lateinit var appCompactActivity: AppCompatActivity
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -41,7 +41,7 @@ open class BaseFragment : Fragment() {
     }
 
     fun hideBottomNavigation() {
-        bottomNavView.isVisible = false
+        bottomNavView.visibility = View.INVISIBLE
     }
 
     fun showToolbar() {

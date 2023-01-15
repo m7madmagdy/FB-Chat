@@ -1,7 +1,6 @@
 package com.example.socialmedia
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.app.Activity.RESULT_OK
 import android.content.ContentValues
 import android.content.Intent
@@ -92,7 +91,15 @@ class ProfileFragment : BaseFragment() {
                 bottomSheetCameraOrGallery()
                 profileOrCoverPhoto = "cover"
             }
+
+            avatarImage.setOnClickListener { profilePictureFullScreen() }
         }
+    }
+
+    private fun profilePictureFullScreen() {
+        val fullScreenIntent = Intent(requireContext(), FullScreenPictureActivity::class.java)
+        fullScreenIntent.putExtra("avatar", userImage.toString())
+        startActivity(fullScreenIntent)
     }
 
     private fun initFirebase() {
@@ -131,7 +138,7 @@ class ProfileFragment : BaseFragment() {
                             shimmerLayout.visibility = View.INVISIBLE
                         }
                     }
-                } catch (e: NullPointerException){
+                } catch (e: NullPointerException) {
                     Log.d("Firebase", "onCatchError: ${e.message}")
                 }
             }
