@@ -118,10 +118,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
+                android:drawablePadding="10dp"
                 android:fontFamily="sans-serif-black"
                 android:textColor="@color/black"
                 android:textSize="22sp"
-                tools:text="Mohamed Magdy" />
+                android:visibility="invisible"
+                app:drawableRightCompat="@drawable/ic_verified"
+                tools:text="Mohamed Magdy"
+                app:drawableTint="@color/blue_firebase_btn" />
 
             <TextView
                 android:id="@+id/user_email"

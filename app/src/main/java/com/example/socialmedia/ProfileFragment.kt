@@ -62,6 +62,7 @@ class ProfileFragment : BaseFragment() {
         initFirebase()
         initUserClicks()
         initCameraPermission()
+        initFirebaseAdmin()
         return binding.root
     }
 
@@ -72,6 +73,12 @@ class ProfileFragment : BaseFragment() {
 
     private fun initCameraPermission() {
         cameraPermissions = arrayOf(Manifest.permission.CAMERA)
+    }
+
+    private fun initFirebaseAdmin() {
+        if (firebaseUser.email.toString() != getString(R.string.admin_email)) {
+            binding.userName.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null)
+        }
     }
 
     private fun checkCameraPermission(): Boolean {
@@ -137,7 +144,8 @@ class ProfileFragment : BaseFragment() {
                                 .diskCacheStrategy(DiskCacheStrategy.DATA)
                                 .into(coverPhoto)
 
-                            shimmerLayout.visibility = View.INVISIBLE
+                            shimmerLayout.visibility = View.GONE
+                            userName.visibility = View.VISIBLE
                         }
                     }
                 } catch (e: NullPointerException) {
