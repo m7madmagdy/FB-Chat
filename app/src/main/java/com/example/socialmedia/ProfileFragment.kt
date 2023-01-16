@@ -25,9 +25,9 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.socialmedia.databinding.BottomSheetEditProfileBinding
 import com.example.socialmedia.databinding.BottomSheetPickImageBinding
 import com.example.socialmedia.databinding.FragmentProfileBinding
-import com.example.socialmedia.utils.Constants.CAMERA_REQUEST_CODE
 import com.example.socialmedia.utils.Constants.IMAGE_PICK_CAMERA_CODE
 import com.example.socialmedia.utils.Constants.IMAGE_PICK_GALLERY_CODE
+import com.example.socialmedia.utils.Constants.REQUEST_CODE
 import com.example.socialmedia.utils.Constants.STORAGE_PATH
 import com.example.socialmedia.utils.ProgressDialog
 import com.google.android.gms.tasks.Task
@@ -52,7 +52,7 @@ class ProfileFragment : BaseFragment() {
     private lateinit var storageReference: StorageReference
     private lateinit var imageUri: Uri
     private lateinit var profileOrCoverPhoto: String
-    private lateinit var cameraPermissions: Array<String>
+    private lateinit var permissions: Array<String>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -61,24 +61,21 @@ class ProfileFragment : BaseFragment() {
         _binding = FragmentProfileBinding.inflate(layoutInflater)
         initFirebase()
         initUserClicks()
-        initCameraPermission()
         initFirebaseAdmin()
+        initPermissions()
+        requestPermissions()
         return binding.root
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        requestCameraPermission()
+    private fun initPermissions() {
+        permissions = arrayOf(
+            Manifest.permission.CAMERA,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+        )
     }
 
-    private fun initCameraPermission() {
-        cameraPermissions = arrayOf(Manifest.permission.CAMERA)
-    }
-
-    private fun initFirebaseAdmin() {
-        if (firebaseUser.email.toString() != getString(R.string.admin_email)) {
-            binding.userName.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null)
-        }
+    private fun requestPermissions() {
+        ActivityCompat.requestPermissions(requireActivity(), permissions, REQUEST_CODE)
     }
 
     private fun checkCameraPermission(): Boolean {
@@ -86,6 +83,23 @@ class ProfileFragment : BaseFragment() {
             requireActivity(),
             Manifest.permission.CAMERA
         ) == (PackageManager.PERMISSION_GRANTED)
+    }
+
+    private fun checkStoragePermission(): Boolean {
+        return if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
+            ContextCompat.checkSelfPermission(
+                requireActivity(),
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ) == (PackageManager.PERMISSION_GRANTED)
+        } else {
+            true
+        }
+    }
+
+    private fun initFirebaseAdmin() {
+        if (firebaseUser.email.toString() != getString(R.string.admin_email)) {
+            binding.userName.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null)
+        }
     }
 
     private fun initUserClicks() {
@@ -205,15 +219,19 @@ class ProfileFragment : BaseFragment() {
         binding.apply {
             camera.setOnClickListener {
                 if (!checkCameraPermission()) {
-                    requestCameraPermission()
+                    requestPermissions()
                 } else {
                     openCamera()
                     bottomSheet.dismiss()
                 }
             }
             gallery.setOnClickListener {
-                openGallery()
-                bottomSheet.dismiss()
+                if (!checkStoragePermission()) {
+                    requestPermissions()
+                } else {
+                    openGallery()
+                    bottomSheet.dismiss()
+                }
             }
         }
 
@@ -228,10 +246,6 @@ class ProfileFragment : BaseFragment() {
         }
         galleryIntent.type = "image/*"
         startActivityForResult(galleryIntent, IMAGE_PICK_GALLERY_CODE)
-    }
-
-    private fun requestCameraPermission() {
-        ActivityCompat.requestPermissions(requireActivity(), cameraPermissions, CAMERA_REQUEST_CODE)
     }
 
     private fun openCamera() {
@@ -353,12 +367,7 @@ class ProfileFragment : BaseFragment() {
                             progressDialog.hideDialog()
                             Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                         }
-                } else {
-                    progressDialog.hideDialog()
-                    Toast.makeText(requireContext(), "Failed to update photo", Toast.LENGTH_SHORT)
-                        .show()
                 }
-
             }
 
             .addOnFailureListener {
