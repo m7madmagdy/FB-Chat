@@ -18,5 +18,6 @@
     <color name="add_image_bg">#CFCFCF</color>
     <color name="chooser_sheet_color">#4E4E4E</color>
     <color name="full_screen_bg">#2B2B2B</color>
+    <color name="start_icon_tint">#4E4E4E</color>
 
 </resources>

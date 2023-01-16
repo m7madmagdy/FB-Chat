@@ -2,6 +2,7 @@ package com.example.socialmedia
 
 import android.app.Activity
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.Spanned
@@ -21,7 +22,6 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
@@ -32,7 +32,6 @@ class LoginActivity : AppCompatActivity() {
     private val binding get() = _binding!!
     private var user: FirebaseUser? = null
     private var googleSignInClient: GoogleSignInClient? = null
-    private var bottomSheetDialog: RecoverPasswordFragment? = null
     private lateinit var firebaseAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,6 +43,51 @@ class LoginActivity : AppCompatActivity() {
         initUserLogin()
         initUserRegister()
         initForgetPassword()
+        initIconsColor()
+    }
+
+    private fun initIconsColor() {
+        binding.apply {
+            emailEdt.setOnFocusChangeListener { _, hasFocus ->
+                if (hasFocus) {
+                    emailLayout.setStartIconTintList(
+                        ColorStateList.valueOf(
+                            ContextCompat.getColor(
+                                applicationContext, R.color.blue_firebase_btn
+                            )
+                        )
+                    )
+                } else {
+                    emailLayout.setStartIconTintList(
+                        ColorStateList.valueOf(
+                            ContextCompat.getColor(
+                                applicationContext, R.color.start_icon_tint
+                            )
+                        )
+                    )
+                }
+            }
+
+            passwordEdt.setOnFocusChangeListener { _, hasFocus ->
+                if (hasFocus) {
+                    passwordLayout.setStartIconTintList(
+                        ColorStateList.valueOf(
+                            ContextCompat.getColor(
+                                applicationContext, R.color.blue_firebase_btn
+                            )
+                        )
+                    )
+                } else {
+                    passwordLayout.setStartIconTintList(
+                        ColorStateList.valueOf(
+                            ContextCompat.getColor(
+                                applicationContext, R.color.start_icon_tint
+                            )
+                        )
+                    )
+                }
+            }
+        }
     }
 
     private fun initGoogleSignIn() {
@@ -149,15 +193,12 @@ class LoginActivity : AppCompatActivity() {
                     }
                     startActivity(Intent(this, ProfileActivity::class.java))
                     finish()
-                } else {
-                    progressDialog.hideDialog()
-                    Toast.makeText(this, getString(R.string.failed), Toast.LENGTH_SHORT).show()
                 }
             }
 
             .addOnFailureListener {
                 progressDialog.hideDialog()
-                Toast.makeText(this, getString(R.string.failed), Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
             }
     }
 
@@ -169,7 +210,7 @@ class LoginActivity : AppCompatActivity() {
                     val account = task.result
                     firebaseAuthWithGoogle(account)
                 } catch (e: Exception) {
-                    Toast.makeText(this, getString(R.string.failed), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, e.message, Toast.LENGTH_SHORT).show()
                 }
             }
         }
@@ -183,13 +224,10 @@ class LoginActivity : AppCompatActivity() {
                     Toast.makeText(this, "Welcome back \n${user?.email}", Toast.LENGTH_SHORT).show()
                     startActivity(Intent(this, ProfileActivity::class.java))
                     finish()
-                } else {
-                    Toast.makeText(this, getString(R.string.login_failed), Toast.LENGTH_SHORT)
-                        .show()
                 }
             }
             .addOnFailureListener {
-                Toast.makeText(this, getString(R.string.failed), Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
             }
     }
 

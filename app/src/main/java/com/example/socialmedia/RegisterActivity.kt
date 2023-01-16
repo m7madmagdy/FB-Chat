@@ -1,6 +1,7 @@
 package com.example.socialmedia
 
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.SpannableString
 import android.text.Spanned
@@ -23,7 +24,7 @@ import com.google.firebase.ktx.Firebase
 class RegisterActivity : AppCompatActivity() {
     private var _binding: ActivityRegisterBinding? = null
     private val binding get() = _binding!!
-    private var user: FirebaseUser? = null
+    private lateinit var firebaseUser: FirebaseUser
     private lateinit var firebaseAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,6 +35,51 @@ class RegisterActivity : AppCompatActivity() {
         initActionBar()
         initUserRegister()
         initUserLogin()
+        initIconsColor()
+    }
+
+    private fun initIconsColor() {
+        binding.apply {
+            nameEdt.setOnFocusChangeListener { _, hasFocus ->
+                if (hasFocus) {
+                    nameLayout.setStartIconTintList(ColorStateList.valueOf(ContextCompat.getColor(
+                        applicationContext, R.color.blue_firebase_btn)))
+                }else{
+                    nameLayout.setStartIconTintList(ColorStateList.valueOf(ContextCompat.getColor(
+                        applicationContext, R.color.start_icon_tint)))
+                }
+            }
+
+            phoneEdt.setOnFocusChangeListener { _, hasFocus ->
+                if (hasFocus) {
+                    phoneLayout.setStartIconTintList(ColorStateList.valueOf(ContextCompat.getColor(
+                        applicationContext, R.color.blue_firebase_btn)))
+                }else{
+                    phoneLayout.setStartIconTintList(ColorStateList.valueOf(ContextCompat.getColor(
+                        applicationContext, R.color.start_icon_tint)))
+                }
+            }
+
+            emailEdt.setOnFocusChangeListener { _, hasFocus ->
+                if (hasFocus) {
+                    emailLayout.setStartIconTintList(ColorStateList.valueOf(ContextCompat.getColor(
+                        applicationContext, R.color.blue_firebase_btn)))
+                }else{
+                    emailLayout.setStartIconTintList(ColorStateList.valueOf(ContextCompat.getColor(
+                        applicationContext, R.color.start_icon_tint)))
+                }
+            }
+
+            passwordEdt.setOnFocusChangeListener { _, hasFocus ->
+                if (hasFocus) {
+                    passwordLayout.setStartIconTintList(ColorStateList.valueOf(ContextCompat.getColor(
+                        applicationContext, R.color.blue_firebase_btn)))
+                }else{
+                    passwordLayout.setStartIconTintList(ColorStateList.valueOf(ContextCompat.getColor(
+                        applicationContext, R.color.start_icon_tint)))
+                }
+            }
+        }
     }
 
     private fun initActionBar() {
@@ -71,6 +117,8 @@ class RegisterActivity : AppCompatActivity() {
 
     private fun initUserRegister() {
         binding.registerBtn.setOnClickListener {
+            val name = binding.nameEdt.text.toString().trim()
+            val phone = binding.phoneEdt.text.toString().trim()
             val email = binding.emailEdt.text.toString().trim()
             val password = binding.passwordEdt.text.toString().trim()
 
@@ -85,41 +133,42 @@ class RegisterActivity : AppCompatActivity() {
                     passwordEdt.isFocusable = true
                 }
             } else {
-                register(email, password)
+                register(name, phone, email, password)
             }
         }
     }
 
-    private fun register(email: String, password: String) {
+    private fun register(name: String, phone: String, email: String, password: String) {
         val progressDialog = ProgressDialog(this)
         progressDialog.show(getString(R.string.registering_user))
 
         firebaseAuth.createUserWithEmailAndPassword(email, password)
+
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     ProgressDialog(this).hideDialog()
-                    user = firebaseAuth.currentUser!!
-                    val userEmail = user!!.email.toString()
-                    val uid = user!!.uid
+                    firebaseUser = firebaseAuth.currentUser!!
+                    val userEmail = firebaseUser.email.toString()
+                    val userId = firebaseUser.uid
                     val userInfo = hashMapOf<Any, String>()
                     userInfo.apply {
                         put("email", userEmail)
-                        put("uid", uid)
-                        put("name", "")
-                        put("phone", "")
+                        put("uid", userId)
+                        put("name", name)
+                        put("phone", phone)
                         put("avatar", "")
-                        put("cover","")
+                        put("cover", "")
                     }
                     val database = FirebaseDatabase.getInstance()
                     val reference = database.getReference("Users")
-                    reference.child(uid).setValue(userInfo)
+                    reference.child(userId).setValue(userInfo)
                     startActivity(Intent(this, ProfileActivity::class.java))
                     finish()
                 }
             }
             .addOnFailureListener {
                 progressDialog.hideDialog()
-                Toast.makeText(this, getString(R.string.failed), Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
             }
     }
 
