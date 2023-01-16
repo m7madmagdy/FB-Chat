@@ -18,6 +18,7 @@ import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -26,6 +27,7 @@ import com.example.socialmedia.databinding.BottomSheetPickImageBinding
 import com.example.socialmedia.databinding.FragmentProfileBinding
 import com.example.socialmedia.utils.Constants.IMAGE_PICK_CAMERA_CODE
 import com.example.socialmedia.utils.Constants.IMAGE_PICK_GALLERY_CODE
+import com.example.socialmedia.utils.Constants.REQUEST_CODE
 import com.example.socialmedia.utils.Constants.STORAGE_PATH
 import com.example.socialmedia.utils.ProgressDialog
 import com.google.android.gms.tasks.Task
@@ -37,12 +39,6 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage.getInstance
 import com.google.firebase.storage.StorageReference
-import com.karumi.dexter.Dexter
-import com.karumi.dexter.MultiplePermissionsReport
-import com.karumi.dexter.PermissionToken
-import com.karumi.dexter.listener.PermissionRequest
-import com.karumi.dexter.listener.multi.MultiplePermissionsListener
-
 
 class ProfileFragment : BaseFragment() {
     private var _binding: FragmentProfileBinding? = null
@@ -57,7 +53,6 @@ class ProfileFragment : BaseFragment() {
     private lateinit var imageUri: Uri
     private lateinit var profileOrCoverPhoto: String
     private lateinit var permissions: Array<String>
-    private lateinit var storagePermissions: Array<String>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -67,28 +62,20 @@ class ProfileFragment : BaseFragment() {
         initFirebase()
         initUserClicks()
         initFirebaseAdmin()
+        initPermissions()
+        requestPermissions()
         return binding.root
     }
 
-    override fun onStart() {
-        super.onStart()
-        requestPermissions()
+    private fun initPermissions() {
+        permissions = arrayOf(
+            Manifest.permission.CAMERA,
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+        )
     }
 
     private fun requestPermissions() {
-        Dexter.withContext(requireContext())
-            .withPermissions(
-                Manifest.permission.CAMERA,
-                Manifest.permission.ACCESS_MEDIA_LOCATION,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            ).withListener(object : MultiplePermissionsListener {
-                override fun onPermissionsChecked(report: MultiplePermissionsReport) {}
-                override fun onPermissionRationaleShouldBeShown(
-                    permissions: List<PermissionRequest?>?,
-                    token: PermissionToken?
-                ) {
-                }
-            }).check()
+        ActivityCompat.requestPermissions(requireActivity(), permissions, REQUEST_CODE)
     }
 
     private fun checkCameraPermission(): Boolean {
@@ -99,10 +86,14 @@ class ProfileFragment : BaseFragment() {
     }
 
     private fun checkStoragePermission(): Boolean {
-        return ContextCompat.checkSelfPermission(
-            requireActivity(),
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
-        ) == (PackageManager.PERMISSION_GRANTED)
+        return if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.Q) {
+            ContextCompat.checkSelfPermission(
+                requireActivity(),
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ) == (PackageManager.PERMISSION_GRANTED)
+        } else {
+            true
+        }
     }
 
     private fun initFirebaseAdmin() {
@@ -235,9 +226,9 @@ class ProfileFragment : BaseFragment() {
                 }
             }
             gallery.setOnClickListener {
-                if (!checkStoragePermission()){
+                if (!checkStoragePermission()) {
                     requestPermissions()
-                }else{
+                } else {
                     openGallery()
                     bottomSheet.dismiss()
                 }

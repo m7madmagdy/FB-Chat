@@ -79,6 +79,4 @@ dependencies {
     implementation 'com.github.chrisbanes:PhotoView:2.3.0'
     // lifecycle
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
-    // Runtime Permission
-    implementation 'com.karumi:dexter:6.2.3'
 }
