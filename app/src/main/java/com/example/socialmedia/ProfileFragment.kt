@@ -253,6 +253,13 @@ class ProfileFragment : BaseFragment() {
         val headerName = dialogView.findViewById(R.id.edit_name) as TextView
         val updateBtn = dialogView.findViewById(R.id.update_btn) as Button
         val cancelBtn = dialogView.findViewById(R.id.cancel_btn) as Button
+        val userName = binding.userName.text.toString().trim()
+        val userPhone = binding.userPhone.text.toString().trim()
+
+        when (key) {
+            "name" -> nameOrPhone.setText(userName)
+            "phone" -> nameOrPhone.setText(userPhone)
+        }
 
         headerName.text = "Update $key"
         nameOrPhone.hint = "Edit $key"
