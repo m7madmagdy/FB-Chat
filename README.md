@@ -9,9 +9,7 @@
 
 ## **App Screenshots**
 
-<img src="https://m7madmagdy.github.io/profile/firebase social app/main screen.png" width="200"><img src="https://i.imgur.com/HW3iDI9.png" width="200"> <img src="https://i.imgur.com/Mco88IP.png" width="200"><img src="https://m7madmagdy.github.io/profile/firebase social app/google signin.png" width="200">
-<img src="https://m7madmagdy.github.io/profile/firebase social app/allow camera.png" width="200"><img src="https://m7madmagdy.github.io/profile/firebase social app/allow notifications.png" width="200">
-<img src="https://i.imgur.com/5Lez471.png" width="200"> <img src="https://m7madmagdy.github.io/profile/firebase social app/edit profile.png" width="200"><img src="https://m7madmagdy.github.io/profile/firebase social app/recover password.png" width="200"> 
+<img src="https://m7madmagdy.github.io/profile/firebase social app/main screen.png" width="200"> <img src="https://i.imgur.com/HW3iDI9.png" width="200"> <img src="https://i.imgur.com/Mco88IP.png" width="200"> <img src="https://m7madmagdy.github.io/profile/firebase social app/google signin.png" width="200"> <img src="https://m7madmagdy.github.io/profile/firebase social app/allow camera.png" width="200"> <img src="https://m7madmagdy.github.io/profile/firebase social app/allow notifications.png" width="200"> <img src="https://i.imgur.com/ZewgbUi.png" width="200"> <img src="https://i.imgur.com/sdLtSZy.png" width="200"> <img src="https://m7madmagdy.github.io/profile/firebase social app/recover password.png" width="200"> 
 
 ## **Dependencies**
 -  [Firebase Tools](https://firebase.google.com/)
