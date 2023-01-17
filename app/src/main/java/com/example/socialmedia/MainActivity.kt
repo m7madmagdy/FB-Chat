@@ -67,19 +67,16 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    /* TODO: Part 07 We will do the followings.
+    /* TODO: Part 08 We will do the followings.
 
-        * Edit Profile
-            1- Name, Phone, Picture, Cover Photo
+        * Show all Users from database (Firebase) in Recyclerview
+            we will show the following info for each user:
+            1- Profile Picture
+            2- Cover Photo
+            3- Name
+            4- Email
+            5- Phone Number
 
-        * Requirements
-            1- Camera & Storage Permission (to pick image from camera or gallery)
-            2- Firebase storage libraries (to upload & receive profile / cover photo)
-
-        * UI Update
-            1- Add ImageView (for cover photo)
-            2- Add Floating action button to show dialog option for edit profile
-            3- Add Default Image for Profile Avatar
     */
     override fun onDestroy() {
         super.onDestroy()
