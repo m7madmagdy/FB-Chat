@@ -9,7 +9,7 @@
 
 ## **App Screenshots**
 
-<img src="https://m7madmagdy.github.io/profile/firebase social app/main screen.png" width="200"> <img src="https://i.imgur.com/HW3iDI9.png" width="200"> <img src="https://i.imgur.com/Mco88IP.png" width="200"> <img src="https://m7madmagdy.github.io/profile/firebase social app/google signin.png" width="200"> <img src="https://m7madmagdy.github.io/profile/firebase social app/allow camera.png" width="200"> <img src="https://m7madmagdy.github.io/profile/firebase social app/allow notifications.png" width="200"> <img src="https://i.imgur.com/ZewgbUi.png" width="200"> <img src="https://i.imgur.com/sdLtSZy.png" width="200"> <img src="https://m7madmagdy.github.io/profile/firebase social app/recover password.png" width="200"> 
+<img src="https://i.imgur.com/X8o7Org.png" width="200"> <img src="https://i.imgur.com/KJIjaFo.png" width="200"> <img src="https://i.imgur.com/qRReEYU.png" width="200"> <img src="https://m7madmagdy.github.io/profile/firebase social app/google signin.png" width="200"> <img src="https://m7madmagdy.github.io/profile/firebase social app/allow camera.png" width="200"> <img src="https://m7madmagdy.github.io/profile/firebase social app/allow notifications.png" width="200"> <img src="https://i.imgur.com/kluX1ak.png" width="200"> <img src="https://i.imgur.com/L7N1Cau.png" width="200"> <img src="https://i.imgur.com/cdq2P24.png" width="200"> <img src="https://i.imgur.com/QuUmqQP.png" width="200"> <img src="https://i.imgur.com/QFcLwxS.png" width="200">
 
 ## **Dependencies**
 -  [Firebase Tools](https://firebase.google.com/)
