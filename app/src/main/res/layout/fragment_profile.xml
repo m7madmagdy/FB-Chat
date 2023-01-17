@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
     android:fillViewport="true"
     tools:ignore="SpeakableTextPresentCheck">
 
@@ -35,6 +34,7 @@
                 android:id="@+id/add_cover_photo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:tooltipText="Add Cover Photo"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="@string/add_photo"
                 android:src="@drawable/ic_add_a_photo"
@@ -80,6 +80,7 @@
                         android:id="@+id/add_user_image"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:tooltipText="Add Profile Picture"
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:contentDescription="@string/add_photo"
                         android:src="@drawable/ic_add_a_photo"
@@ -96,6 +97,7 @@
                     android:layout_marginRight="10dp"
                     android:background="?attr/selectableItemBackground"
                     android:drawablePadding="4dp"
+                    android:tooltipText="Edit Profile"
                     android:gravity="center"
                     android:padding="8dp"
                     android:text="@string/edit_profile"
@@ -119,8 +121,8 @@
                 android:textSize="22sp"
                 android:visibility="invisible"
                 app:drawableRightCompat="@drawable/ic_verified"
-                tools:text="Mohamed Magdy"
-                app:drawableTint="@color/blue_firebase_btn" />
+                app:drawableTint="@color/blue_firebase_btn"
+                tools:text="Mohamed Magdy" />
 
             <TextView
                 android:id="@+id/user_email"

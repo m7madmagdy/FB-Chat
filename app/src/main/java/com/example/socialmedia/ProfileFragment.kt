@@ -96,6 +96,10 @@ class ProfileFragment : BaseFragment() {
     private fun initFirebaseAdmin() {
         if (firebaseUser.email.toString() != getString(R.string.admin_email)) {
             binding.userName.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null)
+        } else {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                binding.userName.tooltipText = "Verified"
+            }
         }
     }
 
@@ -268,18 +272,16 @@ class ProfileFragment : BaseFragment() {
         val builder = AlertDialog.Builder(requireContext())
         builder.setView(dialogView)
         val editLayout = dialogView.findViewById(R.id.user_layout) as TextInputLayout
-        val nameOrPhone = dialogView.findViewById(R.id.name_or_phone) as TextInputEditText
+        val nameOrPhone = dialogView.findViewById(R.id.user_info_edt) as TextInputEditText
         val headerName = dialogView.findViewById(R.id.edit_name) as TextView
         val updateBtn = dialogView.findViewById(R.id.update_btn) as Button
         val cancelBtn = dialogView.findViewById(R.id.cancel_btn) as Button
         val userName = binding.userName.text.toString().trim()
         val userPhone = binding.userPhone.text.toString().trim()
-
         when (key) {
             "name" -> nameOrPhone.setText(userName)
             "phone" -> nameOrPhone.setText(userPhone)
         }
-
         headerName.text = "Update $key"
         nameOrPhone.hint = "Edit $key"
         val dialog = builder.create()
@@ -344,7 +346,7 @@ class ProfileFragment : BaseFragment() {
                     results.apply { put(profileOrCoverPhoto, downloadUri.toString()) }
                     databaseReference.child(firebaseUser.uid).updateChildren(results)
                         .addOnSuccessListener { progressDialog.hideDialog() }
-                        .addOnFailureListener {e ->
+                        .addOnFailureListener { e ->
                             progressDialog.hideDialog()
                             Toast.makeText(requireContext(), e.message, Toast.LENGTH_SHORT).show()
                         }

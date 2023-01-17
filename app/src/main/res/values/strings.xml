@@ -15,7 +15,7 @@
     <string name="or">OR</string>
     <string name="google_sign_in">Continue with Google</string>
     <string name="close_sheet">Close sheet</string>
-    <string name="recover_password">Recover Password</string>
+    <string name="recover_password">Recover Your Password</string>
     <string name="cancel" tools:ignore="ButtonCase">CANCEL</string>
     <string name="recover">RECOVER</string>
     <string name="failed">Authentication failed..</string>
@@ -52,5 +52,7 @@
     <string name="admin_email">mohamedmagdysaber@gmail.com</string>
     <string name="log_out">Log out</string>
     <string name="search">Search</string>
+    <string name="user_search">Search…</string>
+    <string name="photo_saved_on_device">Photo saved on this device</string>
 
 </resources>
