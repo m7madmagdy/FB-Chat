@@ -18,9 +18,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.view.MenuHost
-import androidx.core.view.MenuProvider
-import androidx.lifecycle.Lifecycle
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.socialmedia.databinding.BottomSheetEditProfileBinding
@@ -61,7 +58,6 @@ class ProfileFragment : BaseFragment() {
     ): View {
         _binding = FragmentProfileBinding.inflate(layoutInflater)
         initFirebase()
-        initUserClicks()
         initFirebaseAdmin()
         initPermissions()
         requestPermissions()
@@ -160,6 +156,7 @@ class ProfileFragment : BaseFragment() {
 
                             shimmerLayout.visibility = View.GONE
                             userName.visibility = View.VISIBLE
+                            initUserClicks()
                         }
                     }
                 } catch (e: NullPointerException) {
@@ -347,9 +344,9 @@ class ProfileFragment : BaseFragment() {
                     results.apply { put(profileOrCoverPhoto, downloadUri.toString()) }
                     databaseReference.child(firebaseUser.uid).updateChildren(results)
                         .addOnSuccessListener { progressDialog.hideDialog() }
-                        .addOnFailureListener {
+                        .addOnFailureListener {e ->
                             progressDialog.hideDialog()
-                            Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                            Toast.makeText(requireContext(), e.message, Toast.LENGTH_SHORT).show()
                         }
                 }
             }
