@@ -3,6 +3,7 @@
     <style name="Theme.SocialMedia" parent="Theme.MaterialComponents.Light.DarkActionBar">
         <item name="colorPrimary">@color/color_primary</item>
         <item name="colorPrimaryDark">@color/color_primary</item>
+        <item name="android:itemTextAppearance">@style/menuTextAppearance</item>
 
         <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
         <item name="bottomSheetDialogTheme">@style/ThemeOverlay.App.BottomSheetDialog</item>

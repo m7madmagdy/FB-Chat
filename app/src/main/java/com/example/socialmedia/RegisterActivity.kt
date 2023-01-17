@@ -162,7 +162,7 @@ class RegisterActivity : AppCompatActivity() {
                     val database = FirebaseDatabase.getInstance()
                     val reference = database.getReference("Users")
                     reference.child(userId).setValue(userInfo)
-                    startActivity(Intent(this, ProfileActivity::class.java))
+                    startActivity(Intent(this, DashboardActivity::class.java))
                     finish()
                 }
             }

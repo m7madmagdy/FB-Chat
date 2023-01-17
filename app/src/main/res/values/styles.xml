@@ -11,4 +11,9 @@
         <item name="cornerSize">20dp</item>
     </style>
 
+    <style name="menuTextAppearance" parent="@android:style/TextAppearance.Widget.IconMenu.Item">
+        <item name="android:textColor">@color/logout_icon</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>

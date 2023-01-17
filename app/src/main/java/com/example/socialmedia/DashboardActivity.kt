@@ -1,35 +1,27 @@
 package com.example.socialmedia
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
-import com.example.socialmedia.databinding.ActivityProfileBinding
+import com.example.socialmedia.databinding.ActivityDashboardBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 
-class ProfileActivity : AppCompatActivity() {
-    private var _binding: ActivityProfileBinding? = null
+class DashboardActivity : AppCompatActivity() {
+    private var _binding: ActivityDashboardBinding? = null
     private val binding get() = _binding!!
     private lateinit var firebaseAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _binding = ActivityProfileBinding.inflate(layoutInflater)
+        _binding = ActivityDashboardBinding.inflate(layoutInflater)
         setContentView(binding.root)
         firebaseAuth = FirebaseAuth.getInstance()
-        initActionBar()
         initNavController()
-    }
-
-    private fun initActionBar() {
-        val actionBar = supportActionBar
-        actionBar?.apply {
-            title = getString(R.string.profile)
-        }
     }
 
     private fun initNavController() {
@@ -56,7 +48,7 @@ class ProfileActivity : AppCompatActivity() {
 
     override fun onSupportNavigateUp(): Boolean {
         val navController =
-            Navigation.findNavController(this@ProfileActivity, R.id.fragmentContainerView)
+            Navigation.findNavController(this@DashboardActivity, R.id.fragmentContainerView)
         navController.navigateUp()
         return super.onSupportNavigateUp()
     }
