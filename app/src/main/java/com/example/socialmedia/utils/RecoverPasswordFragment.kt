@@ -41,7 +41,7 @@ class RecoverPasswordFragment : BottomSheetDialogFragment() {
         val bottomSheet =
             dialog?.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
         behavior = BottomSheetBehavior.from(bottomSheet!!).apply {
-            state = BottomSheetBehavior.STATE_COLLAPSED
+            state = BottomSheetBehavior.STATE_EXPANDED
             isHideable = true
         }
 
@@ -89,7 +89,7 @@ class RecoverPasswordFragment : BottomSheetDialogFragment() {
 
             .addOnFailureListener {
                 progressDialog.hideDialog()
-                Toast.makeText(requireContext(), getString(R.string.failed), Toast.LENGTH_SHORT)
+                Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT)
                     .show()
             }
     }

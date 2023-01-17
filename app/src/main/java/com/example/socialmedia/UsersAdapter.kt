@@ -1,6 +1,7 @@
 package com.example.socialmedia
 
 import android.annotation.SuppressLint
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -64,6 +65,10 @@ class UsersAdapter(
             binding.apply {
                 if (binding.userEmail.text != root.context.getString(R.string.admin_email)) {
                     binding.userName.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null)
+                }else{
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        binding.userName.tooltipText = "Verified"
+                    }
                 }
             }
         }

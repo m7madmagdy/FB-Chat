@@ -2,7 +2,6 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/Widget.MaterialComponents.BottomSheet"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -56,11 +55,13 @@
                 tools:hint="@string/name">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/name_or_phone"
+                    android:id="@+id/user_info_edt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:imeOptions="flagNoFullscreen"
+                    android:imeOptions="actionDone"
                     android:inputType="text" />
+
+                <requestFocus/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
