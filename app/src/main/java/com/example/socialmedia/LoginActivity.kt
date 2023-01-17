@@ -191,7 +191,7 @@ class LoginActivity : AppCompatActivity() {
                         val reference = database.getReference("Users")
                         reference.child(uid).setValue(userInfo)
                     }
-                    startActivity(Intent(this, ProfileActivity::class.java))
+                    startActivity(Intent(this, DashboardActivity::class.java))
                     finish()
                 }
             }
@@ -222,7 +222,7 @@ class LoginActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     user = firebaseAuth.currentUser
                     Toast.makeText(this, "Welcome back \n${user?.email}", Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(this, ProfileActivity::class.java))
+                    startActivity(Intent(this, DashboardActivity::class.java))
                     finish()
                 }
             }

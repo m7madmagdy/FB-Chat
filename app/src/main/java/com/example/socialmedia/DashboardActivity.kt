@@ -1,35 +1,36 @@
 package com.example.socialmedia
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.TextUtils
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
-import com.example.socialmedia.databinding.ActivityProfileBinding
+import com.example.socialmedia.databinding.ActivityDashboardBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 
-class ProfileActivity : AppCompatActivity() {
-    private var _binding: ActivityProfileBinding? = null
+class DashboardActivity : AppCompatActivity() {
+    private var _binding: ActivityDashboardBinding? = null
     private val binding get() = _binding!!
     private lateinit var firebaseAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _binding = ActivityProfileBinding.inflate(layoutInflater)
+        _binding = ActivityDashboardBinding.inflate(layoutInflater)
         setContentView(binding.root)
         firebaseAuth = FirebaseAuth.getInstance()
-        initActionBar()
         initNavController()
-    }
-
-    private fun initActionBar() {
-        val actionBar = supportActionBar
-        actionBar?.apply {
-            title = getString(R.string.profile)
-        }
     }
 
     private fun initNavController() {
@@ -49,6 +50,37 @@ class ProfileActivity : AppCompatActivity() {
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.log_out -> {
+                alertUserSignOut()
+                true
+            }
+            else -> false
+        }
+    }
+
+    private fun alertUserSignOut() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(getString(R.string.sign_out))
+
+        builder.setPositiveButton(getString(R.string.sign_out)) { _, _ ->
+            firebaseAuth.signOut()
+            startActivity(Intent(this, MainActivity::class.java))
+        }
+
+        builder.setNegativeButton(getString(R.string.cancel)) { dialog, _ ->
+            dialog.cancel()
+        }
+
+        builder.create().show()
+    }
+
     override fun onStart() {
         checkUserStatus()
         super.onStart()
@@ -56,7 +88,7 @@ class ProfileActivity : AppCompatActivity() {
 
     override fun onSupportNavigateUp(): Boolean {
         val navController =
-            Navigation.findNavController(this@ProfileActivity, R.id.fragmentContainerView)
+            Navigation.findNavController(this@DashboardActivity, R.id.fragmentContainerView)
         navController.navigateUp()
         return super.onSupportNavigateUp()
     }

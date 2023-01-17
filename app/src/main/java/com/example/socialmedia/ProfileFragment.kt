@@ -11,15 +11,16 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
+import androidx.lifecycle.Lifecycle
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.example.socialmedia.databinding.BottomSheetEditProfileBinding
@@ -104,7 +105,6 @@ class ProfileFragment : BaseFragment() {
 
     private fun initUserClicks() {
         binding.apply {
-            signOut.setOnClickListener { alertUserSignOut() }
             editProfile.setOnClickListener { bottomSheetEditProfile() }
             addUserImage.setOnClickListener {
                 bottomSheetCameraOrGallery()
@@ -311,22 +311,6 @@ class ProfileFragment : BaseFragment() {
                 editLayout.error = "Please enter value"
             }
         }
-    }
-
-    private fun alertUserSignOut() {
-        val builder = AlertDialog.Builder(requireContext())
-        builder.setTitle(getString(R.string.sign_out))
-
-        builder.setPositiveButton(getString(R.string.sign_out)) { _, _ ->
-            firebaseAuth.signOut()
-            startActivity(Intent(requireContext(), MainActivity::class.java))
-        }
-
-        builder.setNegativeButton(getString(R.string.cancel)) { dialog, _ ->
-            dialog.cancel()
-        }
-
-        builder.create().show()
     }
 
     @Deprecated("Deprecated in Java")

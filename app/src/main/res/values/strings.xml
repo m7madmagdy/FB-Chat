@@ -50,5 +50,7 @@
     <string name="back">Back</string>
     <string name="update">Update</string>
     <string name="admin_email">mohamedmagdysaber@gmail.com</string>
+    <string name="log_out">Log out</string>
+    <string name="search">Search</string>
 
 </resources>

@@ -152,27 +152,6 @@
 
         </com.facebook.shimmer.ShimmerFrameLayout>
 
-        <TextView
-            android:id="@+id/sign_out"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="30dp"
-            android:background="@drawable/sign_out_ripple"
-            android:gravity="center"
-            android:paddingLeft="20dp"
-            android:paddingTop="12dp"
-            android:paddingRight="20dp"
-            android:paddingBottom="12dp"
-            android:text="@string/sign_out"
-            android:textAllCaps="false"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:drawableLeftCompat="@drawable/ic_logout"
-            app:drawableTint="@color/logout_icon" />
-
     </RelativeLayout>
 
 </ScrollView>
