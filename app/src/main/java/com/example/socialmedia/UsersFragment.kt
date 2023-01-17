@@ -16,9 +16,9 @@ class UsersFragment : BaseFragment() {
     private var _binding: FragmentUsersBinding? = null
     private val binding get() = _binding!!
     private val usersAdapter = UsersAdapter { v, position -> onUserItemClick(v, position) }
-    private lateinit var usersList: ArrayList<User?>
     private var firebaseUser: FirebaseUser? = null
     private lateinit var firebaseDatabase: DatabaseReference
+    private lateinit var usersList: ArrayList<User?>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,20 +47,24 @@ class UsersFragment : BaseFragment() {
     private fun getAllUsers() {
         usersList = ArrayList()
 
-        firebaseDatabase.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                snapshot.children.forEach {
-                    val modelUser = it.getValue(User::class.java)
-                    if (!modelUser?.uid.equals(firebaseUser?.uid)) {
-                        usersList.add(modelUser)
+        try {
+            firebaseDatabase.addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    snapshot.children.forEach {
+                        val modelUser = it.getValue(User::class.java)
+                        if (!modelUser?.uid.equals(firebaseUser?.uid)) {
+                            usersList.add(modelUser)
+                        }
+                        usersAdapter.setUsers(usersList)
+                        binding.shimmerLayout.visibility = View.GONE
                     }
-                    usersAdapter.setUsers(usersList)
-                    binding.shimmerLayout.visibility = View.GONE
                 }
-            }
 
-            override fun onCancelled(error: DatabaseError) {}
-        })
+                override fun onCancelled(error: DatabaseError) {}
+            })
+        } catch (e: NullPointerException) {
+            Toast.makeText(requireContext(), e.message, Toast.LENGTH_SHORT).show()
+        }
     }
 
     private fun onUserItemClick(v: View, position: Int) {
