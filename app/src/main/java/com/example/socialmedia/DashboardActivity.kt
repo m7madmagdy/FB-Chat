@@ -2,7 +2,16 @@ package com.example.socialmedia
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
+import androidx.core.view.MenuHost
+import androidx.core.view.MenuProvider
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
@@ -39,6 +48,37 @@ class DashboardActivity : AppCompatActivity() {
             startActivity(Intent(this, MainActivity::class.java))
             finish()
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.main_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.log_out -> {
+                alertUserSignOut()
+                true
+            }
+            else -> false
+        }
+    }
+
+    private fun alertUserSignOut() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(getString(R.string.sign_out))
+
+        builder.setPositiveButton(getString(R.string.sign_out)) { _, _ ->
+            firebaseAuth.signOut()
+            startActivity(Intent(this, MainActivity::class.java))
+        }
+
+        builder.setNegativeButton(getString(R.string.cancel)) { dialog, _ ->
+            dialog.cancel()
+        }
+
+        builder.create().show()
     }
 
     override fun onStart() {

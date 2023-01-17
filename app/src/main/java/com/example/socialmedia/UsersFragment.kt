@@ -5,19 +5,18 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.*
+import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.widget.SearchView
-import androidx.core.view.MenuHost
-import androidx.core.view.MenuProvider
-import androidx.lifecycle.Lifecycle
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.socialmedia.data.User
 import com.example.socialmedia.databinding.FragmentUsersBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
+import java.lang.reflect.Field
 import java.util.*
+
 
 class UsersFragment : BaseFragment() {
     private var _binding: FragmentUsersBinding? = null
@@ -37,7 +36,7 @@ class UsersFragment : BaseFragment() {
         initFirebase()
         initRecyclerView()
         getAllUsers()
-        menuProviders()
+        searchUsers()
         return binding.root
     }
 
@@ -78,7 +77,7 @@ class UsersFragment : BaseFragment() {
         }
     }
 
-    private fun searchUsers(query: String?) {
+    private fun performSearch(query: String?) {
 
         firebaseDatabase.addValueEventListener(object : ValueEventListener {
             @SuppressLint("NotifyDataSetChanged")
@@ -111,67 +110,26 @@ class UsersFragment : BaseFragment() {
         }
     }
 
-    private fun menuProviders() {
-        val menuHost: MenuHost = requireActivity()
-
-        menuHost.addMenuProvider(object : MenuProvider {
-            override fun onCreateMenu(menu: Menu, menuInflater: MenuInflater) {
-                menuInflater.inflate(R.menu.main_menu, menu)
-
-                val searchItem = menu.findItem(R.id.search)
-                val searchView = searchItem.actionView as SearchView
-
-                searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-                    override fun onQueryTextSubmit(query: String?): Boolean {
-                        if (!TextUtils.isEmpty(query)){
-                            searchUsers(query)
-                        }else{
-                            getAllUsers()
-                        }
-                        return false
-                    }
-
-                    override fun onQueryTextChange(query: String?): Boolean {
-                        if (!TextUtils.isEmpty(query)){
-                            searchUsers(query)
-                        }else{
-                            getAllUsers()
-                        }
-                        return false
-                    }
-                })
-            }
-
-            override fun onMenuItemSelected(menuItem: MenuItem): Boolean {
-                return when (menuItem.itemId) {
-                    R.id.search -> {
-                        // todo menu1
-                        true
-                    }
-                    R.id.log_out -> {
-                        alertUserSignOut()
-                        true
-                    }
-                    else -> false
+    private fun searchUsers(){
+        binding.search.setOnQueryTextListener(object : android.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                if (!TextUtils.isEmpty(query)){
+                    performSearch(query)
+                }else{
+                    getAllUsers()
                 }
+                return false
             }
-        }, viewLifecycleOwner, Lifecycle.State.RESUMED)
-    }
 
-    private fun alertUserSignOut() {
-        val builder = AlertDialog.Builder(requireContext())
-        builder.setTitle(getString(R.string.sign_out))
-
-        builder.setPositiveButton(getString(R.string.sign_out)) { _, _ ->
-            firebaseAuth.signOut()
-            startActivity(Intent(requireContext(), MainActivity::class.java))
-        }
-
-        builder.setNegativeButton(getString(R.string.cancel)) { dialog, _ ->
-            dialog.cancel()
-        }
-
-        builder.create().show()
+            override fun onQueryTextChange(query: String?): Boolean {
+                if (!TextUtils.isEmpty(query)){
+                    performSearch(query)
+                }else{
+                    getAllUsers()
+                }
+                return false
+            }
+        })
     }
 
     private fun checkUserStatus() {
