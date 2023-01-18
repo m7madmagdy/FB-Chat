@@ -12,6 +12,7 @@ import com.example.socialmedia.data.User
 import com.example.socialmedia.databinding.FragmentUsersBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.database.*
 import java.util.*
 
@@ -71,7 +72,7 @@ class UsersFragment : BaseFragment() {
                 override fun onCancelled(error: DatabaseError) {}
             })
         } catch (e: NullPointerException) {
-            Toast.makeText(requireContext(), e.message, Toast.LENGTH_SHORT).show()
+            FirebaseCrashlytics.getInstance().recordException(e)
         }
     }
 
@@ -108,21 +109,22 @@ class UsersFragment : BaseFragment() {
         }
     }
 
-    private fun searchUsers(){
-        binding.search.setOnQueryTextListener(object : android.widget.SearchView.OnQueryTextListener {
+    private fun searchUsers() {
+        binding.search.setOnQueryTextListener(object :
+            android.widget.SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
-                if (!TextUtils.isEmpty(query)){
+                if (!TextUtils.isEmpty(query)) {
                     performSearch(query)
-                }else{
+                } else {
                     getAllUsers()
                 }
                 return false
             }
 
             override fun onQueryTextChange(query: String?): Boolean {
-                if (!TextUtils.isEmpty(query)){
+                if (!TextUtils.isEmpty(query)) {
                     performSearch(query)
-                }else{
+                } else {
                     getAllUsers()
                 }
                 return false
