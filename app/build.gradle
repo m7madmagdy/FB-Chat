@@ -20,11 +20,11 @@ android {
     }
 
     buildTypes {
-        debug{
-            minifyEnabled true
-            shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
+//        debug{
+//            minifyEnabled true
+//            shrinkResources true
+//            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+//        }
         release {
             minifyEnabled true
             shrinkResources true
@@ -79,4 +79,8 @@ dependencies {
     implementation 'com.github.chrisbanes:PhotoView:2.3.0'
     // lifecycle
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
+
+    // Animated BottomBar
+    implementation 'nl.joery.animatedbottombar:library:1.1.0'
+
 }

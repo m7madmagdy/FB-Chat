@@ -11,7 +11,7 @@
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/bottom_navigation"
+        android:layout_above="@id/bottom_bar"
         android:background="@color/main_bg"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
@@ -24,8 +24,23 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:padding="6dp"
+        android:visibility="gone"
         android:layout_centerHorizontal="true"
         android:background="?android:attr/windowBackground"
         app:menu="@menu/bottom_nav_menu" />
+
+    <nl.joery.animatedbottombar.AnimatedBottomBar
+        android:id="@+id/bottom_bar"
+        android:background="@color/second_bg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:abb_selectedTabType="text"
+        app:abb_indicatorAppearance="round"
+        app:abb_indicatorMargin="16dp"
+        app:abb_indicatorHeight="4dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        app:abb_tabs="@menu/bottom_nav_menu"
+        app:abb_selectedIndex="0" />
 
 </RelativeLayout>
