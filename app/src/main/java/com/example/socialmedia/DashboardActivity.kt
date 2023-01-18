@@ -15,12 +15,14 @@ import androidx.navigation.ui.NavigationUI
 import com.example.socialmedia.databinding.ActivityDashboardBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.perf.FirebasePerformance
 
 class DashboardActivity : AppCompatActivity() {
     private var _binding: ActivityDashboardBinding? = null
     private val binding get() = _binding!!
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var navController: NavController
+    private val trace = FirebasePerformance.getInstance().newTrace("social-media")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,6 +30,7 @@ class DashboardActivity : AppCompatActivity() {
         setContentView(binding.root)
         firebaseAuth = FirebaseAuth.getInstance()
         initNavController()
+        trace.start()
     }
 
     @SuppressLint("RestrictedApi")
@@ -96,5 +99,6 @@ class DashboardActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+        trace.stop()
     }
 }
