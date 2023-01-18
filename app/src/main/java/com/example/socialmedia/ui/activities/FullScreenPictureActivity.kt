@@ -1,4 +1,4 @@
-package com.example.socialmedia
+package com.example.socialmedia.ui.activities
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
+import com.example.socialmedia.R
 import com.example.socialmedia.databinding.ActivityFullscreenBinding
 import com.example.socialmedia.utils.Constants.REQUEST_CODE
 

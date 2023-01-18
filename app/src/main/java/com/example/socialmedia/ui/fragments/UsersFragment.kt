@@ -1,15 +1,19 @@
-package com.example.socialmedia
+package com.example.socialmedia.ui.fragments
 
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.*
-import android.widget.Toast
 import androidx.core.view.isVisible
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
+import com.example.socialmedia.R
 import com.example.socialmedia.data.User
 import com.example.socialmedia.databinding.FragmentUsersBinding
+import com.example.socialmedia.ui.adapters.UsersAdapter
+import com.example.socialmedia.ui.main.BaseFragment
+import com.example.socialmedia.ui.main.MainActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.crashlytics.FirebaseCrashlytics
@@ -25,6 +29,7 @@ class UsersFragment : BaseFragment() {
     private lateinit var firebaseDatabase: DatabaseReference
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var usersList: ArrayList<User?>
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -104,8 +109,10 @@ class UsersFragment : BaseFragment() {
     private fun onUserItemClick(v: View, position: Int) {
         val user = usersAdapter.getUser(position)
         when (v.id) {
-            R.id.user_layout -> Toast.makeText(requireContext(), user?.name, Toast.LENGTH_SHORT)
-                .show()
+            R.id.user_layout -> {
+                val action = UsersFragmentDirections.actionUsersFragmentToChatFragment(user?.uid.toString())
+                findNavController().navigate(action)
+            }
         }
     }
 
@@ -138,10 +145,5 @@ class UsersFragment : BaseFragment() {
             startActivity(Intent(requireContext(), MainActivity::class.java))
             activity?.finish()
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

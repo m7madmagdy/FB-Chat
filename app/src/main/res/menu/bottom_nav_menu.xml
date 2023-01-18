@@ -20,4 +20,9 @@
         android:icon="@drawable/ic_groups_filled"
         android:title="@string/users" />
 
+    <item
+        android:id="@+id/chatsFragment"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_chat_filled"
+        android:title="@string/chats" />
 </menu>

@@ -1,4 +1,4 @@
-package com.example.socialmedia
+package com.example.socialmedia.ui.activities
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -12,7 +12,9 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
+import com.example.socialmedia.R
 import com.example.socialmedia.databinding.ActivityDashboardBinding
+import com.example.socialmedia.ui.main.MainActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.perf.FirebasePerformance
@@ -35,6 +37,9 @@ class DashboardActivity : AppCompatActivity() {
 
     @SuppressLint("RestrictedApi")
     private fun initNavController() {
+        val toolbar = binding.dashboardToolbar
+        setSupportActionBar(toolbar)
+        supportActionBar?.show()
         val menu = MenuBuilder(this)
         val inflater = menuInflater
         inflater.inflate(R.menu.bottom_nav_menu, menu)

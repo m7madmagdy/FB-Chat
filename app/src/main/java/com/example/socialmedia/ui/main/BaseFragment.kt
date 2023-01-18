@@ -1,4 +1,4 @@
-package com.example.socialmedia
+package com.example.socialmedia.ui.main
 
 import android.content.Context
 import android.os.Bundle
@@ -9,18 +9,19 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.example.socialmedia.R
+import nl.joery.animatedbottombar.AnimatedBottomBar
 
 open class BaseFragment : Fragment() {
-    lateinit var bottomNavView: BottomNavigationView
+    lateinit var bottomNavView: AnimatedBottomBar
     lateinit var appCompactActivity: AppCompatActivity
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         appCompactActivity = activity as AppCompatActivity
-        bottomNavView = activity?.findViewById(R.id.bottom_navigation) as BottomNavigationView
-        backBtnIndicator()
+        bottomNavView = activity?.findViewById(R.id.bottom_bar) as AnimatedBottomBar
         clearGlideMemory()
+        backBtnIndicator()
     }
 
     private fun clearGlideMemory() {
@@ -38,7 +39,7 @@ open class BaseFragment : Fragment() {
     }
 
     fun hideBottomNavigation() {
-        bottomNavView.visibility = View.INVISIBLE
+        bottomNavView.isVisible = false
     }
 
     fun showToolbar() {

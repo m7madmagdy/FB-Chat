@@ -1,4 +1,4 @@
-package com.example.socialmedia
+package com.example.socialmedia.ui.fragments
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -20,9 +20,12 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.example.socialmedia.R
 import com.example.socialmedia.databinding.BottomSheetEditProfileBinding
 import com.example.socialmedia.databinding.BottomSheetPickImageBinding
 import com.example.socialmedia.databinding.FragmentProfileBinding
+import com.example.socialmedia.ui.activities.FullScreenPictureActivity
+import com.example.socialmedia.ui.main.BaseFragment
 import com.example.socialmedia.utils.Constants.IMAGE_PICK_CAMERA_CODE
 import com.example.socialmedia.utils.Constants.IMAGE_PICK_GALLERY_CODE
 import com.example.socialmedia.utils.Constants.REQUEST_CODE

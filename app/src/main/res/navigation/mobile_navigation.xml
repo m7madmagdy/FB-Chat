@@ -7,22 +7,39 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.socialmedia.HomeFragment"
+        android:name="com.example.socialmedia.ui.fragments.HomeFragment"
         android:label="@string/home"
         tools:layout="@layout/fragment_home" />
     <fragment
         android:id="@+id/profileFragment"
-        android:name="com.example.socialmedia.ProfileFragment"
+        android:name="com.example.socialmedia.ui.fragments.ProfileFragment"
         android:label="@string/profile"
-        tools:layout="@layout/fragment_profile" >
-        <action
-            android:id="@+id/profileFragment_to_usersFragment"
-            app:destination="@id/usersFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_profile" />
     <fragment
         android:id="@+id/usersFragment"
-        android:name="com.example.socialmedia.UsersFragment"
+        android:name="com.example.socialmedia.ui.fragments.UsersFragment"
         android:label="@string/users"
-        tools:layout="@layout/fragment_users" />
+        tools:layout="@layout/fragment_users" >
+        <action
+            android:id="@+id/action_usersFragment_to_chatFragment"
+            app:enterAnim="@anim/fragment_enter"
+            app:exitAnim="@anim/fragment_exit"
+            app:popEnterAnim="@anim/fragment_enter_pop"
+            app:popExitAnim="@anim/fragment_exit_pop"
+            app:destination="@id/chatFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/chatsFragment"
+        android:name="com.example.socialmedia.ui.fragments.ChatsFragment"
+        android:label="@string/chats"
+        tools:layout="@layout/fragment_chats" />
+    <fragment
+        android:id="@+id/chatFragment"
+        android:name="com.example.socialmedia.ui.fragments.ChatFragment"
+        tools:layout="@layout/fragment_chat" >
+        <argument
+            android:name="uid"
+            app:argType="string" />
+    </fragment>
 
 </navigation>

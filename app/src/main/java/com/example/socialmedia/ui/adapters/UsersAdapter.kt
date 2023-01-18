@@ -1,13 +1,13 @@
-package com.example.socialmedia
+package com.example.socialmedia.ui.adapters
 
 import android.annotation.SuppressLint
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.socialmedia.R
 import com.example.socialmedia.data.User
 import com.example.socialmedia.databinding.UserCardBinding
 
