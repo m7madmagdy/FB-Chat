@@ -1,4 +1,4 @@
-package com.example.socialmedia
+package com.example.socialmedia.ui.main
 
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -10,6 +10,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.socialmedia.databinding.ActivityMainBinding
+import com.example.socialmedia.ui.activities.LoginActivity
+import com.example.socialmedia.ui.activities.RegisterActivity
 import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {

@@ -1,4 +1,4 @@
-package com.example.socialmedia
+package com.example.socialmedia.ui.activities
 
 import android.app.Activity
 import android.content.Intent
@@ -15,9 +15,10 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.example.socialmedia.R
 import com.example.socialmedia.databinding.ActivityLoginBinding
 import com.example.socialmedia.utils.ProgressDialog
-import com.example.socialmedia.utils.RecoverPasswordFragment
+import com.example.socialmedia.ui.fragments.RecoverPasswordFragment
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient

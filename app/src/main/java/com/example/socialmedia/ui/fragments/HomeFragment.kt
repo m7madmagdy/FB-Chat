@@ -1,15 +1,11 @@
-package com.example.socialmedia
+package com.example.socialmedia.ui.fragments
 
-import android.content.Intent
 import android.os.Bundle
-import android.view.*
-import androidx.appcompat.app.AlertDialog
-import androidx.core.view.MenuHost
-import androidx.core.view.MenuProvider
-import androidx.lifecycle.Lifecycle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import com.example.socialmedia.databinding.FragmentHomeBinding
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
+import com.example.socialmedia.ui.main.BaseFragment
 
 class HomeFragment : BaseFragment() {
     private var _binding: FragmentHomeBinding? = null

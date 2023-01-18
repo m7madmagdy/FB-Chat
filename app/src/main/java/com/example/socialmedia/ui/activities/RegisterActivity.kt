@@ -1,4 +1,4 @@
-package com.example.socialmedia
+package com.example.socialmedia.ui.activities
 
 import android.content.Intent
 import android.content.res.ColorStateList
@@ -13,6 +13,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.example.socialmedia.R
 import com.example.socialmedia.databinding.ActivityRegisterBinding
 import com.example.socialmedia.utils.ProgressDialog
 import com.google.firebase.auth.FirebaseAuth
@@ -43,40 +44,48 @@ class RegisterActivity : AppCompatActivity() {
             nameEdt.setOnFocusChangeListener { _, hasFocus ->
                 if (hasFocus) {
                     nameLayout.setStartIconTintList(ColorStateList.valueOf(ContextCompat.getColor(
-                        applicationContext, R.color.blue_firebase_btn)))
+                        applicationContext, R.color.blue_firebase_btn
+                    )))
                 }else{
                     nameLayout.setStartIconTintList(ColorStateList.valueOf(ContextCompat.getColor(
-                        applicationContext, R.color.start_icon_tint)))
+                        applicationContext, R.color.start_icon_tint
+                    )))
                 }
             }
 
             phoneEdt.setOnFocusChangeListener { _, hasFocus ->
                 if (hasFocus) {
                     phoneLayout.setStartIconTintList(ColorStateList.valueOf(ContextCompat.getColor(
-                        applicationContext, R.color.blue_firebase_btn)))
+                        applicationContext, R.color.blue_firebase_btn
+                    )))
                 }else{
                     phoneLayout.setStartIconTintList(ColorStateList.valueOf(ContextCompat.getColor(
-                        applicationContext, R.color.start_icon_tint)))
+                        applicationContext, R.color.start_icon_tint
+                    )))
                 }
             }
 
             emailEdt.setOnFocusChangeListener { _, hasFocus ->
                 if (hasFocus) {
                     emailLayout.setStartIconTintList(ColorStateList.valueOf(ContextCompat.getColor(
-                        applicationContext, R.color.blue_firebase_btn)))
+                        applicationContext, R.color.blue_firebase_btn
+                    )))
                 }else{
                     emailLayout.setStartIconTintList(ColorStateList.valueOf(ContextCompat.getColor(
-                        applicationContext, R.color.start_icon_tint)))
+                        applicationContext, R.color.start_icon_tint
+                    )))
                 }
             }
 
             passwordEdt.setOnFocusChangeListener { _, hasFocus ->
                 if (hasFocus) {
                     passwordLayout.setStartIconTintList(ColorStateList.valueOf(ContextCompat.getColor(
-                        applicationContext, R.color.blue_firebase_btn)))
+                        applicationContext, R.color.blue_firebase_btn
+                    )))
                 }else{
                     passwordLayout.setStartIconTintList(ColorStateList.valueOf(ContextCompat.getColor(
-                        applicationContext, R.color.start_icon_tint)))
+                        applicationContext, R.color.start_icon_tint
+                    )))
                 }
             }
         }

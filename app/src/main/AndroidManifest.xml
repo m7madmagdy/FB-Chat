@@ -23,8 +23,8 @@
         tools:targetApi="31">
 
         <activity
-            android:name=".DashboardActivity"
-            android:windowSoftInputMode="adjustPan"
+            android:name=".ui.activities.DashboardActivity"
+            android:theme="@style/Theme.Dashboard"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -37,25 +37,25 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".FullScreenPictureActivity"
+            android:name=".ui.activities.FullScreenPictureActivity"
             android:launchMode="singleTask"
             android:exported="false" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".ui.activities.LoginActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".ui.main.MainActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".RegisterActivity"
+            android:name=".ui.activities.RegisterActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
