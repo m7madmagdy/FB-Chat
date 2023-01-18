@@ -5,16 +5,14 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.*
-import android.widget.TextView
 import android.widget.Toast
-import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.socialmedia.data.User
 import com.example.socialmedia.databinding.FragmentUsersBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
-import java.lang.reflect.Field
 import java.util.*
 
 
@@ -66,7 +64,7 @@ class UsersFragment : BaseFragment() {
                             usersList.add(modelUser)
                         }
                         usersAdapter.setUsers(usersList)
-                        binding.shimmerLayout.visibility = View.GONE
+                        binding.shimmerLayout.isVisible = false
                     }
                 }
 

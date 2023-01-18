@@ -5,6 +5,7 @@ import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.socialmedia.data.User
@@ -65,7 +66,7 @@ class UsersAdapter(
             binding.apply {
                 if (binding.userEmail.text != root.context.getString(R.string.admin_email)) {
                     binding.userName.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null)
-                }else{
+                } else {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                         binding.userName.tooltipText = "Verified"
                     }
@@ -74,7 +75,7 @@ class UsersAdapter(
         }
 
         override fun onClick(v: View) {
-            onItemClicked(v, adapterPosition)
+            onItemClicked(v, absoluteAdapterPosition)
         }
     }
 }
