@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'com.google.gms.google-services'
     id 'androidx.navigation.safeargs.kotlin'
+    id 'com.google.firebase.crashlytics'
 }
 
 android {
@@ -57,6 +58,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics-ktx:21.2.0'
     implementation 'com.google.firebase:firebase-database-ktx:20.1.0'
     implementation 'com.google.firebase:firebase-storage-ktx:20.1.0'
+    implementation 'com.google.firebase:firebase-crashlytics-ktx:18.3.2'
     // Firebase Google sign in
     implementation 'com.google.android.gms:play-services-auth:20.4.0'
     // Lottie Animation
@@ -77,10 +79,9 @@ dependencies {
     implementation 'com.facebook.shimmer:shimmer:0.5.0'
     // PhotoView
     implementation 'com.github.chrisbanes:PhotoView:2.3.0'
-    // lifecycle
+    // Lifecycle
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
-
-    // Animated BottomBar
+    // AnimatedBottomBar
     implementation 'nl.joery.animatedbottombar:library:1.1.0'
 
 }
