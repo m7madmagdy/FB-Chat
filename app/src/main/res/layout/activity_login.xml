@@ -10,7 +10,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp">
+        android:layout_margin="20dp"
+        android:gravity="center">
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/lottie_animation"
@@ -134,7 +135,7 @@
             android:layout_below="@id/google_sign_in_btn"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="30dp"
             android:gravity="center"
             android:padding="10dp"
             android:text="@string/not_have_account_register"

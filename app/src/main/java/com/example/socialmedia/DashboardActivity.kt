@@ -1,21 +1,17 @@
 package com.example.socialmedia
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.text.TextUtils
 import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.SearchView
-import androidx.core.view.MenuHost
-import androidx.core.view.MenuProvider
-import androidx.lifecycle.Lifecycle
+import androidx.appcompat.view.menu.MenuBuilder
+import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
-import androidx.navigation.ui.setupWithNavController
 import com.example.socialmedia.databinding.ActivityDashboardBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -24,6 +20,7 @@ class DashboardActivity : AppCompatActivity() {
     private var _binding: ActivityDashboardBinding? = null
     private val binding get() = _binding!!
     private lateinit var firebaseAuth: FirebaseAuth
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,12 +30,15 @@ class DashboardActivity : AppCompatActivity() {
         initNavController()
     }
 
+    @SuppressLint("RestrictedApi")
     private fun initNavController() {
-        val bottomNavView = binding.bottomNavigation
+        val menu = MenuBuilder(this)
+        val inflater = menuInflater
+        inflater.inflate(R.menu.bottom_nav_menu, menu)
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
-        val navController = navHostFragment.navController
-        bottomNavView.setupWithNavController(navController)
+        navController = navHostFragment.navController
+        binding.bottomBar.setupWithNavController(menu, navController)
         NavigationUI.setupActionBarWithNavController(this, navController)
     }
 
@@ -50,7 +50,7 @@ class DashboardActivity : AppCompatActivity() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
         return super.onCreateOptionsMenu(menu)
     }

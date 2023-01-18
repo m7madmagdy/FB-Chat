@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/homeFragment"
-        android:icon="@drawable/home_selector"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_home_filled"
         android:title="@string/home" />
 
     <item
         android:id="@+id/profileFragment"
-        android:icon="@drawable/profile_selector"
+        android:icon="@drawable/ic_profile_filled"
+        app:showAsAction="ifRoom"
         android:title="@string/profile" />
 
     <item
         android:id="@+id/usersFragment"
-        android:icon="@drawable/users_selector"
+        app:showAsAction="ifRoom"
+        android:icon="@drawable/ic_groups_filled"
         android:title="@string/users" />
 
 </menu>
