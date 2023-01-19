@@ -73,7 +73,7 @@ class DashboardActivity : AppCompatActivity() {
         builder.setTitle(getString(R.string.sign_out))
 
         builder.setPositiveButton(getString(R.string.sign_out)) { _, _ ->
-            if (user != null) {
+            if (user == null) {
                 Toast.makeText(this, "Failed..", Toast.LENGTH_SHORT).show()
             } else {
                 firebaseAuth.signOut()
