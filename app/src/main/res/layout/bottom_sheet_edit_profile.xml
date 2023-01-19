@@ -42,6 +42,7 @@
                     android:padding="8dp"
                     android:text="@string/edit_profile"
                     android:textColor="@color/black"
+                    android:fontFamily="@font/poppins_semibold"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     tools:ignore="RelativeOverlap" />

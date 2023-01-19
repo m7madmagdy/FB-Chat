@@ -38,7 +38,8 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:contentDescription="@string/add_photo"
                 android:src="@drawable/ic_add_a_photo"
-                app:tint="@color/black" />
+                app:tint="@color/black"
+                tools:targetApi="o" />
 
         </androidx.cardview.widget.CardView>
 
@@ -84,7 +85,8 @@
                         android:background="?attr/selectableItemBackgroundBorderless"
                         android:contentDescription="@string/add_photo"
                         android:src="@drawable/ic_add_a_photo"
-                        app:tint="@color/black" />
+                        app:tint="@color/black"
+                        tools:targetApi="o" />
 
                 </androidx.cardview.widget.CardView>
 
@@ -97,6 +99,7 @@
                     android:layout_marginRight="10dp"
                     android:background="?attr/selectableItemBackground"
                     android:drawablePadding="4dp"
+                    android:fontFamily="@font/poppins_semibold"
                     android:tooltipText="Edit Profile"
                     android:gravity="center"
                     android:padding="8dp"
@@ -106,7 +109,8 @@
                     android:textSize="16sp"
                     android:textStyle="bold"
                     app:drawableLeftCompat="@drawable/ic_edit"
-                    app:drawableTint="@color/black" />
+                    app:drawableTint="@color/black"
+                    tools:targetApi="o" />
 
             </RelativeLayout>
 
@@ -115,11 +119,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"
+                android:fontFamily="@font/poppins_semibold"
                 android:drawablePadding="4dp"
-                android:fontFamily="sans-serif-black"
                 android:textColor="@color/black"
-                android:textSize="22sp"
+                android:textSize="20sp"
                 android:visibility="invisible"
+                android:textStyle="bold"
                 app:drawableRightCompat="@drawable/ic_verified"
                 app:drawableTint="@color/blue_firebase_btn"
                 tools:text="Mohamed Magdy" />
@@ -128,7 +133,6 @@
                 android:id="@+id/user_email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
                 android:textColor="@color/black"
                 tools:text="mohamedmagdysaber@gmail.com" />
 

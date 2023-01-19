@@ -9,9 +9,9 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fontFamily="sans-serif-black"
         android:gravity="center"
         android:text="@string/chats"
+        android:fontFamily="@font/poppins_semibold"
         android:textColor="@color/black"
         android:textSize="30sp" />
 

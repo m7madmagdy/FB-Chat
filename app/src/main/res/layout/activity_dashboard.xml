@@ -14,6 +14,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:title="@string/home"
         app:menu="@menu/main_menu"
         app:navigationIcon="@drawable/navigate_up_back_left"
         app:navigationIconTint="@color/black" />
