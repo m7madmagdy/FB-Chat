@@ -36,10 +36,10 @@ class RegisterActivity : AppCompatActivity() {
         initActionBar()
         initUserRegister()
         initUserLogin()
-        initIconsColor()
+        initEditTextIconsColor()
     }
 
-    private fun initIconsColor() {
+    private fun initEditTextIconsColor() {
         binding.apply {
             nameEdt.setOnFocusChangeListener { _, hasFocus ->
                 if (hasFocus) {

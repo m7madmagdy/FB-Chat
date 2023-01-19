@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.view.menu.MenuBuilder
@@ -50,14 +51,6 @@ class DashboardActivity : AppCompatActivity() {
         NavigationUI.setupActionBarWithNavController(this, navController)
     }
 
-    private fun checkUserStatus() {
-        val user: FirebaseUser? = firebaseAuth.currentUser
-        if (user == null) {
-            startActivity(Intent(this, MainActivity::class.java))
-            finish()
-        }
-    }
-
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
         return super.onCreateOptionsMenu(menu)
@@ -74,12 +67,19 @@ class DashboardActivity : AppCompatActivity() {
     }
 
     private fun alertUserSignOut() {
+        val user: FirebaseUser? = firebaseAuth.currentUser
+
         val builder = AlertDialog.Builder(this)
         builder.setTitle(getString(R.string.sign_out))
 
         builder.setPositiveButton(getString(R.string.sign_out)) { _, _ ->
-            firebaseAuth.signOut()
-            startActivity(Intent(this, MainActivity::class.java))
+            if (user != null) {
+                Toast.makeText(this, "Failed..", Toast.LENGTH_SHORT).show()
+            } else {
+                firebaseAuth.signOut()
+                startActivity(Intent(this, MainActivity::class.java))
+                finish()
+            }
         }
 
         builder.setNegativeButton(getString(R.string.cancel)) { dialog, _ ->
@@ -87,6 +87,14 @@ class DashboardActivity : AppCompatActivity() {
         }
 
         builder.create().show()
+    }
+
+    private fun checkUserStatus() {
+        val user: FirebaseUser? = firebaseAuth.currentUser
+        if (user == null) {
+            startActivity(Intent(this, MainActivity::class.java))
+            finish()
+        }
     }
 
     override fun onStart() {

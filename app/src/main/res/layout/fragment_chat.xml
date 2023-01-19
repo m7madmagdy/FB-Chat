@@ -24,16 +24,16 @@
                 android:id="@+id/back_btn"
                 android:layout_width="45dp"
                 android:layout_height="60dp"
-                android:tooltipText="Navigate Up"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:backgroundTint="@color/second_bg"
+                android:contentDescription="@string/back"
                 android:src="@drawable/navigate_up_back_left"
+                android:tooltipText="Navigate Up"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:tint="@color/black"
-                tools:targetApi="o"
-                android:contentDescription="@string/back" />
+                tools:targetApi="o" />
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/avatar"
@@ -41,7 +41,7 @@
                 android:layout_height="55dp"
                 android:layout_margin="10dp"
                 android:padding="4dp"
-                android:src="@mipmap/ic_launcher_round"
+                android:src="@mipmap/user"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/back_btn"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -62,12 +62,15 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-black"
-                    tools:text="Mohamed Magdy"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/circleImageView"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Mohamed Magdy" />
+
+                <!-- Receiver status online or offline -->
+                <!-- will implement later -->
 
                 <TextView
                     android:id="@+id/status"
