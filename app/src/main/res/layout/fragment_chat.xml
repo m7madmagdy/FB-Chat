@@ -33,7 +33,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:tint="@color/black"
-                tools:targetApi="o" />
+                tools:targetApi="o"
+                android:contentDescription="@string/back" />
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/circleImageView"

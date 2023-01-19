@@ -7,7 +7,7 @@ import android.text.TextUtils
 import android.view.*
 import androidx.core.view.isVisible
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.socialmedia.R
 import com.example.socialmedia.data.User
 import com.example.socialmedia.databinding.FragmentUsersBinding
@@ -53,7 +53,7 @@ class UsersFragment : BaseFragment() {
     private fun initRecyclerView() {
         binding.usersRecyclerview.apply {
             setHasFixedSize(true)
-            layoutManager = GridLayoutManager(requireContext(), 2)
+            layoutManager = LinearLayoutManager(requireContext())
             adapter = usersAdapter
         }
     }
@@ -70,7 +70,9 @@ class UsersFragment : BaseFragment() {
                             usersList.add(modelUser)
                         }
                         usersAdapter.setUsers(usersList)
-                        binding.shimmerLayout.isVisible = false
+                        binding.apply {
+                            shimmerLayout.isVisible = false
+                        }
                     }
                 }
 
@@ -110,7 +112,8 @@ class UsersFragment : BaseFragment() {
         val user = usersAdapter.getUser(position)
         when (v.id) {
             R.id.user_layout -> {
-                val action = UsersFragmentDirections.actionUsersFragmentToChatFragment(user?.uid.toString())
+                val action =
+                    UsersFragmentDirections.actionUsersFragmentToChatFragment(user?.uid.toString())
                 findNavController().navigate(action)
             }
         }

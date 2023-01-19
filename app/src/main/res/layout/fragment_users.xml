@@ -1,70 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/search_card"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="10dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:fitsSystemWindows="true"
+        android:scrollbars="vertical">
 
-        <SearchView
-            android:id="@+id/search"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:iconifiedByDefault="false"
-            android:queryBackground="@android:color/transparent"
-            android:queryHint="@string/user_search"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_height="match_parent">
 
-    </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/search_card"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_margin="10dp"
+                app:cardBackgroundColor="@color/second_bg"
+                app:cardCornerRadius="40dp"
+                app:cardElevation="1dp">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/users_recyclerview"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search_card"
-        tools:listitem="@layout/user_card" />
+                <SearchView
+                    android:id="@+id/search"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:iconifiedByDefault="false"
+                    android:queryBackground="@android:color/transparent"
+                    android:queryHint="@string/user_search"
+                    android:tooltipText="@string/search"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:targetApi="o" />
 
-    <com.facebook.shimmer.ShimmerFrameLayout
-        android:id="@+id/shimmer_layout"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/search_card">
+            </androidx.cardview.widget.CardView>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/users_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/search_card"
+                android:layout_marginLeft="6dp"
+                android:background="@color/main_bg"
+                tools:listitem="@layout/user_card" />
 
-            <include layout="@layout/user_shimmer" />
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmer_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/search_card"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="5dp"
+                android:orientation="vertical"
+                android:paddingTop="5dp">
 
-            <include layout="@layout/user_shimmer" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-            <include layout="@layout/user_shimmer" />
+                    <include layout="@layout/user_shimmer" />
 
-            <include layout="@layout/user_shimmer" />
+                    <include layout="@layout/user_shimmer" />
 
-        </LinearLayout>
+                    <include layout="@layout/user_shimmer" />
 
-    </com.facebook.shimmer.ShimmerFrameLayout>
+                    <include layout="@layout/user_shimmer" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+                    <include layout="@layout/user_shimmer" />
+
+                    <include layout="@layout/user_shimmer" />
+
+                    <include layout="@layout/user_shimmer" />
+
+                    <include layout="@layout/user_shimmer" />
+
+                    <include layout="@layout/user_shimmer" />
+
+                </LinearLayout>
+
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
+        </RelativeLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
