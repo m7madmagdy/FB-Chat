@@ -48,7 +48,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@id/search_card"
-                android:layout_marginLeft="6dp"
+                android:paddingLeft="8dp"
                 android:background="@color/main_bg"
                 tools:listitem="@layout/user_card" />
 
