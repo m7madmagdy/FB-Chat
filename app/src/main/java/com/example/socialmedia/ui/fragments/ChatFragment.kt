@@ -8,6 +8,7 @@ import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.text.Editable
+import android.text.TextUtils
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
@@ -35,6 +36,7 @@ class ChatFragment : BaseFragment() {
     private lateinit var firebaseUser: FirebaseUser
     private lateinit var firebaseDatabase: FirebaseDatabase
     private lateinit var userDatabaseReference: DatabaseReference
+    private lateinit var databaseRef: DatabaseReference
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var permissions: Array<String>
     private lateinit var myUid: String
@@ -67,11 +69,13 @@ class ChatFragment : BaseFragment() {
         firebaseAuth = FirebaseAuth.getInstance()
         firebaseUser = FirebaseAuth.getInstance().currentUser!!
         firebaseDatabase = FirebaseDatabase.getInstance()
+        databaseRef = FirebaseDatabase.getInstance().reference
         userDatabaseReference = firebaseDatabase.getReference("Users")
     }
 
     private fun initUserInfo() {
-        Toast.makeText(requireContext(), "Chating with ${arguments.user.name}", Toast.LENGTH_SHORT)
+        val args = arguments.user
+        Toast.makeText(requireContext(), "Chating with ${args.name}", Toast.LENGTH_SHORT)
             .show()
 
         val userQuery = userDatabaseReference.orderByChild("uid").equalTo(hisUid)
@@ -79,19 +83,25 @@ class ChatFragment : BaseFragment() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 snapshot.children.forEach { ds ->
                     val name = "" + ds.child("name").value
+                    val email = "" + ds.child("email").value
                     val image = "" + ds.child("avatar").value
                     binding.apply {
                         Glide.with(requireContext())
                             .load(image)
                             .into(avatar)
                         userName.text = name
+                        if (email != root.context.getString(R.string.admin_email)) {
+                            userName.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null)
+                        } else {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                                userName.tooltipText = "Verified"
+                            }
+                        }
                     }
                 }
             }
 
-            override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(requireContext(), error.message, Toast.LENGTH_SHORT).show()
-            }
+            override fun onCancelled(error: DatabaseError) {}
         })
     }
 
@@ -100,14 +110,20 @@ class ChatFragment : BaseFragment() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun afterTextChanged(s: Editable?) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-                binding.sendMessageBtn.isEnabled = s.toString().isNotEmpty()
-                binding.sendMessageBtn.setOnClickListener { sendMessage(s.toString()) }
+                val messageTxt = binding.messageEdt.text.toString().trim()
+
+                if (TextUtils.isEmpty(messageTxt)) {
+                    binding.sendMessageBtn.isEnabled = false
+                } else {
+                    binding.sendMessageBtn.isEnabled = true
+                    binding.sendMessageBtn.setOnClickListener { sendMessage(s.toString()) }
+                }
             }
         })
     }
 
     private fun sendMessage(message: String) {
-        val databaseRef = FirebaseDatabase.getInstance().reference
+        val myUid = firebaseUser.uid
         val values = hashMapOf<String, Any>()
         values.apply {
             put("sender", myUid)
@@ -116,6 +132,7 @@ class ChatFragment : BaseFragment() {
             databaseRef.child("Chats").push().setValue(values)
         }
         binding.messageEdt.text.clear()
+        Toast.makeText(requireContext(), "Message sent", Toast.LENGTH_SHORT).show()
     }
 
     private fun initPermissions() {
@@ -162,18 +179,6 @@ class ChatFragment : BaseFragment() {
         }
 
         builder.create().show()
-    }
-
-    private fun checkUserStatus() {
-        val user: FirebaseUser? = firebaseAuth.currentUser
-        if (user != null) {
-            myUid = user.uid // Currently signed in user
-        }
-    }
-
-    override fun onStart() {
-        checkUserStatus()
-        super.onStart()
     }
 
     override fun onStop() {

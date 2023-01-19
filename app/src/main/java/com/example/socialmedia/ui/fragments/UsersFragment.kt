@@ -1,7 +1,6 @@
 package com.example.socialmedia.ui.fragments
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.*
@@ -13,7 +12,6 @@ import com.example.socialmedia.data.User
 import com.example.socialmedia.databinding.FragmentUsersBinding
 import com.example.socialmedia.ui.adapters.UsersAdapter
 import com.example.socialmedia.ui.main.BaseFragment
-import com.example.socialmedia.ui.main.MainActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.crashlytics.FirebaseCrashlytics
@@ -36,7 +34,6 @@ class UsersFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentUsersBinding.inflate(layoutInflater)
-        usersList = ArrayList()
         initFirebase()
         initRecyclerView()
         getAllUsers()
@@ -51,6 +48,7 @@ class UsersFragment : BaseFragment() {
     }
 
     private fun initRecyclerView() {
+        usersList = ArrayList()
         binding.usersRecyclerview.apply {
             setHasFixedSize(true)
             layoutManager = LinearLayoutManager(requireContext())
@@ -59,7 +57,6 @@ class UsersFragment : BaseFragment() {
     }
 
     private fun getAllUsers() {
-
         try {
             firebaseDatabase.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
@@ -68,10 +65,8 @@ class UsersFragment : BaseFragment() {
                         val modelUser = it.getValue(User::class.java)
                         if (!modelUser?.uid.equals(firebaseUser.uid)) {
                             usersList.add(modelUser)
-                        }
-                        usersAdapter.setUsers(usersList)
-                        binding.apply {
-                            shimmerLayout.isVisible = false
+                            usersAdapter.setUsers(usersList)
+                            binding.shimmerLayout.isVisible = false
                         }
                     }
                 }
@@ -89,18 +84,17 @@ class UsersFragment : BaseFragment() {
             @SuppressLint("NotifyDataSetChanged")
             override fun onDataChange(snapshot: DataSnapshot) {
                 usersList.clear()
-                snapshot.children.forEach {
-                    val modelUser = it.getValue(User::class.java)
-                    if (!modelUser?.uid.equals(firebaseUser.uid)) {
-                        if (modelUser?.name?.lowercase(Locale.ROOT)!!
-                                .contains(query!!.lowercase(Locale.ROOT)) || modelUser.email?.lowercase(
-                                Locale.ROOT
-                            )!!.contains(query)
-                        ) {
+                snapshot.children.forEach { ds ->
+                    val modelUser = ds.getValue(User::class.java)
+                    val queryName = modelUser?.name?.lowercase(Locale.ROOT)!!
+                        .contains(query!!.lowercase(Locale.ROOT))
+                    val queryEmail = modelUser.email?.lowercase(Locale.ROOT)!!.contains(query)
+                    if (!modelUser.uid.equals(firebaseUser.uid)) {
+                        if (queryName || queryEmail) {
                             usersList.add(modelUser)
+                            usersAdapter.setUsers(usersList)
                         }
                     }
-                    usersAdapter.setUsers(usersList)
                 }
             }
 
@@ -140,13 +134,5 @@ class UsersFragment : BaseFragment() {
                 return false
             }
         })
-    }
-
-    private fun checkUserStatus() {
-        val user: FirebaseUser? = firebaseAuth.currentUser
-        if (user == null) {
-            startActivity(Intent(requireContext(), MainActivity::class.java))
-            activity?.finish()
-        }
     }
 }

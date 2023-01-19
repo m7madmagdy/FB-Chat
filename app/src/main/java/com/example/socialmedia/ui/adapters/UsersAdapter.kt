@@ -60,12 +60,12 @@ class UsersAdapter(
             }
 
             binding.apply {
-                if (binding.userEmail.text != root.context.getString(R.string.admin_email)) {
-                    binding.userName.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null)
-                } else {
+                if (userEmail.text == root.context.getString(R.string.admin_email)) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                        binding.userName.tooltipText = "Verified"
+                        userName.tooltipText = "Verified"
                     }
+                } else {
+                    userName.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null)
                 }
             }
         }
