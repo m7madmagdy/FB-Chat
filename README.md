@@ -9,7 +9,11 @@
 
 ## **App Screenshots**
 
-<img src="https://i.imgur.com/RqSH22T.png" width="200"><img src="https://i.imgur.com/fCXBhUw.png" width="200"><img src="https://i.imgur.com/RlnOq0B.png" width="200"><img src="https://i.imgur.com/wjyFubC.png" width="200"><img src="https://i.imgur.com/TAT4TX6.png" width="200"><img src="https://i.imgur.com/m3YH3dy.png" width="200"><img src="https://i.imgur.com/q3dxM9K.png" width="200"><img src="https://i.imgur.com/pp6NZ4b.png" width="200"><img src="https://i.imgur.com/lXfrFNy.png" width="200">
+<img src="https://i.imgur.com/RqSH22T.png" width="200"><img src="https://i.imgur.com/fCXBhUw.png" width="200">
+<img src="https://i.imgur.com/RlnOq0B.png" width="200"><img src="https://i.imgur.com/wjyFubC.png" width="200">
+<img src="https://i.imgur.com/TAT4TX6.png" width="200"><img src="https://i.imgur.com/nGsl1r3.png" width="200">
+<img src="https://i.imgur.com/m3YH3dy.png" width="200"><img src="https://i.imgur.com/q3dxM9K.png" width="200">
+<img src="https://i.imgur.com/pp6NZ4b.png" width="200"><img src="https://i.imgur.com/lXfrFNy.png" width="200">
 
 ## **Dependencies**
 -  [Firebase Tools](https://firebase.google.com/)
