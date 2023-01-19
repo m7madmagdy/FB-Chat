@@ -28,16 +28,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    /* TODO: Part 08 We will do the followings.
+    /* TODO: Part 11 We will do the followings.
 
-        * Show all Users from database (Firebase) in Recyclerview
-            we will show the following info for each user:
-            1- Profile Picture
-            2- Cover Photo
-            3- Name
-            4- Email
-            5- Phone Number
-
+        1- Show Receiver profile picture and name in toolbar
+        2- Send message to any user
     */
     override fun onDestroy() {
         super.onDestroy()
