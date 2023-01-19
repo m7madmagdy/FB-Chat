@@ -18,6 +18,7 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.bumptech.glide.Glide
 import com.example.socialmedia.R
 import com.example.socialmedia.databinding.FragmentChatBinding
 import com.example.socialmedia.ui.main.BaseFragment
@@ -36,8 +37,9 @@ class ChatFragment : BaseFragment() {
         _binding = FragmentChatBinding.inflate(layoutInflater)
         initPermissions()
         initNotificationPermission()
-        handleMessage()
-        backFragment()
+        initSendMessage()
+        initUserInfo()
+        initNavigateUp()
         return binding.root
     }
 
@@ -47,11 +49,22 @@ class ChatFragment : BaseFragment() {
         hideToolbar()
     }
 
-    private fun backFragment() {
+    private fun initNavigateUp() {
         binding.backBtn.setOnClickListener { findNavController().popBackStack() }
     }
 
-    private fun handleMessage() {
+    private fun initUserInfo() {
+        val args = arguments.user
+        Toast.makeText(requireContext(), "Chating with ${args.name}", Toast.LENGTH_SHORT).show()
+        binding.apply {
+            Glide.with(requireContext())
+                .load(args.avatar)
+                .into(avatar)
+            userName.text = args.name
+        }
+    }
+
+    private fun initSendMessage() {
         binding.messageEdt.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
@@ -122,5 +135,4 @@ class ChatFragment : BaseFragment() {
         super.onDestroyView()
         _binding = null
     }
-
 }

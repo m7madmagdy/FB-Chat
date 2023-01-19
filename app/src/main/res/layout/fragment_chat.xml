@@ -22,10 +22,9 @@
 
             <ImageButton
                 android:id="@+id/back_btn"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="45dp"
+                android:layout_height="60dp"
                 android:tooltipText="Navigate Up"
-                android:layout_marginLeft="8dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:backgroundTint="@color/second_bg"
                 android:src="@drawable/navigate_up_back_left"
@@ -37,7 +36,7 @@
                 android:contentDescription="@string/back" />
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/circleImageView"
+                android:id="@+id/avatar"
                 android:layout_width="55dp"
                 android:layout_height="55dp"
                 android:layout_margin="10dp"
@@ -55,7 +54,7 @@
                 android:paddingLeft="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/circleImageView"
+                app:layout_constraintStart_toEndOf="@+id/avatar"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
@@ -63,7 +62,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-black"
-                    android:text="Mohamed Magdy"
+                    tools:text="Mohamed Magdy"
                     android:textColor="@color/black"
                     android:textSize="16sp"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -95,7 +94,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:background="@color/white"
+            android:background="@color/second_bg"
             android:elevation="20dp"
             android:gravity="center"
             android:orientation="horizontal"

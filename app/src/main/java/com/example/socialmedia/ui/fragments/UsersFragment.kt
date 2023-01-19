@@ -113,7 +113,7 @@ class UsersFragment : BaseFragment() {
         when (v.id) {
             R.id.user_layout -> {
                 val action =
-                    UsersFragmentDirections.actionUsersFragmentToChatFragment(user?.uid.toString())
+                    UsersFragmentDirections.actionUsersFragmentToChatFragment(user!!)
                 findNavController().navigate(action)
             }
         }
