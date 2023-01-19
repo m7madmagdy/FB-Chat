@@ -51,10 +51,6 @@ class UsersAdapter(
         fun setUserView(user: User) {
             binding.apply {
                 Glide.with(root.context)
-                    .load(user.cover)
-                    .into(coverPhoto)
-
-                Glide.with(root.context)
                     .load(user.avatar)
                     .into(avatarImage)
 
