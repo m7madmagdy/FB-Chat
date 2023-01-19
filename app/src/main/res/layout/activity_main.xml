@@ -24,7 +24,7 @@
         android:textSize="20sp"
         app:layout_constraintTop_toTopOf="@+id/lottie_animation"
         android:textColor="@color/black"
-        android:fontFamily="sans-serif-black"/>
+        android:fontFamily="@font/poppins_semibold"/>
 
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lottie_animation"

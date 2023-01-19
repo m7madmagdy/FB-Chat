@@ -34,9 +34,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawablePadding="6dp"
-            android:fontFamily="sans-serif-black"
+            android:fontFamily="@font/poppins_semibold"
             android:textColor="@color/black"
-            android:textSize="12sp"
+            android:textSize="14sp"
             app:drawableRightCompat="@drawable/ic_verified"
             app:drawableTint="@color/blue_firebase_btn"
             tools:text="Mohamed Magdy" />
@@ -45,9 +45,8 @@
             android:id="@+id/user_email"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="1dp"
             android:textColor="@color/black"
-            android:textSize="11sp"
+            android:textSize="12sp"
             tools:text="mohamedmagdysaber@gmail.com" />
 
         <TextView
@@ -56,7 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="1dp"
             android:textColor="@color/black"
-            android:textSize="11sp"
+            android:textSize="12sp"
             tools:text="01287303441" />
 
     </LinearLayout>

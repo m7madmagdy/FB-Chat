@@ -35,6 +35,7 @@
                     android:iconifiedByDefault="false"
                     android:queryBackground="@android:color/transparent"
                     android:queryHint="@string/user_search"
+                    android:fontFamily="@font/poppins_semibold"
                     android:tooltipText="@string/search"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"

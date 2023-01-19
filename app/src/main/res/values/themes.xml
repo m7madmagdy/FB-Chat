@@ -28,7 +28,6 @@
     <style name="Widget.App.Toolbar" parent="Widget.MaterialComponents.Toolbar.Primary">
         <item name="materialThemeOverlay">@style/ThemeOverlay.App.Toolbar</item>
         <item name="titleTextAppearance">@style/TextAppearance.Shrine.Headline6</item>
-        <item name="subtitleTextAppearance">@style/TextAppearance.App.Subtitle1</item>
     </style>
 
     <style name="ThemeOverlay.App.Toolbar" parent="">

@@ -3,6 +3,7 @@ package com.example.socialmedia.ui.fragments
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -131,8 +132,10 @@ class ChatFragment : BaseFragment() {
             put("message", message)
             databaseRef.child("Chats").push().setValue(values)
         }
-        binding.messageEdt.text.clear()
+        val soundEffect = MediaPlayer.create(requireContext(), R.raw.message_sent)
+        soundEffect.start()
         Toast.makeText(requireContext(), "Message sent", Toast.LENGTH_SHORT).show()
+        binding.messageEdt.text.clear()
     }
 
     private fun initPermissions() {
