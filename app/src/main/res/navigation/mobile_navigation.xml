@@ -38,8 +38,8 @@
         android:name="com.example.socialmedia.ui.fragments.ChatFragment"
         tools:layout="@layout/fragment_chat" >
         <argument
-            android:name="uid"
-            app:argType="string" />
+            android:name="user"
+            app:argType="com.example.socialmedia.data.User" />
     </fragment>
 
 </navigation>

@@ -1,5 +1,9 @@
 package com.example.socialmedia.data
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 data class User(
     var name: String? = null,
     var email: String? = null,
@@ -7,4 +11,4 @@ data class User(
     var uid: String? = null,
     var avatar: String? = null,
     var cover: String? = null
-)
+) : Parcelable
