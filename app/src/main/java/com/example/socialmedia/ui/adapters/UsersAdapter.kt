@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.socialmedia.R
 import com.example.socialmedia.data.User
-import com.example.socialmedia.databinding.UserCardBinding
+import com.example.socialmedia.databinding.RowUsersCardBinding
 
 class UsersAdapter(
     private val onItemClicked: (v: View, position: Int) -> Unit
@@ -17,7 +17,7 @@ class UsersAdapter(
     var usersList: ArrayList<User?> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UsersViewHolder {
-        val view = UserCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val view = RowUsersCardBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
         return UsersViewHolder(view, onItemClicked)
     }
@@ -40,7 +40,7 @@ class UsersAdapter(
     }
 
     inner class UsersViewHolder(
-        val binding: UserCardBinding,
+        val binding: RowUsersCardBinding,
         private val onItemClicked: (v: View, position: Int) -> Unit
     ) : RecyclerView.ViewHolder(binding.root), View.OnClickListener {
 

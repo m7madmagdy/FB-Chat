@@ -62,5 +62,7 @@
     <string name="send_message">Send message</string>
     <string name="enable_notification">الـسـماح للإشـعـارات</string>
     <string name="enable">ENABLE</string>
+    <string name="seen">Seen</string>
+    <string name="delivered">Delivered</string>
 
 </resources>
