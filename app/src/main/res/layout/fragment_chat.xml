@@ -7,7 +7,7 @@
     android:fillViewport="true"
     android:scrollbars="vertical">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -93,23 +93,24 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/chat_recyclerview"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toTopOf="@+id/chat_layout"
-            app:layout_constraintTop_toBottomOf="@+id/header_layout" />
+            android:layout_height="match_parent"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:layout_above="@id/chat_layout"
+            android:layout_below="@id/header_layout"
+            tools:listitem="@layout/row_chat_right" />
 
         <LinearLayout
             android:id="@+id/chat_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
             android:background="@color/second_bg"
             android:elevation="20dp"
             android:gravity="center"
             android:orientation="horizontal"
-            android:padding="2dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            android:padding="2dp">
 
             <EditText
                 android:id="@+id/message_edt"
@@ -134,6 +135,6 @@
 
         </LinearLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </RelativeLayout>
 
 </ScrollView>

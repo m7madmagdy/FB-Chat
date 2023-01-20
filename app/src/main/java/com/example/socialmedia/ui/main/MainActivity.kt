@@ -29,9 +29,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     /* TODO: Part 11 We will do the followings.
+      -> Show sent messages
+         1- Design different layouts for sender and receiver
+         2- Receiver layout on left will contain image, message and time
+         3- Sender layout on right will contain message and time
 
-        1- Show Receiver profile picture and name in toolbar
-        2- Send message to any user
     */
     override fun onDestroy() {
         super.onDestroy()

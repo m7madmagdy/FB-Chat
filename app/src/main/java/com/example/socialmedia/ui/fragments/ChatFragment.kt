@@ -20,9 +20,12 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.socialmedia.R
+import com.example.socialmedia.data.Chat
 import com.example.socialmedia.databinding.FragmentChatBinding
+import com.example.socialmedia.ui.adapters.ChatAdapter
 import com.example.socialmedia.ui.main.BaseFragment
 import com.example.socialmedia.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
@@ -34,20 +37,26 @@ class ChatFragment : BaseFragment() {
     private val binding get() = _binding!!
     private val arguments: ChatFragmentArgs by navArgs()
     private val hisUid by lazy { arguments.user.uid }
+    private val chatAdapter = ChatAdapter()
     private lateinit var firebaseUser: FirebaseUser
     private lateinit var firebaseDatabase: FirebaseDatabase
     private lateinit var userDatabaseReference: DatabaseReference
     private lateinit var databaseRef: DatabaseReference
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var permissions: Array<String>
-    private lateinit var myUid: String
+    private lateinit var hisImage: String
+    private lateinit var seenListener: ValueEventListener
+    private lateinit var userRefForSeen: DatabaseReference
+    private lateinit var chatList: ArrayList<Chat?>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentChatBinding.inflate(layoutInflater)
+        chatList = ArrayList()
         initFirebase()
+        initChatRecyclerview()
         initPermissions()
         initNotificationPermission()
         initSendMessage()
@@ -85,10 +94,10 @@ class ChatFragment : BaseFragment() {
                 snapshot.children.forEach { ds ->
                     val name = "" + ds.child("name").value
                     val email = "" + ds.child("email").value
-                    val image = "" + ds.child("avatar").value
+                    hisImage = "" + ds.child("avatar").value
                     binding.apply {
                         Glide.with(requireContext())
-                            .load(image)
+                            .load(hisImage)
                             .into(avatar)
                         userName.text = name
                         if (email != root.context.getString(R.string.admin_email)) {
@@ -121,21 +130,75 @@ class ChatFragment : BaseFragment() {
                 }
             }
         })
+        readMessages()
+    }
+
+    private fun readMessages() {
+        val dbRef = FirebaseDatabase.getInstance().getReference("Chats")
+        dbRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                chatList.clear()
+                snapshot.children.forEach { ds ->
+                    val chat = ds.getValue(Chat::class.java)
+                    if (chat?.receiver.equals(firebaseUser.uid) && chat?.sender.equals(hisUid) || chat?.receiver.equals(
+                            hisUid
+                        ) && chat?.sender.equals(firebaseUser.uid)
+                    ) {
+                        chatList.add(chat)
+                        chatAdapter.setChats(chatList)
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {}
+        })
     }
 
     private fun sendMessage(message: String) {
         val myUid = firebaseUser.uid
+        val timeStamp = System.currentTimeMillis()
         val values = hashMapOf<String, Any>()
         values.apply {
             put("sender", myUid)
             put("receiver", hisUid!!)
             put("message", message)
+            put("timestamp", timeStamp)
+            put("isSeen", false)
             databaseRef.child("Chats").push().setValue(values)
         }
         val soundEffect = MediaPlayer.create(requireContext(), R.raw.message_sent)
         soundEffect.start()
         Toast.makeText(requireContext(), "Message sent", Toast.LENGTH_SHORT).show()
         binding.messageEdt.text.clear()
+    }
+
+    private fun seenMessage() {
+        userRefForSeen = FirebaseDatabase.getInstance().getReference("Chats")
+        seenListener = userRefForSeen.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                snapshot.children.forEach { ds ->
+                    val chat = ds.getValue(Chat::class.java)
+                    if (chat?.receiver.equals(firebaseUser.uid) && chat?.sender.equals(hisUid)) {
+                        val values = hashMapOf<String, Any>()
+                        values.put("isSeen", true)
+                        ds.ref.updateChildren(values)
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {}
+        })
+
+    }
+
+    private fun initChatRecyclerview() {
+        binding.chatRecyclerview.apply {
+            setHasFixedSize(true)
+            val linearLayout = LinearLayoutManager(requireContext())
+            linearLayout.stackFromEnd = true
+            layoutManager = linearLayout
+            adapter = chatAdapter
+        }
     }
 
     private fun initPermissions() {
@@ -184,14 +247,10 @@ class ChatFragment : BaseFragment() {
         builder.create().show()
     }
 
-    override fun onStop() {
-        super.onStop()
-        showBottomNavigation()
-        showToolbar()
-    }
-
     override fun onDestroyView() {
         super.onDestroyView()
+        showBottomNavigation()
+        showToolbar()
         _binding = null
     }
 }
