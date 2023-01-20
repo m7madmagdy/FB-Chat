@@ -59,10 +59,14 @@ class ChatFragment : BaseFragment() {
         initChatRecyclerview()
         initPermissions()
         initNotificationPermission()
-        initSendMessage()
         initUserInfo()
         initNavigateUp()
         return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+        initSendMessage()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -85,8 +89,7 @@ class ChatFragment : BaseFragment() {
 
     private fun initUserInfo() {
         val args = arguments.user
-        Toast.makeText(requireContext(), "Chating with ${args.name}", Toast.LENGTH_SHORT)
-            .show()
+        Toast.makeText(requireContext(), "Chating with ${args.name}", Toast.LENGTH_SHORT).show()
 
         val userQuery = userDatabaseReference.orderByChild("uid").equalTo(hisUid)
         userQuery.addValueEventListener(object : ValueEventListener {
@@ -131,6 +134,7 @@ class ChatFragment : BaseFragment() {
             }
         })
         readMessages()
+        seenMessage()
     }
 
     private fun readMessages() {
@@ -168,7 +172,6 @@ class ChatFragment : BaseFragment() {
         }
         val soundEffect = MediaPlayer.create(requireContext(), R.raw.message_sent)
         soundEffect.start()
-        Toast.makeText(requireContext(), "Message sent", Toast.LENGTH_SHORT).show()
         binding.messageEdt.text.clear()
     }
 

@@ -1,10 +1,12 @@
 package com.example.socialmedia.ui.adapters
 
 import android.annotation.SuppressLint
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.example.socialmedia.R
 import com.example.socialmedia.data.Chat
@@ -16,10 +18,10 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class ChatAdapter : RecyclerView.Adapter<ChatAdapter.ChatViewHolder>() {
-    var chatList: ArrayList<Chat?> = ArrayList()
     private lateinit var fUser: FirebaseUser
     private lateinit var messageTv: TextView
     private lateinit var timeTv: TextView
+    private var chatList: ArrayList<Chat?> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, view: Int): ChatViewHolder {
         return if (view == MSG_TYPE_RIGHT) {
@@ -44,14 +46,15 @@ class ChatAdapter : RecyclerView.Adapter<ChatAdapter.ChatViewHolder>() {
         }
     }
 
-    @SuppressLint("SetTextI18n")
+    @RequiresApi(Build.VERSION_CODES.O)
+    @SuppressLint("SetTextI18n", "SimpleDateFormat")
     override fun onBindViewHolder(holder: ChatViewHolder, position: Int) {
         val message = chatList[position]?.message
         val timeStamp = chatList[position]?.timestamp
         val date = Date(timeStamp!!)
-        val dateFormat = SimpleDateFormat("dd/MM/yyyy hh:mm aa", Locale.ENGLISH)
-        val dataTime = dateFormat.format(date)
-        timeTv.text = dataTime
+        val formatter = SimpleDateFormat("EEEE hh:mm aa", Locale.getDefault())
+        val result = formatter.format(date)
+        timeTv.text = result
         messageTv.text = message
     }
 
