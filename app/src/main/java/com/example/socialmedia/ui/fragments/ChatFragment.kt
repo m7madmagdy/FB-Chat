@@ -250,10 +250,14 @@ class ChatFragment : BaseFragment() {
         builder.create().show()
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
+    override fun onPause() {
+        super.onPause()
         showBottomNavigation()
         showToolbar()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
         _binding = null
     }
 }
