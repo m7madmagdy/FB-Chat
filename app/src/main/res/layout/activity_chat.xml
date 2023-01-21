@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:scrollbars="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/chat_toolbar"
+            style="@style/Widget.App.Toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            app:navigationIcon="@drawable/navigate_up_back_left"
+            app:navigationIconTint="@color/black">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/header_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/avatar"
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:src="@mipmap/user"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:gravity="left"
+                    android:orientation="vertical"
+                    android:paddingLeft="10dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/avatar"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <TextView
+                        android:id="@+id/user_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawablePadding="4dp"
+                        android:fontFamily="@font/poppins_semibold"
+                        android:gravity="center"
+                        android:textColor="@color/black"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:drawableRightCompat="@drawable/ic_verified"
+                        app:drawableTint="@color/blue_firebase_btn"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/circleImageView"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="Mohamed Magdy" />
+
+                    <!-- Receiver status online or offline -->
+                    <!-- will implement later -->
+
+                    <TextView
+                        android:id="@+id/status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/online"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/circleImageView"
+                        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.appbar.MaterialToolbar>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/chat_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/chat_layout"
+            android:layout_below="@id/chat_toolbar"
+            android:background="@color/main_bg"
+            tools:listitem="@layout/row_chat_right" />
+
+        <LinearLayout
+            android:id="@+id/chat_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:background="@color/second_bg"
+            android:elevation="20dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="2dp">
+
+            <EditText
+                android:id="@+id/message_edt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:autofillHints="yes"
+                android:background="@android:color/transparent"
+                android:hint="@string/start_typing"
+                android:inputType="textCapSentences|textMultiLine"
+                android:padding="14dp"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/send_message_btn"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginRight="4dp"
+                android:background="@drawable/ic_send"
+                android:contentDescription="@string/send_message"
+                android:enabled="false" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</ScrollView>

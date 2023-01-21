@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.example.socialmedia.R
 import com.example.socialmedia.data.Chat
@@ -21,6 +22,7 @@ class ChatAdapter : RecyclerView.Adapter<ChatAdapter.ChatViewHolder>() {
     private lateinit var fUser: FirebaseUser
     private lateinit var messageTv: TextView
     private lateinit var timeTv: TextView
+    private lateinit var isSeenTv: TextView
     private var chatList: ArrayList<Chat?> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, view: Int): ChatViewHolder {
@@ -56,6 +58,18 @@ class ChatAdapter : RecyclerView.Adapter<ChatAdapter.ChatViewHolder>() {
         val result = formatter.format(date)
         timeTv.text = result
         messageTv.text = message
+
+        if (position == chatList.size - 1) {
+            isSeenTv.setText("Delivered")
+
+//            if (chatList[position]?.isSeen == true){
+//                isSeenTv.setText("Seen")
+//            }else{
+//                isSeenTv.setText("Delivered")
+//            }
+        }else{
+            isSeenTv.isVisible = false
+        }
     }
 
     @SuppressLint("NotifyDataSetChanged")
@@ -68,6 +82,7 @@ class ChatAdapter : RecyclerView.Adapter<ChatAdapter.ChatViewHolder>() {
         init {
             messageTv = itemView.findViewById(R.id.message_tv)
             timeTv = itemView.findViewById(R.id.time_tv)
+            isSeenTv = itemView.findViewById(R.id.is_sent_tv)
         }
     }
 }
