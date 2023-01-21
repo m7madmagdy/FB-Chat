@@ -19,27 +19,11 @@
         android:id="@+id/usersFragment"
         android:name="com.example.socialmedia.ui.fragments.UsersFragment"
         android:label="@string/users"
-        tools:layout="@layout/fragment_users" >
-        <action
-            android:id="@+id/action_usersFragment_to_chatFragment"
-            app:enterAnim="@anim/fragment_enter"
-            app:exitAnim="@anim/fragment_exit"
-            app:popEnterAnim="@anim/fragment_enter_pop"
-            app:popExitAnim="@anim/fragment_exit_pop"
-            app:destination="@id/chatFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_users" />
     <fragment
         android:id="@+id/chatsFragment"
         android:name="com.example.socialmedia.ui.fragments.ChatsFragment"
         android:label="@string/chats"
         tools:layout="@layout/fragment_chats" />
-    <fragment
-        android:id="@+id/chatFragment"
-        android:name="com.example.socialmedia.ui.fragments.ChatFragment"
-        tools:layout="@layout/fragment_chat" >
-        <argument
-            android:name="user"
-            app:argType="com.example.socialmedia.data.User" />
-    </fragment>
 
 </navigation>

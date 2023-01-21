@@ -1,15 +1,16 @@
 package com.example.socialmedia.ui.fragments
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.*
 import androidx.core.view.isVisible
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.socialmedia.R
 import com.example.socialmedia.data.User
 import com.example.socialmedia.databinding.FragmentUsersBinding
+import com.example.socialmedia.ui.activities.ChatActivity
 import com.example.socialmedia.ui.adapters.UsersAdapter
 import com.example.socialmedia.ui.main.BaseFragment
 import com.google.firebase.auth.FirebaseAuth
@@ -106,9 +107,9 @@ class UsersFragment : BaseFragment() {
         val user = usersAdapter.getUser(position)
         when (v.id) {
             R.id.user_layout -> {
-                val action =
-                    UsersFragmentDirections.actionUsersFragmentToChatFragment(user!!)
-                findNavController().navigate(action)
+                val intent = Intent(requireContext(), ChatActivity::class.java)
+                intent.putExtra("hisUid", user?.uid)
+                startActivity(intent)
             }
         }
     }

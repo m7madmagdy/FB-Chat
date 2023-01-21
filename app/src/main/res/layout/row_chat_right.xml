@@ -50,7 +50,7 @@
         android:layout_gravity="right|center"
         android:gravity="right"
         android:layout_marginRight="14dp"
-        android:text="@string/delivered"
+        tools:text="@string/delivered"
         android:textColor="@color/chooser_sheet_color"
         android:textSize="11sp"
         android:fontFamily="@font/poppins_semibold"
