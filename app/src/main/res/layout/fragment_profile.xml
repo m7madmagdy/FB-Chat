@@ -61,6 +61,7 @@
                     android:layout_width="180dp"
                     android:layout_height="180dp"
                     android:src="@mipmap/user"
+                    android:background="@mipmap/user"
                     android:layout_alignParentLeft="true"
                     android:contentDescription="@string/avatar_photo"
                     app:civ_border_color="@color/avatar_image_border"
