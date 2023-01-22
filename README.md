@@ -17,15 +17,12 @@
 <img src="https://i.imgur.com/pp6NZ4b.png" width="200">
 <img src="https://i.imgur.com/lXfrFNy.png" width="200">
 
-
-
 ## **Dependencies**
 -  [Firebase Tools](https://firebase.google.com/)
 -  [Navigation Components](https://developer.android.com/guide/navigation/navigation-getting-started)
 -  [Google SignIn](https://ads.google.com/intl/en_eg/home/)
 -  [Facebook Shimmer](https://facebook.github.io/shimmer-android/)
 -  [Glide](https://square.github.io/picasso/)
-
 #
 
 # APK
