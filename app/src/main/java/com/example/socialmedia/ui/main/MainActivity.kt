@@ -28,12 +28,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    /* TODO: Part 11 We will do the followings.
-      -> Show sent messages
-         1- Design different layouts for sender and receiver
-         2- Receiver layout on left will contain image, message and time
-         3- Sender layout on right will contain message and time
-
+    /* TODO: Part 16 We will do the followings.
+      -> Send messages using FCM
+         1- When user send message the receiver will receive the notification containing message.
+         2- when user clicks the notification it will open the chat with that person.
     */
     override fun onDestroy() {
         super.onDestroy()

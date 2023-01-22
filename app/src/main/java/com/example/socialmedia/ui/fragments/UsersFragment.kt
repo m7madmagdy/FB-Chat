@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
 import android.view.*
+import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.socialmedia.R
@@ -69,6 +70,11 @@ class UsersFragment : BaseFragment() {
                             usersAdapter.setUsers(usersList)
                             binding.shimmerLayout.isVisible = false
                         }
+                    }
+
+                    if (usersList.isEmpty()){
+                        binding.shimmerLayout.isVisible = false
+                        Toast.makeText(requireContext(), "Not found users yet", Toast.LENGTH_SHORT).show()
                     }
                 }
 
