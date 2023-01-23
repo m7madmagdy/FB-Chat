@@ -8,6 +8,8 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
+import android.util.Log
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -15,12 +17,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.socialmedia.R
 import com.example.socialmedia.data.Chat
+import com.example.socialmedia.data.User
 import com.example.socialmedia.databinding.ActivityChatBinding
+import com.example.socialmedia.firebase.*
+import com.example.socialmedia.firebase.Client.getRetrofit
 import com.example.socialmedia.ui.adapters.ChatAdapter
 import com.example.socialmedia.utils.Constants
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
+import retrofit2.Call
+import retrofit2.Callback
 
 class ChatActivity : AppCompatActivity() {
     private var _binding: ActivityChatBinding? = null
@@ -37,6 +44,8 @@ class ChatActivity : AppCompatActivity() {
     private lateinit var seenListener: ValueEventListener
     private lateinit var userRefForSeen: DatabaseReference
     private lateinit var chatList: ArrayList<Chat?>
+    private lateinit var apiService: APIService
+    private var notify: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +53,7 @@ class ChatActivity : AppCompatActivity() {
         setContentView(binding.root)
         chatList = ArrayList()
         initFirebase()
+        initApiService()
         initChatRecyclerview()
         initPermissions()
         initNotificationPermission()
@@ -110,11 +120,18 @@ class ChatActivity : AppCompatActivity() {
                     binding.sendMessageBtn.isEnabled = false
                 } else {
                     binding.sendMessageBtn.isEnabled = true
-                    binding.sendMessageBtn.setOnClickListener { sendMessage(s.toString()) }
+                    binding.sendMessageBtn.setOnClickListener {
+                        notify = true
+                        sendMessage(s.toString())
+                    }
                 }
             }
         })
         readMessages()
+    }
+
+    private fun initApiService() {
+        apiService = getRetrofit("https://fcm.googleapis.com/")!!.create(APIService::class.java)
     }
 
     private fun readMessages() {
@@ -153,6 +170,60 @@ class ChatActivity : AppCompatActivity() {
         val soundEffect = MediaPlayer.create(this, R.raw.message_sent)
         soundEffect.start()
         binding.messageEdt.text.clear()
+
+        val msg = message
+        val db = FirebaseDatabase.getInstance().getReference("Users").child(myUid)
+        db.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val user = snapshot.getValue(User::class.java)
+
+                if (notify) {
+                    sendNotification(hisUid, user!!.name, message)
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {}
+        })
+    }
+
+    private fun sendNotification(hisUid: String, name: String?, message: String) {
+        val myUid = firebaseUser.uid
+        val allTokens = FirebaseDatabase.getInstance().getReference("Tokens")
+        val query = allTokens.orderByKey().equalTo(hisUid)
+        query.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                snapshot.children.forEach { ds ->
+                    val token = ds.getValue(Token::class.java)
+                    val data = Data(
+                        myUid,
+                        "$name:$message",
+                        "New Message",
+                        hisUid,
+                        R.drawable.firebase_icon
+                    )
+                    val sender = Sender(data, token?.token)
+                    apiService.sendNotification(sender)
+                        .enqueue(object : Callback<Response> {
+                            override fun onResponse(
+                                call: Call<Response>,
+                                response: retrofit2.Response<Response>
+                            ) {
+                                if (response.isSuccessful){
+                                    Toast.makeText(this@ChatActivity, response.message(), Toast.LENGTH_SHORT).show()
+                                    Log.d("TAG", "onSuccess: ${response.message()} ${response.body()}")
+                                }
+                            }
+
+                            override fun onFailure(call: Call<Response>, t: Throwable) {
+                                Toast.makeText(this@ChatActivity, t.message, Toast.LENGTH_SHORT).show()
+                                Log.d("TAG", "onFailure: ${t.message}")
+                            }
+                        })
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {}
+        })
     }
 
     private fun seenMessage() {

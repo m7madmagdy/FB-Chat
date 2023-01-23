@@ -15,25 +15,37 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.NavigationUI
 import com.example.socialmedia.R
 import com.example.socialmedia.databinding.ActivityDashboardBinding
+import com.example.socialmedia.firebase.Token
 import com.example.socialmedia.ui.main.MainActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.installations.FirebaseInstallations
 import com.google.firebase.perf.FirebasePerformance
 
 class DashboardActivity : AppCompatActivity() {
     private var _binding: ActivityDashboardBinding? = null
     private val binding get() = _binding!!
+    private val trace = FirebasePerformance.getInstance().newTrace("social-media")
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var navController: NavController
-    private val trace = FirebasePerformance.getInstance().newTrace("social-media")
+    private lateinit var mUid: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityDashboardBinding.inflate(layoutInflater)
         setContentView(binding.root)
         firebaseAuth = FirebaseAuth.getInstance()
-        initNavController()
         trace.start()
+        initNavController()
+        updateToken(FirebaseInstallations.getInstance().getToken(true).toString())
+    }
+
+    private fun updateToken(token: String) {
+        val user: FirebaseUser? = firebaseAuth.currentUser
+        val dbRef = FirebaseDatabase.getInstance().getReference("Tokens")
+        val mToken = Token(token)
+        dbRef.child(user?.uid.toString()).setValue(mToken)
     }
 
     @SuppressLint("RestrictedApi")
@@ -94,7 +106,19 @@ class DashboardActivity : AppCompatActivity() {
         if (user == null) {
             startActivity(Intent(this, MainActivity::class.java))
             finish()
+        }else{
+            mUid = user.uid
+            val sp = getSharedPreferences("SP_USER", 0)
+            val editor = sp.edit()
+            editor.putString("Current_UserID", mUid)
+            editor.apply()
         }
+    }
+
+
+    override fun onResume() {
+        checkUserStatus()
+        super.onResume()
     }
 
     override fun onStart() {
