@@ -24,6 +24,3 @@
 -  [Facebook Shimmer](https://facebook.github.io/shimmer-android/)
 -  [Glide](https://square.github.io/picasso/)
 #
-
-# APK
-- **<a href="https://drive.google.com/file/d/1NwFsdcy_ohs0gIGY8Z8cYAIFT1ecrFJQ/view?usp=share_link">Google Drive Link</a>**
