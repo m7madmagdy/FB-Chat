@@ -1,4 +1,4 @@
-# Social Media Application
+# Firebase Social App
 **Build social medial app using Google Firebase Services**
 
 
