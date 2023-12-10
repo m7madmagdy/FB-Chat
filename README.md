@@ -1,7 +1,6 @@
 # Firebase Social App
 **Build social medial app using Google Firebase Services**
 
-
 [![Kotlin Version](https://img.shields.io/badge/kotlin-1.7.20-blue.svg)](http://kotlinlang.org/)
 [![Gradle](https://img.shields.io/badge/gradle-7.3.1-blue.svg)](https://lv.binarybabel.org/catalog/gradle/latest)
 [![API](https://img.shields.io/badge/API-21%2B-blue.svg?style=flat)](https://android-arsenal.com/api?level=21)
