@@ -1,4 +1,4 @@
-# Firebase Social App
+# Social App Using Firebase Tools
 **Build social medial app using Google Firebase Services**
 
 [![Kotlin Version](https://img.shields.io/badge/kotlin-1.7.20-blue.svg)](http://kotlinlang.org/)
